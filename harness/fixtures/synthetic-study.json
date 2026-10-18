@@ -1,0 +1,6 @@
+{
+  "case_id": "synthetic-smoke-001",
+  "synthetic": true,
+  "input_kind": "manifest_only",
+  "series": []
+}
