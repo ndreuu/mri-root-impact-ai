@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "kind": "upstream_asset_inventory",
+  "name": "SpineNet",
+  "role": "research_localization_candidate",
+  "repository": "https://github.com/rwindsor1/SpineNet",
+  "commit": "5e96ac54b1c1845a37d12e40bfd16f647d40acd8",
+  "license_url": "https://github.com/rwindsor1/SpineNet/blob/5e96ac54b1c1845a37d12e40bfd16f647d40acd8/LICENCE.md",
+  "license_scope": "Non-commercial research only; applies to source code, pretrained parameters and outputs. See the linked terms.",
+  "verified_date": "2026-10-19",
+  "digest_origin": "Locally computed SHA-256 of previously downloaded files; not author-published digests.",
+  "official_urls_head_status": 200,
+  "remote_bodies_reverified": false,
+  "local_files_sha256_verified": true,
+  "model_inference_performed": false,
+  "files": {
+    "appearance/ckpt187.pt": {
+      "sha256": "32ca6dd08fb7deae07d471594362bf53eb10a52ebabf87da653c0e14ba457b62",
+      "size_bytes": 7756623,
+      "url": "https://www.robots.ox.ac.uk/~vgg/research/spinenet/weights/appearance/ckpt187.pt"
+    },
+    "context/ckpt16.pt": {
+      "sha256": "fd6d997584978519a1a93bff6ff2e6c877e0bd704659212ebd6d7a7d7a469bc6",
+      "size_bytes": 2054446,
+      "url": "https://www.robots.ox.ac.uk/~vgg/research/spinenet/weights/context/ckpt16.pt"
+    },
+    "detect-vfr/ckpt435.pt": {
+      "sha256": "7da94b16ee160764a1872350b10d15ad5e66a884791fc87e476dbec06c46be0a",
+      "size_bytes": 558044608,
+      "url": "https://www.robots.ox.ac.uk/~vgg/research/spinenet/weights/detect-vfr/ckpt435.pt"
+    },
+    "grading/ckpt1.pt": {
+      "sha256": "b7259f0a32d438d30e58db0f36db0b401ae5e36cb58d3eddb650cd7a141778fb",
+      "size_bytes": 254001510,
+      "url": "https://www.robots.ox.ac.uk/~vgg/research/spinenet/weights/grading/ckpt1.pt"
+    }
+  }
+}

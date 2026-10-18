@@ -61,22 +61,32 @@
     {
       "id": "L001",
       "title": "Проверить SpineNet / SpineReport и выбрать адаптер локализации",
-      "status": "ready",
+      "status": "done",
       "depends_on": [],
       "acceptance": [
         "Зафиксированы upstream, версия, лицензия, веса и требования к входу",
         "Проверен реальный состав выходов и возможность привязки уровней L1–S1"
       ],
-      "evidence": []
+      "evidence": [
+        "docs/localizer-audit.md; harness/upstreams/spinenet.json",
+        "SpineNet commit 5e96ac54b1c1845a37d12e40bfd16f647d40acd8; four official weight URLs respond HEAD 200",
+        "Four cached checkpoints: 821857187 bytes; all SHA-256 recomputed and matched the pinned inventory",
+        "RSNA sagittal T2-like and T1: standalone upstream IO reads 256x256x15 each; source hashes unchanged; no model imported or run",
+        "Native polygon and slice-index API audited; 4mm SliceThickness distinguished from approximately 5mm center spacing",
+        "Research baseline selected; non-commercial restrictions cover code, weights and outputs; SpineReport is a downstream reporting tool",
+        "make check and make smoke pass; MRI inference remains unperformed"
+      ]
     },
     {
       "id": "L002",
       "title": "Выполнить первый реальный запуск локализации",
-      "status": "todo",
+      "status": "ready",
       "depends_on": ["C001", "I001", "L001"],
       "acceptance": [
         "Запуск на доступном разрешенном примере воспроизводится по инструкции",
-        "Выход адаптера проверен по контракту и исходным изображениям"
+        "Выход адаптера проверен по контракту и исходным изображениям",
+        "Исследовательский SpineNet запускается на CPU в изолированном закрепленном окружении; хеши кода и весов проверяются до загрузки",
+        "Геометрия, polygons и связь с исходными кадрами имеют версию; покрытие и overlay проверены без принудительного переименования отсутствующих или нестандартных уровней"
       ],
       "evidence": []
     },
