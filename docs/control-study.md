@@ -1,0 +1,58 @@
+# Контрольное исследование для воспроизводимого запуска
+
+Источник — публичная копия RSNA 2024 на [Hugging Face, darkxtranger/RSNA](https://huggingface.co/datasets/darkxtranger/RSNA/tree/e881937c3222a5fc1c09d573adac3b9a1ff50d35). Версия закреплена: `e881937c3222a5fc1c09d573adac3b9a1ff50d35`. Исходный набор — [RSNA Lumbar Spine Degenerative Classification](https://www.kaggle.com/competitions/rsna-2024-lumbar-spine-degenerative-classification).
+
+У копии нет карточки с отдельной лицензией; она не объявляется CC BY. Ссылка на источник и условия RSNA сохраняются в provenance. Данные и извлеченные строки разметки хранятся вне Git.
+
+## Выбор входа
+
+Проверены ранее скачанные SPIDER T2 и Sudirman 0001. Они подходят для отдельных технических прогонов, но у локального Sudirman нет Sagittal T1. Для основного контрольного входа выбран RSNA study `3139265320` с тремя типами серий: Sagittal T2/STIR, Sagittal T1 и Axial T2.
+
+Выбор детерминирован: максимальное число опубликованных сочетаний condition/level, затем минимальный размер снимков и стабильный идентификатор. Можно явно передать `--study-id`, чтобы повторять один случай независимо от выбора по умолчанию.
+
+Внешний каталог на текущей машине: `/Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320`. В `raw/` находятся исходные DICOM, три таблицы только выбранного случая и `provenance.json`. В `prepared/` — manifest C001 и отчет проверки входа.
+
+Проверенный состав: 15 Sagittal T2/STIR, 15 Sagittal T1 и 30 Axial T2, всего 60 DICOM (3 560 654 байта). Сохранены 25 строк координат и одна строка оценок стенозов выбранного случая. Все 60 файлов прошли проверку SHA-256 и декодирование на Python 3.12.14, pydicom 3.0.2, NumPy 2.5.3. Сагиттальные серии имеют по одной ориентации; аксиальная — шесть, поэтому `registration_status=needs_review`.
+
+## Команды
+
+Загрузчик работает на Python 3.9+ со стандартной библиотекой. Для декодирования DICOM нужен Python 3.12 с зависимостями из `requirements-data.txt`:
+
+```sh
+python3.12 -m venv .venv-data
+.venv-data/bin/python -m pip install -r requirements-data.txt
+```
+
+Из корня репозитория:
+
+```sh
+MRI_DATA_ROOT=/Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320
+python3 scripts/fetch_rsna_control.py --output "$MRI_DATA_ROOT/raw" --study-id 3139265320
+.venv-data/bin/python -m mri_root_impact prepare-rsna \
+  --data-root "$MRI_DATA_ROOT/raw" --output "$MRI_DATA_ROOT/prepared" --allow-missing-modality
+```
+
+Повторная проверка без загрузок:
+
+```sh
+python3 scripts/fetch_rsna_control.py --output "$MRI_DATA_ROOT/raw" --study-id 3139265320 --verify-only
+python3 -m mri_root_impact validate --study "$MRI_DATA_ROOT/prepared/study.json"
+.venv-data/bin/python -m mri_root_impact preflight \
+  --study "$MRI_DATA_ROOT/prepared/study.json" --output "$MRI_DATA_ROOT/prepared/preflight.json" --allow-missing-modality
+```
+
+Загрузчик использует HTTP Range с проверкой ответа 206, размера диапазона и лимитом 128 МиБ на попытку подготовки. Архив целиком занимает около 30,3 ГБ и не скачивается. Проверяются локальные ZIP-заголовки, размер и CRC каждого извлеченного файла; затем сохраняется SHA-256. Контрольная сумма полного архива записана как идентификатор источника, но не считается проверенной при выборочном чтении.
+
+Ожидаемый результат: загрузчик сообщает `status=verified`, валидатор — `ok=true`, preflight проверяет SHA-256 и декодирует все изображения. При ошибке данные не объявляются прошедшими проверку. Выходной JSON не может перезаписать исходный снимок, manifest или посторонние метаданные.
+
+## Границы проверки
+
+- Прочитанные снимки подтверждают техническую доступность входа. Модели еще не запускались; `inference_performed=false`.
+- Метка Sagittal T2/STIR — класс исходной таблицы, а не подтверждение обычного T2. В manifest она обозначена как T2-like с явным ограничением.
+- В выбранных DICOM отсутствует тег `Modality`. Он не дописывается в исходные файлы. Явный флаг `--allow-missing-modality` разрешает проверку по заявленному типу набора с отметкой `modality_status=dataset_declared`; без флага пропуск считается ошибкой. Другой явно указанный тип, например CT, не допускается и с флагом.
+- Наличие координат разметки не подтверждает геометрическое покрытие L1–S1. Оно подлежит проверке при работе с локализатором.
+- FrameOfReferenceUID и ориентации проверяются на согласованность. Они не заменяют регистрацию или визуальную проверку соответствия анатомии; преобразование между сериями не вычисляется.
+- Метки RSNA относятся к стенозам. Они не дают эталона морфологии грыжи, воздействия на корешок или клинической радикулопатии.
+- `full_stage_i_input=false` сохраняется до проверки пригодности входа для моделей и fusion. Наличие трех типов серий само по себе такой готовности не подтверждает.
+
+Следующий шаг — L001: выбрать локализатор и проверить его требования к подготовленному входу. Для L002 используется тот же внешний manifest; изображения повторно в Git не копируются.

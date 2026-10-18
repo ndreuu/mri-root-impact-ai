@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 STAGES = ("localization", "disc_analysis", "stenosis", "fusion")
 STATUSES = {"todo", "ready", "in_progress", "done"}
 FORBIDDEN_SUFFIXES = (
-    ".dcm", ".dicom", ".nii", ".nii.gz", ".nrrd", ".mha", ".mhd",
+    ".dcm", ".dicom", ".ima", ".nii", ".nii.gz", ".nrrd", ".mha", ".mhd",
     ".pt", ".pth", ".ckpt", ".safetensors", ".onnx", ".npy", ".npz",
 )
 

@@ -38,7 +38,7 @@
     {
       "id": "I001",
       "title": "Подобрать МРТ-исследование для воспроизводимого запуска",
-      "status": "ready",
+      "status": "done",
       "depends_on": ["C001"],
       "acceptance": [
         "Проверены уже доступные SPIDER и DICOM-примеры; выбран источник и зафиксированы условия использования",
@@ -48,7 +48,15 @@
         "Manifest проходит валидатор C001, изображения декодируются; описаны команды подготовки и повторной проверки выбранного входа с ожидаемым результатом",
         "Явно указано, какие модули можно отлаживать на выбранном исследовании и каких серий или эталонных меток не хватает"
       ],
-      "evidence": []
+      "evidence": [
+        "docs/control-study.md; scripts/fetch_rsna_control.py; requirements-data.txt",
+        "RSNA study 3139265320: 15 Sagittal T2/STIR, 15 Sagittal T1, 30 Axial T2",
+        "fetch_rsna_control.py --verify-only: 60 files verified without network",
+        "prepare-rsna / preflight: 60 image hashes verified and 60 DICOM files decoded",
+        "harness check: 74 tests pass with optional data dependencies; core Python 3.9 passes 65 and skips 9 decoder tests; smoke passes",
+        "External manifest and preflight report: /Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320/prepared",
+        "Modality missing is explicit; geometry needs_review; model inference not performed"
+      ]
     },
     {
       "id": "L001",
