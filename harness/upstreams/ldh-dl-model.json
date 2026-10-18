@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "kind": "upstream_audit_inventory",
+  "name": "LDH-DL-MODEL",
+  "repository": "https://github.com/ElzatElham/LDH-DL-MODEL",
+  "commit": "b2b9ca49aac8b4b552f0dc0ad0342e3352306ab7",
+  "verified_date": "2026-10-19",
+  "source_files": {
+    "Keypoint_Detection_train.yaml": {
+      "size_bytes": 131,
+      "sha256": "46b8090a20d73c788351c50ad5e84824155831faac6faf08c2409ab748836e57"
+    },
+    "Object _Detection_train.yaml": {
+      "size_bytes": 99,
+      "sha256": "87a11f77586687ca831d6ba8bc58c98dcd9ccb504f2d051a2e0a8c75dc22202a"
+    },
+    "README.md": {
+      "size_bytes": 1693,
+      "sha256": "611144770fccda3c7c9f09213c708f67df7316d4d1c18df7aa5f1262792dbd1b"
+    },
+    "Semantic_Segmentation_train.yaml": {
+      "size_bytes": 114,
+      "sha256": "53806e323a9a9d4cefdf52e570dcacf997feeb4a30abfd58f5e06d222e306bba"
+    },
+    "YOLOV8_testing.py": {
+      "size_bytes": 1213,
+      "sha256": "75778bc52ed36108b86ed0682dccc17af18d4d27b4b58e76e56fe509708fe7b8"
+    },
+    "YOLOV8_training.py": {
+      "size_bytes": 1882,
+      "sha256": "ae0caa6cbb77f3d623bb05cf3fa62fbb42e2e0653b18442b99d1bff07ba1eb63"
+    }
+  },
+  "repository_license_declared": null,
+  "trained_lumbar_checkpoints_found_in_checked_sources": false,
+  "integration_ready": false,
+  "medical_inference_performed": false,
+  "repository_checks": {
+    "branches": [
+      "main"
+    ],
+    "releases_count": 0,
+    "tags_count": 0,
+    "checkpoint_files_in_tree": 0
+  },
+  "paper": {
+    "doi": "10.1007/s11547-025-01996-y",
+    "url": "https://link.springer.com/article/10.1007/s11547-025-01996-y"
+  },
+  "yaml_metadata": {
+    "detection_class_names": [
+      "0",
+      "1"
+    ],
+    "segmentation_class_names": {
+      "0": 0,
+      "1": 1,
+      "2": 2
+    },
+    "pose_class_names": [
+      "0"
+    ],
+    "keypoint_shape": [
+      9,
+      3
+    ],
+    "class_and_keypoint_semantics_published_in_repository": false
+  },
+  "wrapper_calls": {
+    "YOLOV8_training.py": [
+      {
+        "method": "train",
+        "kwargs": [
+          "data",
+          "epochs",
+          "imgsz",
+          "patience",
+          "batch",
+          "fliplr",
+          "flipud",
+          "name",
+          "device"
+        ]
+      }
+    ],
+    "YOLOV8_testing.py": [
+      {
+        "method": "val",
+        "kwargs": [
+          "data",
+          "device"
+        ]
+      }
+    ]
+  },
+  "readme_pretrained_links": [
+    {
+      "filename": "yolov8x.pt",
+      "url": "https://github.com/ultralytics/assets/releases/download/v8.2.0/yolov8x.pt",
+      "role": "generic_COCO_initialization_not_LDH_trained_checkpoint",
+      "asset_id": 178977295,
+      "size_bytes": 136890692,
+      "sha256": null,
+      "downloaded": false
+    },
+    {
+      "filename": "yolov8x-seg.pt",
+      "url": "https://github.com/ultralytics/assets/releases/download/v8.2.0/yolov8x-seg.pt",
+      "role": "generic_COCO_initialization_not_LDH_trained_checkpoint",
+      "asset_id": 178978806,
+      "size_bytes": 144101612,
+      "sha256": null,
+      "downloaded": false
+    },
+    {
+      "filename": "yolov8x-pose-p6.pt",
+      "url": "https://github.com/ultralytics/assets/releases/download/v8.2.0/yolov8x-pose-p6.pt",
+      "role": "generic_COCO_initialization_not_LDH_trained_checkpoint",
+      "asset_id": 178978562,
+      "size_bytes": 199031868,
+      "sha256": null,
+      "downloaded": false
+    }
+  ],
+  "bounded_hf_searches": [
+    {
+      "query": "LDH-DL-MODEL",
+      "matching_models": 0
+    },
+    {
+      "query": "ElzatElham",
+      "matching_models": 0
+    }
+  ],
+  "missing_for_integration": [
+    "LDH-trained detection, segmentation and nine-keypoint checkpoints or a verified equivalent baseline",
+    "Source-code and medical-weight usage conditions",
+    "Class IDs and anatomical keypoint order",
+    "Exact preprocessing and slice-selection protocol",
+    "Measurement and grading postprocessing with units and unambiguous rules"
+  ],
+  "limitations": [
+    "Negative availability result is limited to the checked repository, releases, linked assets and bounded Hugging Face searches.",
+    "The article license and generic Ultralytics license do not establish licensing for author code or missing medical checkpoints.",
+    "No generic model weights were downloaded or used as medical inference."
+  ]
+}

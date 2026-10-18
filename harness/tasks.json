@@ -102,23 +102,45 @@
     {
       "id": "L003",
       "title": "Привязать дисковые уровни и ROI к исходным кадрам",
-      "status": "todo",
+      "status": "ready",
       "depends_on": ["L002", "D001"],
       "acceptance": [
-        "Требования к ROI согласованы с проверенными входами модели дисков из D001",
-        "Дисковые уровни привязаны к исходным кадрам с явной геометрией; наличие двух тел не выдается за сегментацию диска",
-        "Для неоднозначной нумерации и недостающих данных сохраняются неопределенность и причина; ROI проверены на исходных изображениях"
+        "Для аксиальной ветки определены source-frame ROI/связи уровней; сагиттальные polygons не копируются в Axial T2 как готовый crop",
+        "Отдельные аксиальные ориентации, IOP/IPP и spacing сохраняются; привязка к дисковым уровням проверена на исходных кадрах",
+        "Нумерация SpineNet и неподтвержденная регистрация не становятся достоверными уровнями; неоднозначность сохраняется явно",
+        "Геометрическая подготовка не объявляется LDH inference и не зависит от наличия generic COCO весов"
       ],
       "evidence": []
     },
     {
       "id": "D001",
       "title": "Проверить LDH-DL-MODEL и объем адаптации YOLOv8",
-      "status": "ready",
+      "status": "done",
       "depends_on": [],
       "acceptance": [
         "Проверены upstream, лицензия, веса, входы и доступные признаки грыжи",
         "Размер, степень, сторона и положение не заявляются доступными без проверки"
+      ],
+      "evidence": [
+        "docs/ldh-audit.md; harness/upstreams/ldh-dl-model.json",
+        "Official commit b2b9ca49aac8b4b552f0dc0ad0342e3352306ab7: six text files; all six SHA-256 recorded; code license not declared",
+        "GitHub releases/tags empty; published pretrained links are generic Ultralytics COCO assets, not confirmed LDH checkpoints",
+        "AST confirms train/val wrappers and numeric detection/segmentation IDs plus nine-keypoint shape; medical class/keypoint semantics and measurement code are missing",
+        "Primary paper DOI10.1007/s11547-025-01996-y checked; input axial T2; classification is anatomical postprocessing rather than native YOLO pathology classes",
+        "No Ultralytics installation, generic checkpoint download, training or medical inference performed; integration_ready=false",
+        "D002 records missing artifacts; L003 clarified for axial/source-frame geometry; S001 remains independent"
+      ]
+    },
+    {
+      "id": "D002",
+      "title": "Подтвердить обученные LDH-веса и условия или выбрать альтернативный baseline",
+      "status": "ready",
+      "depends_on": ["D001"],
+      "acceptance": [
+        "Получен проверяемый medical checkpoint с версией, SHA и условиями использования; generic COCO initialization не считается выполнением",
+        "Определены native классы, порядок ориентиров, preprocessing и единицы выходов",
+        "Для заявленных размеров/степени/зоны есть воспроизводимый вычислительный протокол; неподдержанные признаки остаются неопределенными",
+        "Любое внешнее обращение отправляется только при отдельном разрешении пользователя"
       ],
       "evidence": []
     },
