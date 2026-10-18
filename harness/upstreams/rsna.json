@@ -1,0 +1,366 @@
+{
+  "schema_version": 1,
+  "kind": "upstream_audit_inventory",
+  "name": "RSNA lumbar stenosis candidates",
+  "verified_date": "2026-10-19",
+  "audit_task": "S001",
+  "audit_complete": true,
+  "integration_ready": false,
+  "medical_inference_performed": false,
+  "weights_downloaded": false,
+  "external_code_executed": false,
+  "source_conditions": [
+    "spinal_canal_stenosis",
+    "left_neural_foraminal_narrowing",
+    "right_neural_foraminal_narrowing",
+    "left_subarticular_stenosis",
+    "right_subarticular_stenosis"
+  ],
+  "levels": [
+    "L1-L2",
+    "L2-L3",
+    "L3-L4",
+    "L4-L5",
+    "L5-S1"
+  ],
+  "severity_class_order": [
+    "Normal/Mild",
+    "Moderate",
+    "Severe"
+  ],
+  "side_target_assessments": 20,
+  "dataset_sources": [
+    "https://www.rsna.org/artificial-intelligence/ai-image-challenge/lumbar-spine-degenerative-classification-ai-challenge",
+    "https://pubs.rsna.org/doi/full/10.1148/ryai.250480",
+    "https://pubs.rsna.org/doi/suppl/10.1148/ryai.250480/suppl_file/ryai250480suppa1.pdf"
+  ],
+  "primary_candidate": {
+    "name": "Moyasii / tkmn published side classifier 0203",
+    "role": "selected_for_next_asset_and_CPU_feasibility_check_not_validated_baseline",
+    "repository": "https://github.com/Moyasii/Kaggle-2024-RSNA-Pub",
+    "commit": "8a3cd3e615bf24c934dc5440e96ee52aa68c1386",
+    "code_license": "MIT",
+    "source_files": {
+      "README.md": {
+        "size_bytes": 24232,
+        "sha256": "d3ba816fa6e8de1bf0330840f75e4f509f61a30b3b60054655bb856ebbb6d60b"
+      },
+      "LICENSE": {
+        "size_bytes": 1064,
+        "sha256": "eb6c31a50730136fc4287b9482fec0c7a435b29e514345a2958d7a533113bce6"
+      },
+      "requirements.txt": {
+        "size_bytes": 303,
+        "sha256": "7528caf3a2cb79bc6e241e61bd93b143413de587a91e646bde44fec19d7a6ad7"
+      },
+      "src/predict.py": {
+        "size_bytes": 114809,
+        "sha256": "0491bda6d9ff8d51ec1ccc7c4ba50cc463f1b234a78d38784b52a1b7b1498ee4"
+      },
+      "src/utils/prepare_data.py": {
+        "size_bytes": 1863,
+        "sha256": "10bd82702147a717e68ae80923abf7db624afc97dbb5833573982d0547dd08ba"
+      },
+      "scripts/run_quick.sh": {
+        "size_bytes": 453,
+        "sha256": "2d179cc718f681d8fd88a69df000c47b4edb3f229ea8196aa1be7dead2caf820"
+      },
+      "src/stage2/tkmn/config/0203.yaml": {
+        "size_bytes": 2943,
+        "sha256": "1b5cbe07ac0480fc12c5214856f8533373f4d98a632c77d6e0feb40f25170f79"
+      },
+      "src/stage2/tkmn/config/0123.yaml": {
+        "size_bytes": 2947,
+        "sha256": "dacd3ed947e609d6c0384ecb822e5e93cb1239d74fb6c5ca3f8acf9a6931cc0d"
+      },
+      "src/stage2/tkmn/source/models/rsna2024_attention_net.py": {
+        "size_bytes": 8464,
+        "sha256": "c4994a10424ccd510e1e5fdc768c1a676e8f4be9070ffef76327067c641fb973"
+      },
+      "src/stage1/moyashii/sagittal/config/v6_0002_config.yaml": {
+        "size_bytes": 1136,
+        "sha256": "796ab1b13102af8271976594220417f46985110271bb5d4093c0a3cd8424ac1b"
+      },
+      "src/stage1/moyashii/axial/config/v5_0003_config.yaml": {
+        "size_bytes": 816,
+        "sha256": "29a5829b951aec072d4698ee60242961ac2cd997b012955380d305c1115eba61"
+      }
+    },
+    "weight_dataset": {
+      "ref": "akinosora/rsna2024-lsdc-3rd-models-pub",
+      "id": 5926114,
+      "version": 2,
+      "declared_license": "MIT",
+      "metadata_url": "https://www.kaggle.com/api/v1/datasets/view/akinosora/rsna2024-lsdc-3rd-models-pub",
+      "file_list_endpoint": "https://www.kaggle.com/api/v1/datasets/list/akinosora/rsna2024-lsdc-3rd-models-pub",
+      "file_list_pages_read": 7,
+      "file_list_pagination_complete": true,
+      "listed_file_count": 127,
+      "listed_size_bytes": 22394885824
+    },
+    "classifier": {
+      "filename": "stage2/tkmn/side/v9/0203/exp0203_fold1_best_score.pth",
+      "size_bytes": 41158224,
+      "sha256": null,
+      "downloaded": false,
+      "fold": 1,
+      "config": "src/stage2/tkmn/config/0203.yaml",
+      "architecture": "RSNA2024AttentionNet with three mnasnet_small.lamb_in1k backbones, GeM, attention",
+      "input_channels": 1,
+      "inputs_per_level_side": {
+        "sagittal_t1": [
+          15,
+          224,
+          224
+        ],
+        "sagittal_t2_like": [
+          15,
+          224,
+          224
+        ],
+        "axial_t2": [
+          10,
+          224,
+          224
+        ]
+      },
+      "output_condition_order": [
+        "neural_foraminal_narrowing",
+        "subarticular_stenosis"
+      ],
+      "output_class_order": [
+        "normal_mild",
+        "moderate",
+        "severe"
+      ],
+      "all_three_sequences_required": true,
+      "delivery_check": {
+        "url": "https://www.kaggle.com/api/v1/datasets/download/akinosora/rsna2024-lsdc-3rd-models-pub/stage2%2Ftkmn%2Fside%2Fv9%2F0203%2Fexp0203_fold1_best_score.pth?datasetVersionNumber=2",
+        "method": "GET",
+        "requested_range": "bytes=0-0",
+        "response_status": 206,
+        "delivery_host": "storage.googleapis.com",
+        "content_type": "application/octet-stream",
+        "content_range": "bytes 0-0/41158224",
+        "content_length": "1",
+        "response_body_read": false,
+        "weights_downloaded": false
+      }
+    },
+    "additional_required_models": {
+      "automatic_keypoint_and_ROI_models_required": true,
+      "complete_minimum_subset_verified": false,
+      "published_single_fold_examples": [
+        {
+          "filename": "stage1/moyashii/v6/0002/exp0002_fold0_best_score.pth",
+          "size_bytes": 165772062,
+          "sha256": null,
+          "downloaded": false
+        },
+        {
+          "filename": "stage1/moyashii/v5/0003/exp0003_fold0_best_score.pth",
+          "size_bytes": 72121783,
+          "sha256": null,
+          "downloaded": false
+        }
+      ]
+    },
+    "alternative_side_classifier": {
+      "config": "src/stage2/tkmn/config/0123.yaml",
+      "filename": "stage2/tkmn/side/v9/0123/exp0123_fold0_best_score.pth",
+      "size_bytes": 140646108,
+      "backbone": "resnet18.fb_ssl_yfcc100m_ft_in1k",
+      "resolution": 160
+    },
+    "published_runtime": {
+      "torch": "2.1.2",
+      "torchvision": "0.16.2",
+      "timm": "0.9.16",
+      "numpy": "1.26.4",
+      "pydicom": "2.4.4",
+      "albumentations": "1.4.0"
+    },
+    "CPU_execution_tested": false,
+    "integration_gaps": [
+      "Download exact subset and verify bytes, SHA256 and checkpoint structure before execution.",
+      "Adapt hardcoded cuda:0 and top-level inference into isolated explicit CPU worker.",
+      "Reproduce DICOM intensity conversion, keypoint inference, dataset-v9 ROI, slice selection and side transforms.",
+      "Check anisotropic and oblique source-frame geometry and preserve missing input rather than zeros.",
+      "Verify fold membership separately for localization and classification.",
+      "Do not transfer full-ensemble competition scores to a single checkpoint."
+    ]
+  },
+  "compact_split_alternative": {
+    "repository": "https://github.com/adamnarai/kaggle-rsna-2024",
+    "commit": "3a30fb41ec2af3cd1337d676686880fac9184e7c",
+    "code_license": "MIT",
+    "source_files": {
+      "LICENSE": {
+        "size_bytes": 1070,
+        "sha256": "0ddb749ff859b715ace098f75ac0d50113d95eb8fdd28734ee54b4d7406ab624"
+      },
+      "rsna2024/model/model.py": {
+        "size_bytes": 9934,
+        "sha256": "a076765512132fad89c2eeaef36ea03b0e833d85716f819970610fcccbff7891"
+      },
+      "rsna2024/data_loader/datasets.py": {
+        "size_bytes": 47019,
+        "sha256": "5fb24955b355de4f50b5d5b104896540cbc144cecae04f1ab9e02677401d953e"
+      }
+    },
+    "classifiers": [
+      {
+        "component": "foraminal_stenosis",
+        "dataset": "adamnarai/rsna-2024-hardy-voice-1244-5fold",
+        "dataset_version": 1,
+        "declared_weight_dataset_license": "Unknown",
+        "metadata_url": "https://www.kaggle.com/api/v1/datasets/view/adamnarai/rsna-2024-hardy-voice-1244-5fold",
+        "file_list_url": "https://www.kaggle.com/api/v1/datasets/list/adamnarai/rsna-2024-hardy-voice-1244-5fold",
+        "filename": "rsna-2024-hardy-voice-1244-cv1_best.pt",
+        "size_bytes": 57381984,
+        "sha256": null,
+        "downloaded": false,
+        "file_url": "https://www.kaggle.com/api/v1/datasets/download/adamnarai/rsna-2024-hardy-voice-1244-5fold/rsna-2024-hardy-voice-1244-cv1_best.pt?datasetVersionNumber=1",
+        "config_url": "https://www.kaggle.com/api/v1/datasets/download/adamnarai/rsna-2024-hardy-voice-1244-5fold/config.json?datasetVersionNumber=1",
+        "config_file": {
+          "size_bytes": 2296,
+          "sha256": "07c082df5fa9d1ccb8dbb5e7211670ec5f632d9c17b45d10ebaa67ad69e88c76"
+        },
+        "model": {
+          "type": "ForaminalROIModel",
+          "args": {
+            "base_model": "resnet18",
+            "num_classes": 3,
+            "in_channels": 1,
+            "pretrained": true
+          }
+        },
+        "dataset_preprocessing": {
+          "type": "ForaminalROIDataset",
+          "args": {
+            "img_num": 5,
+            "roi_size": 50,
+            "resolution": 128,
+            "data_dir": "data/raw"
+          }
+        },
+        "labels": {
+          "Normal/Mild": 0,
+          "Moderate": 1,
+          "Severe": 2
+        }
+      },
+      {
+        "component": "subarticular_stenosis",
+        "dataset": "adamnarai/rsna-2024-fiery-meadow-1254-5fold",
+        "dataset_version": 1,
+        "declared_weight_dataset_license": "Unknown",
+        "metadata_url": "https://www.kaggle.com/api/v1/datasets/view/adamnarai/rsna-2024-fiery-meadow-1254-5fold",
+        "file_list_url": "https://www.kaggle.com/api/v1/datasets/list/adamnarai/rsna-2024-fiery-meadow-1254-5fold",
+        "filename": "rsna-2024-fiery-meadow-1254-cv1_best.pt",
+        "size_bytes": 57382111,
+        "sha256": null,
+        "downloaded": false,
+        "file_url": "https://www.kaggle.com/api/v1/datasets/download/adamnarai/rsna-2024-fiery-meadow-1254-5fold/rsna-2024-fiery-meadow-1254-cv1_best.pt?datasetVersionNumber=1",
+        "config_url": "https://www.kaggle.com/api/v1/datasets/download/adamnarai/rsna-2024-fiery-meadow-1254-5fold/config.json?datasetVersionNumber=1",
+        "config_file": {
+          "size_bytes": 2307,
+          "sha256": "5aafe00ea78b2c1148141ad024dbfdcab30d47e3bc0b8a01c6ad40113e81f985"
+        },
+        "model": {
+          "type": "SubarticularROIModel",
+          "args": {
+            "base_model": "resnet18",
+            "num_classes": 3,
+            "in_channels": 1,
+            "pretrained": true
+          }
+        },
+        "dataset_preprocessing": {
+          "type": "SubarticularROIDataset",
+          "args": {
+            "img_num": 5,
+            "roi_size": 50,
+            "resolution": 128,
+            "data_dir": "data/raw"
+          }
+        },
+        "labels": {
+          "Normal/Mild": 0,
+          "Moderate": 1,
+          "Severe": 2
+        }
+      }
+    ],
+    "automatic_one_fold_total_checkpoint_bytes": 384621451,
+    "coordinate_checkpoint_dataset_license": "Unknown",
+    "inference_notebook_snapshot": {
+      "url": "https://www.kaggle.com/api/v1/kernels/pull/adamnarai/rsna2024-two-stage-split-global-3-base",
+      "notebook_source_file": {
+        "size_bytes": 77147,
+        "sha256": "d0c7f0334778bbbf6b7519bdca31466fe57204ccff0e8af7adcaf203cf7afdd9"
+      },
+      "derived_code_file": {
+        "size_bytes": 66180,
+        "sha256": "ef52e1eb794cb515e164a1c7b04bd0c4647fae383cb9ceb064c86f7eb2a1ec0c"
+      },
+      "derived_code_extraction": "Python code cells concatenated from the downloaded notebook snapshot",
+      "readme_script_version_id": 199792909,
+      "fetched_api_current_version_number": 2,
+      "fetched_script_version_id_verified": null,
+      "historical_version_equivalence_verified": false
+    },
+    "classifier_delivery_checks": [
+      {
+        "request_url": "https://www.kaggle.com/api/v1/datasets/download/adamnarai/rsna-2024-hardy-voice-1244-5fold/rsna-2024-hardy-voice-1244-cv1_best.pt?datasetVersionNumber=1",
+        "status": 206,
+        "headers": {
+          "Content-Type": "application/zip",
+          "ETag": "\"ce7512a6960062b025d8f78c499e2751\"",
+          "x-goog-hash": "md5=znUSppYAYrAl2PeMSZ4nUQ==",
+          "Accept-Ranges": "bytes",
+          "Content-Range": "bytes 0-0/53255934",
+          "Content-Length": "1"
+        },
+        "final_host": "storage.googleapis.com",
+        "body_bytes_read": 0
+      },
+      {
+        "request_url": "https://www.kaggle.com/api/v1/datasets/download/adamnarai/rsna-2024-fiery-meadow-1254-5fold/rsna-2024-fiery-meadow-1254-cv1_best.pt?datasetVersionNumber=1",
+        "status": 206,
+        "headers": {
+          "Content-Type": "application/zip",
+          "ETag": "\"d2abba95b3c8dbf2868275a6c9ca0334\"",
+          "x-goog-hash": "md5=0qu6lbPI2/KGgnWmycoDNA==",
+          "Accept-Ranges": "bytes",
+          "Content-Range": "bytes 0-0/53260131",
+          "Content-Length": "1"
+        },
+        "final_host": "storage.googleapis.com",
+        "body_bytes_read": 0
+      }
+    ],
+    "CPU_fallback_in_source": true,
+    "CPU_execution_tested": false,
+    "missing_input_behavior_requires_adaptation": "zero/partial-zero ROI fallback must not become an assessed negative finding",
+    "license_status": "medical weight conditions unresolved; Unknown is not proof of a ban"
+  },
+  "other_checked_candidate": {
+    "repository": "https://github.com/brendanartley/RSNA-2024-Competition",
+    "commit": "0e795b09783ec773b6996d0816b6c6ae5541c197",
+    "code_license_declared": null,
+    "weight_dataset": "brendanartley/rsna2024-solution-metadata",
+    "weight_dataset_version": 1,
+    "weight_dataset_size_bytes": 8467023056,
+    "weight_dataset_license": "Unknown",
+    "not_selected_reason": "main published subarticular classifier uses SagT2 instead of AxialT2"
+  },
+  "control_case_role": "development_case_from_public_RSNA_training_set_not_independent_accuracy_evaluation",
+  "limitations": [
+    "Neither source audit nor HTTP headers verify weight SHA256 or successful inference.",
+    "RSNA numbering convention is not independently verified anatomical root numbering.",
+    "Normal/Mild combines normal and mild disease and cannot represent absence of all pathology.",
+    "RSNA labels do not establish herniation dimensions, impacted roots or clinical radiculopathy.",
+    "MIT metadata for the published model set is not a review of every upstream backbone or data term."
+  ]
+}

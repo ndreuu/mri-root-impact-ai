@@ -1,0 +1,174 @@
+{
+  "kind": "public_reproducibility_search_evidence",
+  "verified_date": "2026-10-19",
+  "task": "D002",
+  "task_acceptance_fulfilled": false,
+  "task_status_after_search": "ready",
+  "repository": "https://github.com/ElzatElham/LDH-DL-MODEL",
+  "pinned_commit": "b2b9ca49aac8b4b552f0dc0ad0342e3352306ab7",
+  "integration_ready": false,
+  "trained_lumbar_checkpoints_found_in_checked_sources": false,
+  "external_messages_sent": false,
+  "weights_downloaded": false,
+  "patient_images_downloaded": false,
+  "inference_performed": false,
+  "github": {
+    "metadata_url": "https://api.github.com/repos/ElzatElham/LDH-DL-MODEL",
+    "pushed_at": "2024-05-24T06:54:58Z",
+    "declared_license": null,
+    "branches_url": "https://api.github.com/repos/ElzatElham/LDH-DL-MODEL/branches?per_page=100",
+    "branches": [
+      {
+        "name": "main",
+        "commit": "b2b9ca49aac8b4b552f0dc0ad0342e3352306ab7"
+      }
+    ],
+    "forks_url": "https://api.github.com/repos/ElzatElham/LDH-DL-MODEL/forks?per_page=100",
+    "forks_count": 0,
+    "all_state_issues_url": "https://api.github.com/repos/ElzatElham/LDH-DL-MODEL/issues?state=all&per_page=100",
+    "all_state_issues_count": 0,
+    "history": {
+      "commits_url": "https://api.github.com/repos/ElzatElham/LDH-DL-MODEL/commits?per_page=100",
+      "scope": "All 21 commits returned for the sole public main branch, including the initial commit; every recursive tree and every historical README URL list was inspected.",
+      "reachable_commits_checked": 21,
+      "recursive_trees_checked": 21,
+      "all_trees_truncated_false": true,
+      "historical_readmes_checked": 21,
+      "tree_url_template": "https://api.github.com/repos/ElzatElham/LDH-DL-MODEL/git/trees/{commit_sha}?recursive=1",
+      "readme_url_template": "https://raw.githubusercontent.com/ElzatElham/LDH-DL-MODEL/{commit_sha}/README.md",
+      "commit_shas": [
+        "b2b9ca49aac8b4b552f0dc0ad0342e3352306ab7",
+        "bd9b4270a01f0f1d99fd7c4f5516dcc7924109b8",
+        "51c79fa9bcb677666bb936ba1090b7c5b450c395",
+        "397917d15634ae0599a0083fb25cf942d129cf2c",
+        "6b41bc6242d1d2fe5cc4e851ae980676b040934b",
+        "dbb50e34d2ad8dbf1349cb7bc72d8056e1eda4af",
+        "b32761c55b26bc8e734b057eb83e63dccce25392",
+        "53d7c46eb54b789688708712a89060a6190c606d",
+        "26e2496f463c1af4d04c52e9f1a5d2e75d0066fb",
+        "1e2b3db0609412ed3b7e89577af1bdfabfe8f9c5",
+        "6292535cf4e60be3a18f8ab83ba8caa2ebb41f5f",
+        "e82c48c6604a50c1a3a489c6f70d1c5374d140fa",
+        "5ea95f8455f2e7755fdaf1067462d108a484e3ce",
+        "771d60574f5222b744275d91ddcc34da2822ee2d",
+        "3af8445963b1f6db6099d5d39bbc5bee1a1dba01",
+        "f895331124ceb474f8e64ba05876a347fad5cd9c",
+        "b016adcb6f332717a94d6757f43150971e246a7f",
+        "6d248d6109ca93237f0afff468bfc59df91f02f6",
+        "6ef029ebede27ecb57c132f1f77411f3a06c8894",
+        "e9608aad7fa3b63cf21a2f1c8352c87c8df78555",
+        "85c2d974237e2cac73097d822a549a1357b0a4ed"
+      ],
+      "checkpoint_paths_found": [],
+      "trained_lumbar_weight_links_found": [],
+      "all_historical_readme_urls": [
+        "https://github.com/ultralytics/ultralytics",
+        "https://github.com/ultralytics/assets/releases/download/v8.2.0/yolov8x.pt",
+        "https://github.com/ultralytics/assets/releases/download/v8.2.0/yolov8x-seg.pt",
+        "https://github.com/ultralytics/assets/releases/download/v8.2.0/yolov8x-pose-p6.pt",
+        "https://github.com/ElzatElham/LDH-DL-MODEL/blob/main/Object%20_Detection_train.yaml",
+        "https://github.com/ElzatElham/LDH-DL-MODEL/blob/main/Semantic_Segmentation_train.yaml",
+        "https://github.com/ElzatElham/LDH-DL-MODEL/blob/main/Keypoint_Detection_train.yaml",
+        "https://github.com/ElzatElham/LDH-DL-MODEL/blob/main/image.png"
+      ],
+      "weight_link_interpretation": "The three historical weight URLs are generic Ultralytics initialization already identified in D001, not demonstrated lumbar-trained checkpoints.",
+      "historical_additional_blob": {
+        "original_path": "image.png",
+        "renamed_path": "i",
+        "size_bytes": 298010,
+        "deleted_at_head": true,
+        "blob_downloaded": false
+      }
+    }
+  },
+  "author_public_repositories": {
+    "url": "https://api.github.com/users/ElzatElham/repos?per_page=100",
+    "count": 5,
+    "names": [
+      "CTLV-DAOD",
+      "GPT4LFS",
+      "LDH-DL-MODEL",
+      "LVDAN",
+      "multi-model-spinal-CT-segmentation-dataset"
+    ],
+    "gpt4lfs": {
+      "repository_url": "https://github.com/ElzatElham/GPT4LFS",
+      "tree_url": "https://api.github.com/repos/ElzatElham/GPT4LFS/git/trees/main?recursive=1",
+      "commit": "ccb5d3dab6153843f98322141187382349705d4c",
+      "truncated": false,
+      "result": "Separate foraminal-stenosis project. Complete tree contains code, README, requirements and empty-directory markers; no published weights or image data in the checked tree. It does not supply the LDH checkpoints."
+    },
+    "other_repository_limit": "The listed CT projects were not audited as possible MRI replacements."
+  },
+  "huggingface_exact_queries": [
+    {
+      "url": "https://huggingface.co/api/models?search=LDH-DL-MODEL&limit=100",
+      "returned_count": 0
+    },
+    {
+      "url": "https://huggingface.co/api/models?search=ElzatElham&limit=100",
+      "returned_count": 0
+    },
+    {
+      "url": "https://huggingface.co/api/datasets?search=LDH-DL-MODEL&limit=100",
+      "returned_count": 0
+    },
+    {
+      "url": "https://huggingface.co/api/models?search=herniation&limit=100",
+      "returned_count": 0
+    },
+    {
+      "url": "https://huggingface.co/api/datasets?search=herniation&limit=100",
+      "returned_count": 0
+    }
+  ],
+  "huggingface_broad_query": {
+    "url": "https://huggingface.co/api/models?search=LDH&limit=100",
+    "returned_count": 57,
+    "result": "Returned names and tags were inspected; no returned item established the official LDH model or its trained MRI weights. This is a bounded registry search, not an assertion about all HuggingFace repositories."
+  },
+  "zenodo_queries": [
+    {
+      "url": "https://zenodo.org/api/records?q=%22LDH-DL-MODEL%22&size=10",
+      "hits_total": 0
+    },
+    {
+      "url": "https://zenodo.org/api/records?q=%2210.1007%2Fs11547-025-01996-y%22&size=10",
+      "hits_total": 0
+    },
+    {
+      "url": "https://zenodo.org/api/records?q=%22Elham%22%20AND%20%22lumbar%22&size=20",
+      "hits_total": 2,
+      "relevant_hits_identified": 0,
+      "returned_record_ids": [
+        4452813,
+        10164447
+      ]
+    }
+  ],
+  "publication": {
+    "doi": "10.1007/s11547-025-01996-y",
+    "url": "https://link.springer.com/article/10.1007/s11547-025-01996-y",
+    "implementation_link": "https://github.com/ElzatElham/LDH-DL-MODEL",
+    "supplement_metadata": "One supplementary MP4, 17632 kb; not downloaded.",
+    "dedicated_data_availability_section_found_in_accessible_full_text": false,
+    "public_data_or_trained_checkpoint_link_found": false,
+    "corresponding_author_information_found": true,
+    "corresponding_author_information_url": "https://link.springer.com/article/10.1007/s11547-025-01996-y#author-information",
+    "data_on_request_policy_confirmed": false
+  },
+  "remaining_required_artifacts": [
+    "Lumbar-trained detection, segmentation and nine-point-pose checkpoints with provenance and use terms",
+    "Class meanings and ordered anatomical keypoint mapping",
+    "Exact preprocessing and physical-geometry handling",
+    "Measurement postprocessing and unambiguous grading/zone rules",
+    "A permitted reproducible example with expected outputs"
+  ],
+  "limits": [
+    "No global absence claim: arbitrary renamed mirrors, private assets and unindexed author storage were not exhaustively searchable.",
+    "The history search covers all 21 reachable main commits and their trees/README links, not unreachable or private Git objects.",
+    "Registry query counts describe the API responses to the exact URLs on the verification date.",
+    "Publication statements do not establish an author policy of providing data or weights on request.",
+    "This follow-up does not fulfill D002 acceptance or make the model integration-ready."
+  ]
+}

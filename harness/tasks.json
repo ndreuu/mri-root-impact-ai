@@ -39,7 +39,9 @@
       "id": "I001",
       "title": "Подобрать МРТ-исследование для воспроизводимого запуска",
       "status": "done",
-      "depends_on": ["C001"],
+      "depends_on": [
+        "C001"
+      ],
       "acceptance": [
         "Проверены уже доступные SPIDER и DICOM-примеры; выбран источник и зафиксированы условия использования",
         "Описаны состав серий, анатомическое покрытие и ограничения геометрии; приоритет — Sagittal T2, Sagittal T1 и Axial T2 одного исследования",
@@ -81,7 +83,11 @@
       "id": "L002",
       "title": "Выполнить первый реальный запуск локализации",
       "status": "done",
-      "depends_on": ["C001", "I001", "L001"],
+      "depends_on": [
+        "C001",
+        "I001",
+        "L001"
+      ],
       "acceptance": [
         "Запуск на доступном разрешенном примере воспроизводится по инструкции",
         "Выход адаптера проверен по контракту и исходным изображениям",
@@ -103,7 +109,10 @@
       "id": "L003",
       "title": "Привязать дисковые уровни и ROI к исходным кадрам",
       "status": "ready",
-      "depends_on": ["L002", "D001"],
+      "depends_on": [
+        "L002",
+        "D001"
+      ],
       "acceptance": [
         "Для аксиальной ветки определены source-frame ROI/связи уровней; сагиттальные polygons не копируются в Axial T2 как готовый crop",
         "Отдельные аксиальные ориентации, IOP/IPP и spacing сохраняются; привязка к дисковым уровням проверена на исходных кадрах",
@@ -135,23 +144,71 @@
       "id": "D002",
       "title": "Подтвердить обученные LDH-веса и условия или выбрать альтернативный baseline",
       "status": "ready",
-      "depends_on": ["D001"],
+      "depends_on": [
+        "D001"
+      ],
       "acceptance": [
         "Получен проверяемый medical checkpoint с версией, SHA и условиями использования; generic COCO initialization не считается выполнением",
         "Определены native классы, порядок ориентиров, preprocessing и единицы выходов",
         "Для заявленных размеров/степени/зоны есть воспроизводимый вычислительный протокол; неподдержанные признаки остаются неопределенными",
         "Любое внешнее обращение отправляется только при отдельном разрешении пользователя"
       ],
-      "evidence": []
+      "evidence": [
+        "harness/upstreams/ldh-followup-search.json; docs/ldh-audit.md",
+        "Bounded public follow-up: all21 reachable main commit trees and README links, one branch, no forks/issues, author MRI repo, HF and Zenodo queries checked",
+        "No matching medical checkpoints/postprocessing found in checked sources; no messages sent; acceptance remains unfulfilled, approach remains available for adaptation"
+      ]
     },
     {
       "id": "S001",
       "title": "Проверить модели RSNA для фораминального и субартикулярного стеноза",
-      "status": "ready",
+      "status": "done",
       "depends_on": [],
       "acceptance": [
         "Проверены модели, лицензии, классы, требования к сериям и способы привязки к уровню",
-        "Sagittal T1 и Axial T2 обрабатываются с сохранением стороны и неопределенности"
+        "Описаны preprocessing Sagittal T1 / Axial T2, сторона и неопределенность; multi-view входы кандидата явно отделены от раздельных веток исходного плана"
+      ],
+      "evidence": [
+        "docs/rsna-audit.md; harness/upstreams/rsna.json",
+        "Primary candidate Moyasii/tkmn commit8a3cd3e615bf24c934dc5440e96ee52aa68c1386: MIT code and model dataset v2;127 listed files total22394885824B; pagination complete",
+        "Published side0203 trained checkpoint41158224B: delivery206 verified without reading body; all-three-sequence classifier; keypoint models required",
+        "Adam Narai split ResNet18 classifiers and actual configs verified; model dataset license Unknown; metadata/header checks distinguish checkpoints from generic initialization",
+        "RSNA class/condition/level order and numbering caveat documented; control study is public training development case, not independent accuracy evidence",
+        "No weights download, external code execution, dependency installation or stenosis inference; integration_ready=false",
+        "make check and smoke pass; full runtime125 tests pass; core99 pass26 optional skips; source/config hashes and independent documentation review verified"
+      ]
+    },
+    {
+      "id": "S002",
+      "title": "Получить и проверить ограниченный RSNA-комплект и CPU-окружение",
+      "status": "ready",
+      "depends_on": [
+        "S001"
+      ],
+      "acceptance": [
+        "Выбрана явная конфигурация trained classifier и автоматических ROI-моделей; сохранены версии, условия, источники, размеры и SHA-256 всех фактически полученных весов",
+        "Код и веса хранятся вне Git; точные файлы скачиваются без всего competition dataset или полного ансамбля",
+        "Проверены структура и совместимость checkpoint с фактическим inference class; COCO/ImageNet initialization не подменяет medical weights",
+        "Изолированное CPU-окружение закреплено; адаптация не меняет рабочие SpineNet/data runtime",
+        "Дополнительный SagT2 вход, выбранный fold и неподтвержденная точность сокращенного ансамбля указаны явно"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "S003",
+      "title": "Первый воспроизводимый inference стенозов RSNA с автоматическими ROI",
+      "status": "todo",
+      "depends_on": [
+        "C001",
+        "I001",
+        "S002"
+      ],
+      "acceptance": [
+        "На контрольном исследовании выполнен реальный inference подтвержденной конфигурации без чтения train grade/coordinate CSV как входа ответа",
+        "Сохранены native результаты, время, exit code, хеши источников и весов; output соответствует исходной шкале, level/side/condition order",
+        "Проверены source-frame geometry, автоматические ROI, покрытия уровней и преобразования стороны; отсутствующий/пустой crop не становится нормой",
+        "Созданы C001 результаты для двадцати целевых сочетаний; неподтвержденная нумерация/геометрия сохраняется indeterminate",
+        "Повторный запуск и подходящие тесты проходят; development-case не объявляется независимой валидацией или готовым fusion"
       ],
       "evidence": []
     },
@@ -159,7 +216,9 @@
       "id": "F001",
       "title": "Специфицировать анатомический fusion и его пограничные случаи",
       "status": "ready",
-      "depends_on": ["C001"],
+      "depends_on": [
+        "C001"
+      ],
       "acceptance": [
         "Явно описаны правила, пороги, L5–S1, двусторонние и многоуровневые находки",
         "Шкала статьи не приравнивается к RSNA и сохраняется неопределенный исход"
