@@ -18,6 +18,8 @@
 
 Загрузчик работает на Python 3.9+ со стандартной библиотекой. Для декодирования DICOM нужен Python 3.12 с зависимостями из `requirements-data.txt`:
 
+На текущей машине окружение `.venv-data` уже создано в корне репозитория и проверено на выбранном исследовании. Команды ниже позволяют восстановить его.
+
 ```sh
 python3.12 -m venv .venv-data
 .venv-data/bin/python -m pip install -r requirements-data.txt
