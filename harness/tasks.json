@@ -80,13 +80,34 @@
     {
       "id": "L002",
       "title": "Выполнить первый реальный запуск локализации",
-      "status": "ready",
+      "status": "done",
       "depends_on": ["C001", "I001", "L001"],
       "acceptance": [
         "Запуск на доступном разрешенном примере воспроизводится по инструкции",
         "Выход адаптера проверен по контракту и исходным изображениям",
         "Исследовательский SpineNet запускается на CPU в изолированном закрепленном окружении; хеши кода и весов проверяются до загрузки",
         "Геометрия, polygons и связь с исходными кадрами имеют версию; покрытие и overlay проверены без принудительного переименования отсутствующих или нестандартных уровней"
+      ],
+      "evidence": [
+        "docs/localization-run.md; docs/spatial-contract.md; requirements-spinenet.txt",
+        "Fresh isolated CPU SpineNet detect_vb run on RSNA 3139265320: T12,L1,L2,L3,L4,L5,S1; 71 polygons on 15 source frames",
+        "Two fresh runs produce identical localization.json, spatial.json, native.json and overlay.png SHA-256",
+        "Independent source QC: all60 DICOM SHA, 15 source frame geometries, 284 vertices; maximum pixel roundtrip error 8.53e-14",
+        "Source bytes unchanged; no pathological grading, disc ROI, root impact or clinical inference performed",
+        "Full pinned runtime: pip check passes; all125 tests pass; core passes99 and skips26 optional decoder tests; make smoke passes",
+        "Independent code review issues fixed with regressions: Git hidden changes, missing success artifacts, malformed spatial JSON",
+        "External final run: /Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320/localization/l002-001"
+      ]
+    },
+    {
+      "id": "L003",
+      "title": "Привязать дисковые уровни и ROI к исходным кадрам",
+      "status": "todo",
+      "depends_on": ["L002", "D001"],
+      "acceptance": [
+        "Требования к ROI согласованы с проверенными входами модели дисков из D001",
+        "Дисковые уровни привязаны к исходным кадрам с явной геометрией; наличие двух тел не выдается за сегментацию диска",
+        "Для неоднозначной нумерации и недостающих данных сохраняются неопределенность и причина; ROI проверены на исходных изображениях"
       ],
       "evidence": []
     },

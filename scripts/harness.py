@@ -113,7 +113,7 @@ def doctor():
         "repository": str(ROOT),
         "repository_initialized": correct_repo,
         "dependencies": "standard_library_only",
-        "mri_models": "not_configured",
+        "mri_models": "optional_spinenet_requires_explicit_external_paths",
         "inference_ready": False,
     }
 
@@ -147,7 +147,7 @@ def read_fixture(path):
     if fixture["synthetic"] is not True:
         raise ValueError("Smoke accepts synthetic fixtures only")
     if fixture["input_kind"] != "manifest_only" or fixture["series"] != []:
-        raise ValueError("Smoke accepts an empty manifest only; MRI inference is not implemented")
+        raise ValueError("Smoke accepts an empty manifest only; it does not run MRI inference")
     if not isinstance(fixture["case_id"], str) or not re.fullmatch(
         r"[A-Za-z0-9][A-Za-z0-9._-]{0,79}", fixture["case_id"]
     ):

@@ -1,6 +1,7 @@
 .DS_Store
 .venv/
 .venv-data/
+.venv-spinenet/
 venv/
 __pycache__/
 *.py[cod]

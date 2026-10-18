@@ -1,4 +1,4 @@
-"""Validate contracts and verify local DICOM inputs. No models are run."""
+"""Validate MRI inputs and run explicitly requested optional research modules."""
 
 import argparse
 import json
@@ -14,6 +14,16 @@ def main():
     validate = commands.add_parser("validate", help="Validate study and optional module results")
     validate.add_argument("--study", type=Path, required=True)
     validate.add_argument("--result", type=Path, action="append", default=[])
+    validate.add_argument("--spatial", type=Path, help="Validate a localization spatial artifact with its result")
+    localize = commands.add_parser("localize-spinenet", help="Run pinned research localization in a separate Python process")
+    localize.add_argument("--study", type=Path, required=True)
+    localize.add_argument("--source", type=Path, required=True, help="External pinned SpineNet checkout with weights")
+    localize.add_argument("--python", type=Path, required=True, help="Isolated SpineNet Python executable")
+    localize.add_argument("--output", type=Path, required=True, help="New external run directory")
+    localize.add_argument("--series-id")
+    localize.add_argument("--allow-missing-modality", action="store_true")
+    localize.add_argument("--threads", type=int, default=2)
+    localize.add_argument("--timeout", type=int, default=600)
     prepare = commands.add_parser("prepare-rsna", help="Build and verify an external RSNA control manifest")
     prepare.add_argument("--data-root", type=Path, required=True)
     prepare.add_argument("--output", type=Path, required=True, help="External directory for study.json and preflight.json")
@@ -28,11 +38,25 @@ def main():
             study = load_document(args.study)
             results = [load_document(filename) for filename in args.result]
             validate_bundle(study, results)
+            if args.spatial:
+                from .spatial import validate_spatial
+                spatial = load_document(args.spatial)
+                if not isinstance(spatial, dict):
+                    raise ValueError("Spatial artifact must be an object")
+                localization = [result for result in results if result["result_id"] == spatial.get("result_id")]
+                if len(localization) != 1:
+                    raise ValueError("Spatial validation requires its matching module result")
+                validate_spatial(study, localization[0], spatial)
             report = {
                 "ok": True, "operation": "validate", "study_id": study["study_id"],
                 "study_digest": manifest_digest(study), "results_validated": len(results),
                 "synthetic": study["synthetic"], "inference_performed": False,
             }
+        elif args.command == "localize-spinenet":
+            from .spinenet_runner import run_spinenet
+            report = run_spinenet(args.study, args.source, args.python, args.output,
+                                  series_id=args.series_id, allow_missing_modality=args.allow_missing_modality,
+                                  threads=args.threads, timeout=args.timeout)
         else:
             from .control_study import prepare_rsna_study, write_json_external
             from .preflight import verify_study
