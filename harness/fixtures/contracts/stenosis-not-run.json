@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "kind": "module_result",
+  "result_id": "synthetic-subarticular-not-run-v1",
+  "study_id": "synthetic-c001",
+  "synthetic": true,
+  "study_digest": "7975f30cb333f97b27278fecd413f38e0e94ddb974826f6dbd188afafeb84552",
+  "component": "subarticular_stenosis",
+  "producer": {
+    "name": "contract-fixture",
+    "version": "1",
+    "method": "synthetic",
+    "model": null
+  },
+  "assessments": [
+    {
+      "assessment_id": "subarticular-left-not-run",
+      "target": {
+        "level": "L4-L5",
+        "side": "left",
+        "zone": "subarticular"
+      },
+      "status": "not_run",
+      "reason": "Required Axial T2 series is absent.",
+      "observation": null,
+      "image_refs": [],
+      "upstream_refs": [
+        {
+          "result_id": "synthetic-localization-v1",
+          "assessment_id": "loc-l4-l5"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "kind": "module_result",
+  "result_id": "synthetic-localization-v1",
+  "study_id": "synthetic-c001",
+  "synthetic": true,
+  "study_digest": "7975f30cb333f97b27278fecd413f38e0e94ddb974826f6dbd188afafeb84552",
+  "component": "localization",
+  "producer": {
+    "name": "contract-fixture",
+    "version": "1",
+    "method": "synthetic",
+    "model": null
+  },
+  "assessments": [
+    {
+      "assessment_id": "loc-l4-l5",
+      "target": {
+        "level": "L4-L5",
+        "side": "not_applicable",
+        "zone": "disc"
+      },
+      "status": "assessed",
+      "reason": null,
+      "observation": {
+        "label": "L4-L5",
+        "scale_id": "fixture:disc-levels:v1",
+        "measurements": []
+      },
+      "image_refs": [
+        {
+          "series_id": "sag-t2",
+          "image_id": "t2-image-001",
+          "frame_index": 0
+        }
+      ],
+      "upstream_refs": []
+    },
+    {
+      "assessment_id": "loc-ambiguous",
+      "target": {
+        "level": "unknown",
+        "side": "not_applicable",
+        "zone": "disc"
+      },
+      "status": "indeterminate",
+      "reason": "Synthetic ambiguous level; raw candidate is not a confirmed identity.",
+      "observation": {
+        "label": "L5-S1",
+        "scale_id": "fixture:disc-levels:v1",
+        "measurements": []
+      },
+      "image_refs": [
+        {
+          "series_id": "sag-t2",
+          "image_id": "t2-image-001",
+          "frame_index": 0
+        }
+      ],
+      "upstream_refs": []
+    }
+  ]
+}

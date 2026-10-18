@@ -21,13 +21,19 @@
     {
       "id": "C001",
       "title": "Согласовать контракты входов и выходов MRI-модулей",
-      "status": "ready",
+      "status": "done",
       "depends_on": [],
       "acceptance": [
         "Уровень, сторона, зона, источник изображения и неопределенность заданы явно",
         "Пропущенная или не выполненная оценка не представляется отрицательной находкой"
       ],
-      "evidence": []
+      "evidence": [
+        "docs/contracts.md; mri_root_impact/contracts.py",
+        "make check: passed; 36 tests, including 21 contract tests and synthetic contract examples",
+        "make contracts: passed; study and four synthetic module results",
+        "make smoke: passed; no model inference",
+        "docs/progress.md"
+      ]
     },
     {
       "id": "L001",
@@ -76,7 +82,7 @@
     {
       "id": "F001",
       "title": "Специфицировать анатомический fusion и его пограничные случаи",
-      "status": "todo",
+      "status": "ready",
       "depends_on": ["C001"],
       "acceptance": [
         "Явно описаны правила, пороги, L5–S1, двусторонние и многоуровневые находки",

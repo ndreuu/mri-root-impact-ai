@@ -222,6 +222,8 @@ def smoke(fixture_path, output_dir):
 
 
 def run_tests(test_dir):
+    if str(ROOT) not in sys.path:
+        sys.path.insert(0, str(ROOT))
     suite = unittest.TestLoader().discover(str(test_dir))
     count = suite.countTestCases()
     if count == 0:
@@ -246,11 +248,18 @@ def check():
     passed, test_count = run_tests(ROOT / "tests")
     if not passed:
         return {"ok": False, "failed": "unit_tests"}
+    examples = ROOT / "harness/fixtures/contracts"
+    command = [sys.executable, "-m", "mri_root_impact", "validate", "--study", str(examples / "study.json")]
+    for name in ("localization", "stenosis-assessed", "stenosis-indeterminate", "stenosis-not-run"):
+        command.extend(["--result", str(examples / (name + ".json"))])
+    validation = subprocess.run(command, cwd=str(ROOT), capture_output=True, text=True, check=False)
+    if validation.returncode:
+        raise ValueError("Contract examples failed: " + validation.stderr.strip())
     with tempfile.TemporaryDirectory(prefix="mri-harness-check-") as directory:
         smoke(ROOT / "harness/fixtures/synthetic-study.json", directory)
     return {
         "ok": True,
-        "checks": ["environment", "task_registry", "git_candidates", "diff_whitespace", "unit_tests", "synthetic_smoke"],
+        "checks": ["environment", "task_registry", "git_candidates", "diff_whitespace", "unit_tests", "contract_examples", "synthetic_smoke"],
         "tasks": len(tasks),
         "tests_run": test_count,
         "inference_performed": False,

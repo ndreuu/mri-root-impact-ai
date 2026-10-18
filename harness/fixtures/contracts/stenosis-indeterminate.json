@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "kind": "module_result",
+  "result_id": "synthetic-foraminal-indeterminate-v1",
+  "study_id": "synthetic-c001",
+  "synthetic": true,
+  "study_digest": "7975f30cb333f97b27278fecd413f38e0e94ddb974826f6dbd188afafeb84552",
+  "component": "foraminal_stenosis",
+  "producer": {
+    "name": "contract-fixture",
+    "version": "1",
+    "method": "synthetic",
+    "model": null
+  },
+  "assessments": [
+    {
+      "assessment_id": "foraminal-right-ambiguous",
+      "target": {
+        "level": "unknown",
+        "side": "right",
+        "zone": "foraminal"
+      },
+      "status": "indeterminate",
+      "reason": "Level localization is unresolved; native class retained without final interpretation.",
+      "observation": {
+        "label": "moderate",
+        "scale_id": "fixture:stenosis-grade:v1",
+        "measurements": []
+      },
+      "image_refs": [
+        {
+          "series_id": "sag-t1",
+          "image_id": "t1-image-001",
+          "frame_index": 2
+        }
+      ],
+      "upstream_refs": [
+        {
+          "result_id": "synthetic-localization-v1",
+          "assessment_id": "loc-ambiguous"
+        }
+      ]
+    }
+  ]
+}

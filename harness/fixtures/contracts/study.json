@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "kind": "study_manifest",
+  "study_id": "synthetic-c001",
+  "synthetic": true,
+  "series": [
+    {
+      "series_id": "sag-t2",
+      "sequence": "sagittal_t2",
+      "images": [
+        {
+          "image_id": "t2-image-001",
+          "path": "/synthetic/mri-root-impact-ai/t2-001.dcm",
+          "frame_count": 1,
+          "sha256": null
+        }
+      ]
+    },
+    {
+      "series_id": "sag-t1",
+      "sequence": "sagittal_t1",
+      "images": [
+        {
+          "image_id": "t1-image-001",
+          "path": "/synthetic/mri-root-impact-ai/t1-001.dcm",
+          "frame_count": 3,
+          "sha256": null
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Synthetic metadata only; files do not exist. Axial T2 is absent."
+  ]
+}
