@@ -1,0 +1,147 @@
+{
+  "schema_version": "1.0",
+  "kind": "fusion_policy_specification",
+  "policy_id": "mri-root-impact:stenosis-severe-candidate:0.1.0",
+  "policy_version": "0.1.0",
+  "implementation_status": "specified_not_implemented",
+  "purpose": "Stage I research MRI anatomical candidates; no clinical diagnosis",
+  "clinical_validation": "not_performed",
+  "scope": "foraminal_and_subarticular_stenosis_only",
+  "independent_root_impact_accuracy_established": false,
+  "accepted_input": {
+    "schema": "C001 module_result 1.0",
+    "components": ["foraminal_stenosis", "subarticular_stenosis"],
+    "eligible_assessment_status": "assessed",
+    "scale_id": "rsna2024:stenosis-severity:v1",
+    "labels": ["normal_mild", "moderate", "severe"],
+    "sides": ["left", "right"],
+    "review_context_required": true,
+    "missing_review_context": "indeterminate",
+    "existing_indeterminate_source_may_be_promoted": false
+  },
+  "required_review_states": {
+    "anatomical_numbering": "confirmed",
+    "side_assignment": "confirmed",
+    "source_geometry": "verified",
+    "cross_series_registration": ["verified", "not_required_with_evidence"],
+    "diagnostic_adequacy": "sufficient"
+  },
+  "review_binding": {
+    "requires_exact_study_digest": true,
+    "requires_input_file_sha256": true,
+    "requires_target_and_assessment_refs": true,
+    "requires_reviewer_and_evidence_refs": true,
+    "model_agreement_is_confirmation": false,
+    "same_FrameOfReferenceUID_is_registration_proof": false,
+    "unverified_identity_LPS_is_registration_proof": false,
+    "all_model_input_series_must_be_covered": true
+  },
+  "gate_order": [
+    "reject_invalid_policy_bundle_hash_or_probability_consistency",
+    "expand_twenty_expected_level_side_zone_targets",
+    "reject_or_collapse_exact_duplicate_evidence_without_voting",
+    "mark_different_disagreeing_same_target_evidence_indeterminate",
+    "require_assessed_input_known_scale_known_target_and_all_reviews",
+    "require_unique_native_probability_maximum_when_probabilities_exist",
+    "apply_explicit_anatomy_table_then_grade_decision",
+    "attach_optional_herniation_context_without_causal_attribution",
+    "aggregate_only_verified_mappings_preserving_all_branch_evidence"
+  ],
+  "rules": {
+    "foraminal_stenosis": {"rule_id": "F-NFN-01", "zone": "foraminal", "anatomy_column": "foraminal"},
+    "subarticular_stenosis": {"rule_id": "F-SS-01", "zone": "subarticular", "anatomy_column": "subarticular"}
+  },
+  "anatomy": [
+    {"level": "L1-L2", "foraminal": {"root": "L1", "role": "exiting"}, "subarticular": {"root": "L2", "role": "traversing"}},
+    {"level": "L2-L3", "foraminal": {"root": "L2", "role": "exiting"}, "subarticular": {"root": "L3", "role": "traversing"}},
+    {"level": "L3-L4", "foraminal": {"root": "L3", "role": "exiting"}, "subarticular": {"root": "L4", "role": "traversing"}},
+    {"level": "L4-L5", "foraminal": {"root": "L4", "role": "exiting"}, "subarticular": {"root": "L5", "role": "traversing"}},
+    {"level": "L5-S1", "foraminal": {"root": "L5", "role": "exiting"}, "subarticular": {"root": "S1", "role": "traversing"}}
+  ],
+  "grade_decisions_after_gates": {
+    "severe": "potential_impact",
+    "moderate": "indeterminate",
+    "normal_mild": "no_candidate_by_evaluated_criterion"
+  },
+  "threshold": {
+    "type": "native_grade_research_choice",
+    "positive_labels": ["severe"],
+    "borderline_labels": ["moderate"],
+    "numeric_probability_cutoff": null,
+    "herniation_size_cutoff_mm": null,
+    "sung_grade_to_rsna_conversion": null,
+    "moderate_plus_severe_sensitivity_profile_enabled": false,
+    "change_requires_new_policy_version_and_evaluation": true
+  },
+  "native_probabilities": {
+    "optional_for_manual_or_synthetic_assessed_grade": true,
+    "required_for_model_rsna_assessed_grade": true,
+    "model_missing_probabilities": "indeterminate",
+    "partial_or_invalid_probabilities": "invalid_input_error",
+    "when_present_require_all_three": true,
+    "sum_absolute_tolerance": 0.00001,
+    "exact_tied_maximum": "indeterminate",
+    "unique_maximum_must_match_label": true,
+    "clinical_probability_conversion": null,
+    "combine_across_heads_or_models": false
+  },
+  "incomplete_or_unsupported_input": {
+    "missing_target_or_result": "indeterminate",
+    "not_run": "indeterminate",
+    "error": "indeterminate",
+    "indeterminate": "indeterminate",
+    "unknown_scale_label_level_side_or_zone": "indeterminate",
+    "unknown_level_side_or_zone_evidence_storage": "unresolved_native_evidence_separate_from_twenty_canonical_branches",
+    "unreviewed_failed_or_contradictory_gate": "indeterminate",
+    "unsupported_numbering_or_transitional_anatomy": "indeterminate",
+    "named_root_for_unverified_mapping": null,
+    "negative_fallback": false
+  },
+  "duplicate_evidence": {
+    "same_identity_and_same_content": "collapse_without_extra_support",
+    "same_identity_different_content": "invalid_input_error",
+    "different_disagreeing_evidence_same_target": "indeterminate",
+    "different_concordant_evidence_same_target": "retain_refs_without_combining_probabilities",
+    "different_zone_or_level_same_root": "separate_noncontradictory_branches",
+    "choose_max_severity_newest_or_majority": false
+  },
+  "herniation_context": {
+    "required_for_stenosis_candidate": false,
+    "direct_herniation_root_rule_enabled": false,
+    "accepted_native_herniation_scale": null,
+    "currently_available_trained_adapter": false,
+    "not_run_error_missing_or_unknown": "not_evaluated",
+    "unsupported_scale_or_label": "not_evaluated",
+    "null_accepted_scale_disables_all_herniation_interpretation": true,
+    "concordance_requires": ["accepted_assessed_presence", "same_reviewed_level", "same_reviewed_side", "same_anatomical_zone", "verified_spatial_binding"],
+    "concordance_implies_causation": false,
+    "opposite_side_or_other_zone_negates_stenosis": false,
+    "central_disc_unknown_migrated_or_sequestered_maps_automatically": false,
+    "extraforaminal_is_equivalent_to_foraminal_stenosis": false,
+    "size_or_bbox_implies_root_compression": false
+  },
+  "aggregation": {
+    "retain_branch_count": 20,
+    "root_summary_scope": "roots_with_at_least_one_verified_mapping",
+    "group_key": ["root", "side"],
+    "retain_each_level_zone_and_root_role": true,
+    "at_least_one_eligible_positive": "potential_impact",
+    "no_positive_and_any_expected_contributor_unknown": "indeterminate",
+    "all_expected_contributors_no_candidate": "no_candidate_by_evaluated_criterion",
+    "positive_plus_unknown": {"decision": "potential_impact", "coverage": "partial"},
+    "no_verified_mapping": "no_named_root_summary",
+    "select_single_winning_root": false,
+    "sum_or_multiply_probabilities": false,
+    "global_negative_root_clearance": false
+  },
+  "output_specification": {
+    "schema_status": "draft_for_F002_not_C001_compatible",
+    "kind": "mri_root_impact_fusion",
+    "mandatory_provenance": ["policy_id", "policy_version", "policy_sha256", "study_id", "study_digest", "synthetic", "input_result_artifact_sha256", "result_and_assessment_refs", "source_targets_and_grades", "source_producer_and_weights_sha256", "image_refs", "review_context_sha256", "gate_states_and_reason_codes", "rule_id", "coverage", "unresolved_native_evidence"],
+    "branch_decisions": ["potential_impact", "no_candidate_by_evaluated_criterion", "indeterminate"],
+    "candidate_root_only_for_potential_impact": true,
+    "mapped_root_requires_all_mapping_gates": true,
+    "current_control_case_expected": "20_indeterminate_branches_no_named_root_candidates",
+    "diagnosis_of_compression_or_radiculopathy": false
+  }
+}

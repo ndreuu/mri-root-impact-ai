@@ -1,0 +1,1002 @@
+{
+  "schema_version": "1.0",
+  "kind": "fusion_decision_vectors",
+  "synthetic": true,
+  "policy_id": "mri-root-impact:stenosis-severe-candidate:0.1.0",
+  "execution_status": "specified_not_executed",
+  "encoding": "abstract test vectors; not C001 module results or completed fusion outputs",
+  "defaults": {
+    "synthetic": true,
+    "producer_method": "synthetic",
+    "status": "assessed",
+    "scale_id": "rsna2024:stenosis-severity:v1",
+    "reviews": {
+      "anatomical_numbering": "confirmed",
+      "side_assignment": "confirmed",
+      "source_geometry": "verified",
+      "cross_series_registration": "verified",
+      "diagnostic_adequacy": "sufficient"
+    },
+    "herniation_context": "not_evaluated",
+    "probabilities": null
+  },
+  "expansion_rules": [
+    "Every omitted expected target is indeterminate; output always has20canonical branch rows.",
+    "Case review overrides merge into the synthetic default states; review_context=null means no context.",
+    "No real reviewer or registration evidence is asserted by these fictitious defaults.",
+    "F002 must construct and validate genuine synthetic C001/review fixtures before evaluating these vectors.",
+    "The expected branch field describes the supplied target; other omitted expected rows remain indeterminate.",
+    "Unknown level/side/zone evidence is stored separately in unresolved_native_evidence, never as an extra canonical branch."
+  ],
+  "cases": [
+    {
+      "case_id": "F001-01",
+      "description": "L4-L5 left subarticular maps to traversing L5",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "severe"
+          }
+        ]
+      },
+      "expected": {
+        "branch": {
+          "decision": "potential_impact",
+          "candidate_root": {
+            "root": "L5",
+            "role": "traversing",
+            "side": "left"
+          }
+        },
+        "root_summary": {
+          "root": "L5",
+          "side": "left",
+          "decision": "potential_impact",
+          "coverage": "partial"
+        }
+      }
+    },
+    {
+      "case_id": "F001-02",
+      "description": "L4-L5 left foraminal maps to exiting L4",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "foraminal",
+            "label": "severe"
+          }
+        ]
+      },
+      "expected": {
+        "branch": {
+          "decision": "potential_impact",
+          "candidate_root": {
+            "root": "L4",
+            "role": "exiting",
+            "side": "left"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "F001-03",
+      "description": "L5-S1 right subarticular explicitly maps to S1, never L6",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L5-S1",
+            "side": "right",
+            "zone": "subarticular",
+            "label": "severe"
+          }
+        ]
+      },
+      "expected": {
+        "branch": {
+          "decision": "potential_impact",
+          "candidate_root": {
+            "root": "S1",
+            "role": "traversing",
+            "side": "right"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "F001-04",
+      "description": "L5-S1 left foraminal maps to exiting L5",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L5-S1",
+            "side": "left",
+            "zone": "foraminal",
+            "label": "severe"
+          }
+        ]
+      },
+      "expected": {
+        "branch": {
+          "decision": "potential_impact",
+          "candidate_root": {
+            "root": "L5",
+            "role": "exiting",
+            "side": "left"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "F001-05",
+      "description": "Bilateral findings retain two separate sides",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "severe"
+          },
+          {
+            "level": "L4-L5",
+            "side": "right",
+            "zone": "subarticular",
+            "label": "severe"
+          }
+        ]
+      },
+      "expected": {
+        "candidate_roots": [
+          {
+            "root": "L5",
+            "role": "traversing",
+            "side": "left"
+          },
+          {
+            "root": "L5",
+            "role": "traversing",
+            "side": "right"
+          }
+        ],
+        "winning_root": null
+      }
+    },
+    {
+      "case_id": "F001-06",
+      "description": "Multilevel findings preserve both candidates",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L2-L3",
+            "side": "left",
+            "zone": "foraminal",
+            "label": "severe"
+          },
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "severe"
+          }
+        ]
+      },
+      "expected": {
+        "candidate_roots": [
+          {
+            "root": "L2",
+            "role": "exiting",
+            "side": "left"
+          },
+          {
+            "root": "L5",
+            "role": "traversing",
+            "side": "left"
+          }
+        ],
+        "winning_root": null
+      }
+    },
+    {
+      "case_id": "F001-07",
+      "description": "Same L5 has two distinct sites of potential impact",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "severe"
+          },
+          {
+            "level": "L5-S1",
+            "side": "left",
+            "zone": "foraminal",
+            "label": "severe"
+          }
+        ]
+      },
+      "expected": {
+        "root_summary": {
+          "root": "L5",
+          "side": "left",
+          "decision": "potential_impact",
+          "coverage": "complete_within_policy",
+          "supporting_branches": 2
+        },
+        "combine_probabilities": false
+      }
+    },
+    {
+      "case_id": "F001-08",
+      "description": "Different zones of same root are not conflicting evidence",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "severe"
+          },
+          {
+            "level": "L5-S1",
+            "side": "left",
+            "zone": "foraminal",
+            "label": "normal_mild"
+          }
+        ]
+      },
+      "expected": {
+        "root_summary": {
+          "root": "L5",
+          "side": "left",
+          "decision": "potential_impact",
+          "coverage": "complete_within_policy"
+        },
+        "same_target_conflict": false
+      }
+    },
+    {
+      "case_id": "F001-09",
+      "description": "Moderate remains indeterminate under the working policy",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "moderate"
+          }
+        ]
+      },
+      "expected": {
+        "branch": {
+          "decision": "indeterminate",
+          "candidate_root": null
+        },
+        "reason": "moderate_threshold_unestablished"
+      }
+    },
+    {
+      "case_id": "F001-10",
+      "description": "Normal/Mild is only no candidate by this criterion",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "normal_mild"
+          }
+        ]
+      },
+      "expected": {
+        "branch": {
+          "decision": "no_candidate_by_evaluated_criterion",
+          "candidate_root": null
+        },
+        "global_root_clearance": false
+      }
+    },
+    {
+      "case_id": "F001-11",
+      "description": "Source not_run never becomes negative",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": null,
+            "status": "not_run"
+          }
+        ]
+      },
+      "expected": {
+        "branch": {
+          "decision": "indeterminate",
+          "candidate_root": null
+        },
+        "mapped_root": null,
+        "reason": "source_not_run"
+      }
+    },
+    {
+      "case_id": "F001-12",
+      "description": "Source error never becomes negative",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": null,
+            "status": "error"
+          }
+        ]
+      },
+      "expected": {
+        "branch": {
+          "decision": "indeterminate",
+          "candidate_root": null
+        },
+        "mapped_root": null,
+        "reason": "source_error"
+      }
+    },
+    {
+      "case_id": "F001-13",
+      "description": "Source indeterminate never becomes negative",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "severe",
+            "status": "indeterminate"
+          }
+        ]
+      },
+      "expected": {
+        "branch": {
+          "decision": "indeterminate",
+          "candidate_root": null
+        },
+        "mapped_root": null,
+        "reason": "source_indeterminate"
+      }
+    },
+    {
+      "case_id": "F001-14",
+      "description": "L003 agreement cannot confirm anatomical numbering",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "severe"
+          }
+        ],
+        "reviews": {
+          "anatomical_numbering": "unreviewed"
+        },
+        "localizer_comparison": "native_agreement"
+      },
+      "expected": {
+        "branch": {
+          "decision": "indeterminate",
+          "candidate_root": null
+        },
+        "mapped_root": null
+      }
+    },
+    {
+      "case_id": "F001-15",
+      "description": "Research identity-LPS opt-in cannot confirm registration",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "severe"
+          }
+        ],
+        "reviews": {
+          "cross_series_registration": "unreviewed"
+        },
+        "allow_unverified_registration": true
+      },
+      "expected": {
+        "branch": {
+          "decision": "indeterminate",
+          "candidate_root": null
+        },
+        "mapped_root": null
+      }
+    },
+    {
+      "case_id": "F001-16",
+      "description": "Same declared Frame UID without registration evidence is insufficient",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "severe"
+          }
+        ],
+        "reviews": {
+          "cross_series_registration": "unreviewed"
+        },
+        "same_FrameOfReferenceUID": true
+      },
+      "expected": {
+        "branch": {
+          "decision": "indeterminate",
+          "candidate_root": null
+        },
+        "mapped_root": null
+      }
+    },
+    {
+      "case_id": "F001-17",
+      "description": "Missing review context blocks named root inference",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "severe"
+          }
+        ],
+        "review_context": null
+      },
+      "expected": {
+        "branch": {
+          "decision": "indeterminate",
+          "candidate_root": null
+        },
+        "mapped_root": null
+      }
+    },
+    {
+      "case_id": "F001-18",
+      "description": "Unknown side is not expanded to bilateral",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "unknown",
+            "zone": "subarticular",
+            "label": "severe",
+            "status": "indeterminate"
+          }
+        ]
+      },
+      "expected": {
+        "total_branch_count": 20,
+        "indeterminate_branch_count": 20,
+        "unresolved_native_evidence_count": 1,
+        "named_candidate_count": 0,
+        "root_summaries": []
+      }
+    },
+    {
+      "case_id": "F001-19",
+      "description": "Unknown severity scale is not converted by label spelling",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "severe",
+            "scale_id": "fixture:unaccepted-scale:v1"
+          }
+        ]
+      },
+      "expected": {
+        "branch": {
+          "decision": "indeterminate",
+          "candidate_root": null
+        },
+        "reason": "unsupported_scale"
+      }
+    },
+    {
+      "case_id": "F001-20",
+      "description": "Historical grade3 is not translated into RSNA Severe",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "grade_3"
+          }
+        ]
+      },
+      "expected": {
+        "branch": {
+          "decision": "indeterminate",
+          "candidate_root": null
+        },
+        "reason": "unsupported_label"
+      }
+    },
+    {
+      "case_id": "F001-21",
+      "description": "Exact duplicate evidence is counted once",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "severe",
+            "evidence_key": "A"
+          },
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "severe",
+            "evidence_key": "A"
+          }
+        ]
+      },
+      "expected": {
+        "branch": {
+          "decision": "potential_impact",
+          "candidate_root": {
+            "root": "L5",
+            "role": "traversing",
+            "side": "left"
+          }
+        },
+        "unique_supporting_evidence_count": 1
+      }
+    },
+    {
+      "case_id": "F001-22",
+      "description": "Same evidence identity with changed contents is invalid",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "severe",
+            "evidence_key": "A"
+          },
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "normal_mild",
+            "evidence_key": "A"
+          }
+        ]
+      },
+      "expected": {
+        "operation": "invalid_input_error",
+        "successful_fusion_report": false
+      }
+    },
+    {
+      "case_id": "F001-23",
+      "description": "Different disagreeing sources of the same target remain unresolved",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "severe",
+            "evidence_key": "A"
+          },
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "moderate",
+            "evidence_key": "B"
+          }
+        ]
+      },
+      "expected": {
+        "branch": {
+          "decision": "indeterminate",
+          "candidate_root": null
+        },
+        "reason": "same_target_evidence_conflict",
+        "choose_highest_grade": false
+      }
+    },
+    {
+      "case_id": "F001-24",
+      "description": "Tied native maximum is indeterminate",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "moderate",
+            "probabilities": [
+              0.2,
+              0.4,
+              0.4
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "branch": {
+          "decision": "indeterminate",
+          "candidate_root": null
+        },
+        "reason": "tied_probability_maximum"
+      }
+    },
+    {
+      "case_id": "F001-25",
+      "description": "Unique native maximum must agree with the claimed label",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "severe",
+            "probabilities": [
+              0.8,
+              0.1,
+              0.1
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "operation": "invalid_input_error",
+        "successful_fusion_report": false
+      }
+    },
+    {
+      "case_id": "F001-26",
+      "description": "Input hash mismatch aborts, without a normal result",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "severe"
+          }
+        ],
+        "input_sha256_matches": false
+      },
+      "expected": {
+        "operation": "invalid_input_error",
+        "successful_fusion_report": false
+      }
+    },
+    {
+      "case_id": "F001-27",
+      "description": "Empty but valid evidence preserves all20 unknown targets",
+      "inputs": {
+        "branches": []
+      },
+      "expected": {
+        "total_branch_count": 20,
+        "indeterminate_branch_count": 20,
+        "named_candidate_count": 0,
+        "root_summaries": []
+      }
+    },
+    {
+      "case_id": "F001-28",
+      "description": "Complete normal_mild inputs still do not establish global root clearance",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L1-L2",
+            "side": "left",
+            "zone": "foraminal",
+            "label": "normal_mild"
+          },
+          {
+            "level": "L1-L2",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "normal_mild"
+          },
+          {
+            "level": "L1-L2",
+            "side": "right",
+            "zone": "foraminal",
+            "label": "normal_mild"
+          },
+          {
+            "level": "L1-L2",
+            "side": "right",
+            "zone": "subarticular",
+            "label": "normal_mild"
+          },
+          {
+            "level": "L2-L3",
+            "side": "left",
+            "zone": "foraminal",
+            "label": "normal_mild"
+          },
+          {
+            "level": "L2-L3",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "normal_mild"
+          },
+          {
+            "level": "L2-L3",
+            "side": "right",
+            "zone": "foraminal",
+            "label": "normal_mild"
+          },
+          {
+            "level": "L2-L3",
+            "side": "right",
+            "zone": "subarticular",
+            "label": "normal_mild"
+          },
+          {
+            "level": "L3-L4",
+            "side": "left",
+            "zone": "foraminal",
+            "label": "normal_mild"
+          },
+          {
+            "level": "L3-L4",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "normal_mild"
+          },
+          {
+            "level": "L3-L4",
+            "side": "right",
+            "zone": "foraminal",
+            "label": "normal_mild"
+          },
+          {
+            "level": "L3-L4",
+            "side": "right",
+            "zone": "subarticular",
+            "label": "normal_mild"
+          },
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "foraminal",
+            "label": "normal_mild"
+          },
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "normal_mild"
+          },
+          {
+            "level": "L4-L5",
+            "side": "right",
+            "zone": "foraminal",
+            "label": "normal_mild"
+          },
+          {
+            "level": "L4-L5",
+            "side": "right",
+            "zone": "subarticular",
+            "label": "normal_mild"
+          },
+          {
+            "level": "L5-S1",
+            "side": "left",
+            "zone": "foraminal",
+            "label": "normal_mild"
+          },
+          {
+            "level": "L5-S1",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "normal_mild"
+          },
+          {
+            "level": "L5-S1",
+            "side": "right",
+            "zone": "foraminal",
+            "label": "normal_mild"
+          },
+          {
+            "level": "L5-S1",
+            "side": "right",
+            "zone": "subarticular",
+            "label": "normal_mild"
+          }
+        ]
+      },
+      "expected": {
+        "total_branch_count": 20,
+        "no_candidate_branch_count": 20,
+        "named_candidate_count": 0,
+        "root_summary_count": 12,
+        "global_root_clearance": false,
+        "herniation_context": "not_evaluated"
+      }
+    },
+    {
+      "case_id": "F001-29",
+      "description": "Unavailable herniation branch does not veto a valid stenosis candidate",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "severe"
+          }
+        ],
+        "disc_evidence": {
+          "status": "not_run",
+          "reason": "trained_adapter_unavailable"
+        }
+      },
+      "expected": {
+        "branch": {
+          "decision": "potential_impact",
+          "candidate_root": {
+            "root": "L5",
+            "role": "traversing",
+            "side": "left"
+          }
+        },
+        "herniation_context": "not_evaluated",
+        "etiology": "unassigned"
+      }
+    },
+    {
+      "case_id": "F001-30",
+      "description": "Opposite-side unaccepted disc evidence is retained without vetoing stenosis",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "severe"
+          }
+        ],
+        "disc_evidence": {
+          "status": "assessed",
+          "side": "right",
+          "zone": "subarticular",
+          "level": "L4-L5",
+          "scale_id": "fixture:unaccepted-disc-scale:v1",
+          "label": "present"
+        }
+      },
+      "expected": {
+        "branch": {
+          "decision": "potential_impact",
+          "candidate_root": {
+            "root": "L5",
+            "role": "traversing",
+            "side": "left"
+          }
+        },
+        "herniation_context": "not_evaluated",
+        "etiology": "unassigned"
+      }
+    },
+    {
+      "case_id": "F001-31",
+      "description": "Foraminal normal_mild does not exclude an extraforaminal process",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "foraminal",
+            "label": "normal_mild"
+          }
+        ],
+        "disc_evidence": {
+          "status": "assessed",
+          "zone": "extraforaminal",
+          "side": "left",
+          "level": "L4-L5",
+          "scale_id": "fixture:unaccepted-disc-scale:v1",
+          "label": "present"
+        }
+      },
+      "expected": {
+        "branch": {
+          "decision": "no_candidate_by_evaluated_criterion",
+          "candidate_root": null
+        },
+        "herniation_context": "not_evaluated",
+        "global_root_clearance": false
+      }
+    },
+    {
+      "case_id": "F001-32",
+      "description": "Central or migrated herniation does not become a root-specific prediction",
+      "inputs": {
+        "branches": [],
+        "disc_evidence": {
+          "zone": "central",
+          "migration": "unknown",
+          "presence": "unknown"
+        }
+      },
+      "expected": {
+        "total_branch_count": 20,
+        "indeterminate_branch_count": 20,
+        "named_candidate_count": 0,
+        "herniation_context": "not_evaluated"
+      }
+    },
+    {
+      "case_id": "F001-33",
+      "description": "Unsupported native anatomy is retained without renumbering",
+      "inputs": {
+        "branches": [
+          {
+            "level": "unknown",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "severe",
+            "status": "indeterminate",
+            "native_level": "T12-L1"
+          }
+        ]
+      },
+      "expected": {
+        "total_branch_count": 20,
+        "indeterminate_branch_count": 20,
+        "unresolved_native_evidence_count": 1,
+        "named_candidate_count": 0,
+        "root_summaries": []
+      }
+    },
+    {
+      "case_id": "F001-34",
+      "description": "Model RSNA with absent probabilities remains insufficient, not negative",
+      "inputs": {
+        "branches": [
+          {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular",
+            "label": "severe",
+            "probabilities": null
+          }
+        ],
+        "producer_method": "model"
+      },
+      "expected": {
+        "branch": {
+          "decision": "indeterminate",
+          "candidate_root": null
+        },
+        "reason": "native_probabilities_missing",
+        "successful_fusion_report": true
+      }
+    }
+  ]
+}

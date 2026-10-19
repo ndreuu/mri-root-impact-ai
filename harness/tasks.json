@@ -245,13 +245,41 @@
     {
       "id": "F001",
       "title": "Специфицировать анатомический fusion и его пограничные случаи",
-      "status": "ready",
+      "status": "done",
       "depends_on": [
         "C001"
       ],
       "acceptance": [
         "Явно описаны правила, пороги, L5–S1, двусторонние и многоуровневые находки",
         "Шкала статьи не приравнивается к RSNA и сохраняется неопределенный исход"
+      ],
+      "evidence": [
+        "docs/fusion-spec.md; harness/fusion-policy.json; policy mri-root-impact:stenosis-severe-candidate:0.1.0; specified_not_implemented",
+        "Explicit all5disc/zone root mappings including L5-S1=>L5/S1; severe-only research threshold, moderate indeterminate, normal_mild scope-limited no candidate",
+        "Primary Sung2017/LumbarDISC2026/anatomy/nomenclature checked; RSNA grades not converted into Sung scale, confirmed compression or clinical radiculopathy",
+        "34abstract synthetic decision vectors specified_not_executed; no real fusion/MRI run, clinical review, C001 or MRI adapter changes",
+        "Unresolved C001/review gates block named root candidates; L003 agreement and unverified identity-LPS are not confirmation",
+        "Multilevel/bilateral, distinct sites for sameL5, partial coverage, duplicates/conflicts, unknown targets and unsupported herniation scale specified",
+        "Independent medical-evidence and contract reviews pass after unknown-target storage and unsupported-disc-scale clarifications",
+        "Strict JSON/policy IDs/table coverage/34unique vectors checked; existing245tests pass in RSNA runtime; core200pass45skip; make smoke passes"
+      ]
+    },
+    {
+      "id": "F002",
+      "title": "Реализовать исполняемый MRI fusion и проверку неопределенности",
+      "status": "ready",
+      "depends_on": [
+        "C001",
+        "F001",
+        "S003",
+        "L003"
+      ],
+      "acceptance": [
+        "Policy0.1.0, отдельный review/output contract и CLI реализованы без изменения смысла C001; invalid input отличается от valid incomplete evidence",
+        "Сохранены20канонических ветвей и отдельно unknown-target evidence; именованные root candidates требуют assessed источников и всех review gates",
+        "34абстрактных F001 сценария превращены в настоящие synthetic C001/review fixtures и выполнены engine; проверены роли/стороны/агрегация/противоречия/пропуски",
+        "Frozen S003/L003 обработаны без нового MRI inference: все20ветвейindeterminate, именованных кандидатовнет; результат вне Git с policy/source hashes и воспроизводимой командой",
+        "Исходные C001 и MRI run artifacts не переписываются; строгие проверки source hashes сохраняются, обходы подтверждений не добавляются"
       ],
       "evidence": []
     },
