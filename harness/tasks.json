@@ -108,7 +108,7 @@
     {
       "id": "L003",
       "title": "Сопоставить уровни RSNA / SpineNet и проверить source-frame ROI",
-      "status": "ready",
+      "status": "done",
       "depends_on": [
         "L002",
         "D001",
@@ -121,7 +121,17 @@
         "Нумерация SpineNet и неподтвержденная регистрация не становятся достоверными уровнями; неоднозначность сохраняется явно",
         "Геометрическая подготовка не объявляется LDH inference и не зависит от наличия generic COCO весов"
       ],
-      "evidence": []
+      "evidence": [
+        "scripts/compare_localizers.py; docs/level-crosscheck.md; no new MRI/model inference or source C001 changes",
+        "Both frozen L002/S003 worker/run/native/spatial/C001 bundles validated; all60DICOM SHA/header metadata and15SpineNet frames checked",
+        "Exact SagT2 source-frame join despite reversed slice sorting; area-weighted centroids ordered independently along SI; all5native disc/neighbor pairs agree",
+        "All comparisons retain status indeterminate; numbering_confirmed=false,registration_confirmed=false,root_impacts=null; RSNA cross-series research assumption preserved",
+        "10side-specific axial links,100sampled views with repeats,25unique source frames and per-frame IOP; sagittal polygons never become axial crops",
+        "Two fresh runs identical crosscheck.json,overlay.png and6source overlays; montage viewed; independent arithmetic/code review found no blockers",
+        "24new stdlib tests pass including one-disc shift, source-frame identity, missing/duplicate/boundary/degenerate geometry and protected outputs",
+        "make check passes245tests in RSNA runtime; core200pass45optional skips; make smoke passes",
+        "External final run:/Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320/geometry/l003-001; nextF001 specifies MRI fusion"
+      ]
     },
     {
       "id": "D001",
