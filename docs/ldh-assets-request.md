@@ -2,7 +2,7 @@
 
 Статус: **черновик, не отправлен**. Контакты сверены 19 октября 2026 года в разделе [Corresponding authors первичной статьи](https://link.springer.com/article/10.1007/s11547-025-01996-y#author-information): Hai Zhong — `18753107255@163.com`; Shi-Qing Feng — `shiqingfeng@sdu.edu.cn`.
 
-Рекомендуемый первый адресат — Hai Zhong; второй указанный авторами контакт — Shi-Qing Feng. До отправки нужно добавить настоящие имя и подпись отправителя, при наличии — организацию. Принадлежность к университету и разрешения на клиническую работу не предполагаются. Внешних сообщений и обращений через GitHub не было.
+Рекомендуемый первый адресат — Hai Zhong; второй указанный авторами контакт — Shi-Qing Feng. Пользователь предоставил подпись: Andrew Oleynikov, ITMO University. Текст письма ниже соответствует предоставленной пользователем версии; внешних сообщений и обращений через GitHub не было.
 
 Subject: Request for LDH-DL-MODEL trained weights and annotated data for research
 
@@ -25,5 +25,6 @@ Thank you for your time and assistance.
 
 Kind regards,
 
-[Sender's full name]
-[Affiliation, if applicable]
+Andrew Oleynikov
+
+ITMO University
