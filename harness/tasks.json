@@ -107,13 +107,15 @@
     },
     {
       "id": "L003",
-      "title": "Привязать дисковые уровни и ROI к исходным кадрам",
+      "title": "Сопоставить уровни RSNA / SpineNet и проверить source-frame ROI",
       "status": "ready",
       "depends_on": [
         "L002",
-        "D001"
+        "D001",
+        "S003"
       ],
       "acceptance": [
+        "Native дисковые уровни RSNA сопоставлены с соседними vertebral polygons SpineNet; расхождения и неподтвержденность номеров сохранены явно",
         "Для аксиальной ветки определены source-frame ROI/связи уровней; сагиттальные polygons не копируются в Axial T2 как готовый crop",
         "Отдельные аксиальные ориентации, IOP/IPP и spacing сохраняются; привязка к дисковым уровням проверена на исходных кадрах",
         "Нумерация SpineNet и неподтвержденная регистрация не становятся достоверными уровнями; неоднозначность сохраняется явно",
@@ -205,7 +207,7 @@
     {
       "id": "S003",
       "title": "Первый воспроизводимый inference стенозов RSNA с автоматическими ROI",
-      "status": "ready",
+      "status": "done",
       "depends_on": [
         "C001",
         "I001",
@@ -218,7 +220,17 @@
         "Созданы C001 результаты для двадцати целевых сочетаний; неподтвержденная нумерация/геометрия сохраняется indeterminate",
         "Повторный запуск и подходящие тесты проходят; development-case не объявляется независимой валидацией или готовым fusion"
       ],
-      "evidence": []
+      "evidence": [
+        "docs/rsna-run.md; stenosis-rsna isolated CPU worker; no train grade/coordinate CSV input",
+        "Real control MRI:60DICOM,15keypoints,210ROIs,10classifier calls and20native stenosis grades; three C001 outputs validated",
+        "Different declared FrameOfReferenceUIDs preserved: explicit research unverified identity-LPS flag required; all25C001 assessments indeterminate; root_impacts=null",
+        "Strict run:2sagittal keypoint calls,0classifier calls,20stenosis not_run with observation=null; absent UID also blocks cross-series assignment by default",
+        "Two fresh runs identical for all7required JSON/PNG artifacts and60source overlays; CPU inference4.76/4.52seconds with2threads",
+        "Independent source QC:60DICOM SHA/header checks,210ROI footprints,15keypoints; corner error0mm,pixel error8.53e-14; source bytes unchanged; overlays viewed",
+        "make check passes all221tests in RSNA runtime; core176pass45optional skips; make smoke and C001 CLI pass",
+        "Review gaps fixed with regressions: actual-call counters, missing UID, level-plane/FOV source binding, failure source refs and narrow right-side crop",
+        "External final run:/Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320/stenosis/s003-001; technical-qc.json and reproducibility.json"
+      ]
     },
     {
       "id": "F001",

@@ -113,7 +113,7 @@ def doctor():
         "repository": str(ROOT),
         "repository_initialized": correct_repo,
         "dependencies": "standard_library_only",
-        "mri_models": "optional_spinenet_requires_explicit_external_paths",
+        "mri_models": "optional_spinenet_and_rsna_require_explicit_external_paths",
         "inference_ready": False,
     }
 

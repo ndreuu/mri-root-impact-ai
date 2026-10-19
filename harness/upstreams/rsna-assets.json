@@ -137,6 +137,7 @@
       ]
     }
   },
+  "verification_scope": "S002 asset acquisition and synthetic CPU compatibility probe; S003 MRI execution evidence is recorded separately in docs/rsna-run.md",
   "synthetic_probe_only": true,
   "mri_inference_performed": false,
   "configuration": "one classifier fold1 and one sagittal/axial keypoint fold0; reduced research configuration; full-ensemble performance not established",

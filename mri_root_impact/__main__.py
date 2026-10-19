@@ -24,6 +24,13 @@ def main():
     localize.add_argument("--allow-missing-modality", action="store_true")
     localize.add_argument("--threads", type=int, default=2)
     localize.add_argument("--timeout", type=int, default=600)
+    stenosis = commands.add_parser("stenosis-rsna", help="Run verified RSNA MRI inference in a separate CPU process")
+    for name in ("study", "source", "weights", "python", "output"):
+        stenosis.add_argument("--" + name, type=Path, required=True)
+    stenosis.add_argument("--threads", type=int, default=2)
+    stenosis.add_argument("--timeout", type=int, default=600)
+    stenosis.add_argument("--allow-missing-modality", action="store_true")
+    stenosis.add_argument("--allow-unverified-registration", action="store_true", help="Explicit research-only identity-LPS assumption for differing FrameOfReferenceUIDs; results remain indeterminate")
     prepare = commands.add_parser("prepare-rsna", help="Build and verify an external RSNA control manifest")
     prepare.add_argument("--data-root", type=Path, required=True)
     prepare.add_argument("--output", type=Path, required=True, help="External directory for study.json and preflight.json")
@@ -57,6 +64,12 @@ def main():
             report = run_spinenet(args.study, args.source, args.python, args.output,
                                   series_id=args.series_id, allow_missing_modality=args.allow_missing_modality,
                                   threads=args.threads, timeout=args.timeout)
+        elif args.command == "stenosis-rsna":
+            from .rsna_runner import run_rsna
+            report = run_rsna(args.study, args.source, args.weights, args.python, args.output,
+                              allow_missing_modality=args.allow_missing_modality,
+                              allow_unverified_registration=args.allow_unverified_registration,
+                              threads=args.threads, timeout=args.timeout)
         else:
             from .control_study import prepare_rsna_study, write_json_external
             from .preflight import verify_study
