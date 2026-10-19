@@ -142,6 +142,18 @@ F001 выполнен. Закреплены [fusion-spec](fusion-spec.md), ве�
 
 Проверки: strict JSON, полная анатомическая таблица, policy IDs и34уникальных synthetic vectors согласованы. `make check` проходит все245существующих тестов в RSNA runtime; corePython3.9 —200pass/45optionalskip. `make smoke` проходит. Новые unit tests для документации не добавлялись;34сценария будут выполнены при реализации F002. Следующий F002 создаст strict contract/engine/CLI и отчет на frozen MRI-входах с сохранением их неопределенности. D002 и независимая оценка E001 остаются отдельными задачами.
 
+### F002 — исполняемый MRI fusion
+
+F002 выполнен. Новый пакет `mri_fusion` реализует pinned policy 0.1.0, отдельные strict review/output contracts 1.0, deterministic engine и `scripts/fuse_mri.py`. C001, `mri_root_impact/*.py` и сохраненные MRI-артефакты не менялись; исторические policy/vectors status-поля сохранены. Review связан с точными artifact SHA, source assessment и покрытием всех транзитивных входных серий; он не повышает `indeterminate` в `assessed`.
+
+Все 34 F001 сценария преобразованы в настоящие synthetic C001/review fixtures и выполнены engine. Проверены явная L5–S1 таблица, стороны, многоуровневость, разные основания одного L5, partial coverage, unknown target, дубликаты и конфликты, native probabilities и непринятая шкала грыж. Всего добавлено 92 проверки: 42 vector/regression, 26 contract и 24 runner tests. Независимый review помог закрыть смешение JSON true/1 при дедупликации, запись внутри каталогов источников, необработанные scalar/list metadata и смену frozen JSON между проверкой и связыванием SHA.
+
+На frozen L002/S003/L003 сохранен реальный fusion-отчет: **20 `indeterminate`, 0 именованных кандидатов, 0 отрицательных ветвей**, без нового MRI inference. Все 20 native observations (16 Normal/Mild и 4 Moderate), target, status, reason, image/upstream refs сохранены точно. Все ветви имеют `mapped_root=null`, `candidate_root=null`; root summaries пусты. Причины сохраняются совместно: source_indeterminate, numbering_unreviewed, registration_unverified, review_context_missing и herniation_not_evaluated. Грыжа не оценена, причинность не приписана, global clearance и клинический диагноз не сформированы.
+
+Постоянный результат: `/Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320/fusion/f002-001` (`fusion.json`, `report.md`, `run.json`). Два свежих запуска побайтно совпали: SHA fusion `7a175e03af51c178987bfdb2567e2ddc9a43b796fb5c5fe863fb2fc42f65dded`, report `e52bac9a5cf3a6ffa890cee0e1b90c5e8149fccdea64d64ece8c1f1eef63188c`. Повторная `--verify-only` пересчитала отчет без записи; проверены 161 входной файл, включая все 60 DICOM, и SHA 26 файлов кода. Инструкция и пределы review contract — [fusion-run.md](fusion-run.md).
+
+`harness check` проходит все 337 тестов в RSNA runtime; core Python 3.9 — 292 pass / 45 optional skips. Отдельный `harness smoke` проходит. Проверки подтверждают корректность правил, связность и сохранность источников; точность определения корешков на независимых данных не оценивалась. Следующий E001 определит протокол технической оценки; D002 и разрешение реальной анатомической неопределенности остаются отдельной работой. Stage I целиком не завершен.
+
 ## Очередь
 
 Источник статусов и зависимостей — [harness/tasks.json](../harness/tasks.json); текущее состояние выводит `python3 scripts/harness.py status`.
@@ -160,7 +172,7 @@ F001 выполнен. Закреплены [fusion-spec](fusion-spec.md), ве�
 | S002 | Ограниченный RSNA-комплект и CPU-окружение | done | S001 |
 | S003 | Первый inference стенозов с автоматическими ROI | done | C001, I001, S002 |
 | F001 | Спецификация MRI fusion | done | C001 |
-| F002 | Исполняемый MRI fusion и проверка неопределенности | ready | C001, F001, S003, L003 |
+| F002 | Исполняемый MRI fusion и проверка неопределенности | done | C001, F001, S003, L003 |
 | E001 | План технической оценки на доступной разметке | ready | — |
 
-Следующий шаг — F002: реализовать policy0.1.0, строгий review/output contract и проверить34сценария. Реальный S003/L003 должен дать неопределенный исход без повышения source статусов. D002 закрывает пробел LDH-артефактов, E001 — протокол независимой оценки. В новых записях указываем выполненное изменение, проверку и её результат, затем следующий шаг.
+Следующий шаг — E001: определить протокол независимой технической оценки компонентов и fusion. D002 закрывает пробел LDH-артефактов; фактический анатомический review контрольного исследования не выполнен. В новых записях указываем выполненное изменение, проверку и её результат, затем следующий шаг.

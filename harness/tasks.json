@@ -267,7 +267,7 @@
     {
       "id": "F002",
       "title": "Реализовать исполняемый MRI fusion и проверку неопределенности",
-      "status": "ready",
+      "status": "done",
       "depends_on": [
         "C001",
         "F001",
@@ -281,7 +281,15 @@
         "Frozen S003/L003 обработаны без нового MRI inference: все20ветвейindeterminate, именованных кандидатовнет; результат вне Git с policy/source hashes и воспроизводимой командой",
         "Исходные C001 и MRI run artifacts не переписываются; строгие проверки source hashes сохраняются, обходы подтверждений не добавляются"
       ],
-      "evidence": []
+      "evidence": [
+        "mri_fusion/contracts.py,engine.py,runner.py; scripts/fuse_mri.py; docs/fusion-run.md; separate strict review/output1.0 without C001 or historical MRI package changes",
+        "Pinned F001 policy0.1.0 SHA c3e574a12603a0a438eb1db50b9ce21b47b53fcae9b5d2900bbbfd3cc8744fed; 20canonicalbranches, explicit L5-S1 anatomy, source/review/probability gates and separate unknown-target evidence",
+        "All34F001 vectors executed as synthetic C001/review bundles; 92new tests cover vectors/regressions, contracts and runner including duplicates, conflicts, partial coverage, strict SHA, source protection and read-only verification",
+        "Frozen L002/S003/L003 fused without new MRI inference:20indeterminate,0negativebranches,0namedcandidates; all20native observations and source refs preserved; no C001 status promotion or real review created",
+        "Two fresh runs identical fusion.json and report.md SHA; verify-only recomputes output without writes;161inputfiles including60DICOM and26codefiles bound; source bytes unchanged",
+        "harness check:337tests pass in RSNA runtime; core292pass45optional skips; separate harness smoke passes; independent contract/runner reviews and regressions completed",
+        "External final run:/Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320/fusion/f002-001; docs/progress.md; nextE001 technical evaluation protocol; D002 LDH artifacts remain unresolved"
+      ]
     },
     {
       "id": "E001",
