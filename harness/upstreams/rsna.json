@@ -362,5 +362,7 @@
     "Normal/Mild combines normal and mild disease and cannot represent absence of all pathology.",
     "RSNA labels do not establish herniation dimensions, impacted roots or clinical radiculopathy.",
     "MIT metadata for the published model set is not a review of every upstream backbone or data term."
-  ]
+  ],
+  "snapshot_scope": "S001 source/metadata audit before S002 acquisition; current checkpoints and SHA are in rsna-assets.json",
+  "asset_acquisition_inventory": "harness/upstreams/rsna-assets.json"
 }

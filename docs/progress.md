@@ -84,6 +84,16 @@ S001 выполнен. Проверены реальные medical checkpoints �
 
 Проверки: `make check` и `make smoke` проходят; core Python выполняет 99 тестов, 26 optional пропускает. Полный существующий runtime проходит все 125 тестов. Инвентари проверены по скачанным исходникам/config/metadata; документация прошла независимый review. Никакого нового MRI inference, обучения или установки пакетов в этом шаге не выполнялось. S002 проверит реальные байты ограниченного набора весов и CPU-окружение, S003 выполнит первый inference стенозов.
 
+### S002 — RSNA checkpoints и CPU-совместимость
+
+S002 выполнен. Скачаны только side classifier `0203` fold1, sagittal keypoint v6/0002 fold0 и axial keypoint v5/0003 fold0: 279 052 069 байт. Все размеры и SHA-256 закреплены в `harness/upstreams/rsna-assets.json`; MIT dataset v2 и source commit сохранены. Постоянные внешние исходники/веса и provenance — `/Users/andrew/Datasets/mri-root-impact-ai/models/rsna2024-moyasii-v2`. Полные competition data и ансамбль не скачивались.
+
+Добавлены stdlib verifier и bounded downloader с offline `--verify-only`, отдельный CPU compatibility probe и полный lock `.venv-rsna` Python 3.12.14 / Torch 2.5.1 / timm 0.9.16 / NumPy 1.26.4. Verifier сверяет actual source с pinned Git blobs и веса с SHA до модели; probe исполняет только пять model classes из AST, без импорта top-level inference. `weights_only=True`, все три state_dict загружены строго; у classifier удален только training-only loss buffer. Все три synthetic forward дали конечные тензоры ожидаемых форм. Первая полная проверка заняла 12.38 с, повторная выполнена из постоянной папки. Отчет — внешняя `verification/s002-001.json`. Пациентские снимки и CSV разметки не читались, `mri_inference_performed=false`, `root_impacts=null`.
+
+Добавлены 20 проверок существенного поведения: hidden Git changes, лишний код, path traversal/symlinks, неверные SHA/размеры/недостающие веса, AST без top-level side effects, bounded atomic download и offline verification. Базовый `make check` проходит 119 тестов и пропускает 26 optional; новое RSNA-окружение проходит все 145. `make smoke`, offline проверка трех постоянных весов и `pip check` проходят. Старые SpineNet/data окружения не изменялись.
+
+Команды и ограничения — [rsna-assets.md](rsna-assets.md). Синтетический probe подтверждает загрузку и вычислительную совместимость, не качество или корректность ROI на МРТ. Используется multi-view сокращенная конфигурация; пересечение folds с контрольным training-case отдельно не установлено. S003 готов к реализации автоматического DICOM→ROI→native prediction/C001 с сохранением неопределенности.
+
 ## Очередь
 
 Источник статусов и зависимостей — [harness/tasks.json](../harness/tasks.json); текущее состояние выводит `python3 scripts/harness.py status`.
@@ -99,9 +109,9 @@ S001 выполнен. Проверены реальные medical checkpoints �
 | D001 | Аудит LDH-DL-MODEL | done | — |
 | D002 | Обученный LDH-комплект или альтернативный baseline | ready | D001 |
 | S001 | Аудит подходов и моделей RSNA | done | — |
-| S002 | Ограниченный RSNA-комплект и CPU-окружение | ready | S001 |
-| S003 | Первый inference стенозов с автоматическими ROI | todo | C001, I001, S002 |
+| S002 | Ограниченный RSNA-комплект и CPU-окружение | done | S001 |
+| S003 | Первый inference стенозов с автоматическими ROI | ready | C001, I001, S002 |
 | F001 | Спецификация MRI fusion | ready | C001 |
 | E001 | План технической оценки на доступной разметке | ready | — |
 
-Следующий шаг — S002: получить и проверить небольшой опубликованный RSNA-комплект для исследовательского запуска. L003 может готовить геометрическую привязку, D002 — закрывать пробел LDH-артефактов. В новых записях указываем выполненное изменение, проверку и её результат, затем следующий шаг.
+Следующий шаг — S003: первый MRI inference стенозов с автоматическими ROI. L003 может готовить геометрическую привязку, D002 — закрывать пробел LDH-артефактов. В новых записях указываем выполненное изменение, проверку и её результат, затем следующий шаг.

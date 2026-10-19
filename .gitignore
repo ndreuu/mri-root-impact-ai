@@ -2,6 +2,7 @@
 .venv/
 .venv-data/
 .venv-spinenet/
+.venv-rsna/
 venv/
 __pycache__/
 *.py[cod]

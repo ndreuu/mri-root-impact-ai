@@ -181,7 +181,7 @@
     {
       "id": "S002",
       "title": "Получить и проверить ограниченный RSNA-комплект и CPU-окружение",
-      "status": "ready",
+      "status": "done",
       "depends_on": [
         "S001"
       ],
@@ -192,12 +192,19 @@
         "Изолированное CPU-окружение закреплено; адаптация не меняет рабочие SpineNet/data runtime",
         "Дополнительный SagT2 вход, выбранный fold и неподтвержденная точность сокращенного ансамбля указаны явно"
       ],
-      "evidence": []
+      "evidence": [
+        "docs/rsna-assets.md; requirements-rsna.txt; harness/upstreams/rsna-assets.json",
+        "Three MIT datasetv2 medical checkpoints279052069B downloaded and SHA256 verified; pinned source commit8a3cd3e615bf24c934dc5440e96ee52aa68c1386; external source/weights/provenance saved",
+        "All3 state_dicts strict-load on isolated Python3.12.14 CPU Torch2.5.1/timm0.9.16; weights_only=True; class-only AST execution avoids top-level upstream pipeline",
+        "Two CPU probes: synthetic finite output shapes classifier[1,2,1,3],sagittal[1,5,190,190],axial[1,1,95,95]; no patient images/CSV read, MRI inference false",
+        "145 tests pass in RSNA runtime; core119pass26skip; smoke/offline weight verification/pip check pass",
+        "External final probe: /Users/andrew/Datasets/mri-root-impact-ai/models/rsna2024-moyasii-v2/verification/s002-001.json; S003 remains separate MRI inference task"
+      ]
     },
     {
       "id": "S003",
       "title": "Первый воспроизводимый inference стенозов RSNA с автоматическими ROI",
-      "status": "todo",
+      "status": "ready",
       "depends_on": [
         "C001",
         "I001",

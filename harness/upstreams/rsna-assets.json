@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "kind": "rsna_asset_inventory",
+  "repository": "https://github.com/Moyasii/Kaggle-2024-RSNA-Pub",
+  "commit": "8a3cd3e615bf24c934dc5440e96ee52aa68c1386",
+  "verified_date": "2026-10-19",
+  "dataset": "akinosora/rsna2024-lsdc-3rd-models-pub",
+  "dataset_version": 2,
+  "code_license": "MIT",
+  "declared_weight_dataset_license": "MIT",
+  "source_files": {
+    "README.md": {
+      "size_bytes": 24232,
+      "sha256": "d3ba816fa6e8de1bf0330840f75e4f509f61a30b3b60054655bb856ebbb6d60b"
+    },
+    "LICENSE": {
+      "size_bytes": 1064,
+      "sha256": "eb6c31a50730136fc4287b9482fec0c7a435b29e514345a2958d7a533113bce6"
+    },
+    "requirements.txt": {
+      "size_bytes": 303,
+      "sha256": "7528caf3a2cb79bc6e241e61bd93b143413de587a91e646bde44fec19d7a6ad7"
+    },
+    "src/predict.py": {
+      "size_bytes": 114809,
+      "sha256": "0491bda6d9ff8d51ec1ccc7c4ba50cc463f1b234a78d38784b52a1b7b1498ee4"
+    },
+    "src/utils/prepare_data.py": {
+      "size_bytes": 1863,
+      "sha256": "10bd82702147a717e68ae80923abf7db624afc97dbb5833573982d0547dd08ba"
+    },
+    "scripts/run_quick.sh": {
+      "size_bytes": 453,
+      "sha256": "2d179cc718f681d8fd88a69df000c47b4edb3f229ea8196aa1be7dead2caf820"
+    },
+    "src/stage2/tkmn/config/0203.yaml": {
+      "size_bytes": 2943,
+      "sha256": "1b5cbe07ac0480fc12c5214856f8533373f4d98a632c77d6e0feb40f25170f79"
+    },
+    "src/stage2/tkmn/config/0123.yaml": {
+      "size_bytes": 2947,
+      "sha256": "dacd3ed947e609d6c0384ecb822e5e93cb1239d74fb6c5ca3f8acf9a6931cc0d"
+    },
+    "src/stage2/tkmn/source/models/rsna2024_attention_net.py": {
+      "size_bytes": 8464,
+      "sha256": "c4994a10424ccd510e1e5fdc768c1a676e8f4be9070ffef76327067c641fb973"
+    },
+    "src/stage1/moyashii/sagittal/config/v6_0002_config.yaml": {
+      "size_bytes": 1136,
+      "sha256": "796ab1b13102af8271976594220417f46985110271bb5d4093c0a3cd8424ac1b"
+    },
+    "src/stage1/moyashii/axial/config/v5_0003_config.yaml": {
+      "size_bytes": 816,
+      "sha256": "29a5829b951aec072d4698ee60242961ac2cd997b012955380d305c1115eba61"
+    }
+  },
+  "weights": {
+    "classifier": {
+      "filename": "stage2/tkmn/side/v9/0203/exp0203_fold1_best_score.pth",
+      "size_bytes": 41158224,
+      "sha256": "44239affed99127c8945ceb31e615644fb383b4f40e34abe048ce2ff7398c3cd",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/akinosora/rsna2024-lsdc-3rd-models-pub/stage2%2Ftkmn%2Fside%2Fv9%2F0203%2Fexp0203_fold1_best_score.pth?datasetVersionNumber=2",
+      "config": "src/stage2/tkmn/config/0203.yaml",
+      "model_class": "RSNA2024AttentionNet",
+      "fold": 1,
+      "synthetic_input_shapes": [
+        [
+          1,
+          15,
+          224,
+          224
+        ],
+        [
+          1,
+          15,
+          224,
+          224
+        ],
+        [
+          1,
+          10,
+          224,
+          224
+        ]
+      ],
+      "expected_output_shape": [
+        1,
+        2,
+        1,
+        3
+      ]
+    },
+    "sagittal_keypoints": {
+      "filename": "stage1/moyashii/v6/0002/exp0002_fold0_best_score.pth",
+      "size_bytes": 165772062,
+      "sha256": "e819593fd640efd1ab13738dbf9c949466fa1968fc83ea6cd70b696d9d10f231",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/akinosora/rsna2024-lsdc-3rd-models-pub/stage1%2Fmoyashii%2Fv6%2F0002%2Fexp0002_fold0_best_score.pth?datasetVersionNumber=2",
+      "config": "src/stage1/moyashii/sagittal/config/v6_0002_config.yaml",
+      "model_class": "RSNA2024KeypointNetTest",
+      "fold": 0,
+      "synthetic_input_shapes": [
+        [
+          1,
+          1,
+          380,
+          380
+        ]
+      ],
+      "expected_output_shape": [
+        1,
+        5,
+        190,
+        190
+      ]
+    },
+    "axial_keypoints": {
+      "filename": "stage1/moyashii/v5/0003/exp0003_fold0_best_score.pth",
+      "size_bytes": 72121783,
+      "sha256": "b95b94d37b56a81dd3caf225c975c756e16d36d763396e444ebfbaec421e9bc6",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/akinosora/rsna2024-lsdc-3rd-models-pub/stage1%2Fmoyashii%2Fv5%2F0003%2Fexp0003_fold0_best_score.pth?datasetVersionNumber=2",
+      "config": "src/stage1/moyashii/axial/config/v5_0003_config.yaml",
+      "model_class": "RSNA2024KeypointNetTest",
+      "fold": 0,
+      "synthetic_input_shapes": [
+        [
+          1,
+          1,
+          380,
+          380
+        ]
+      ],
+      "expected_output_shape": [
+        1,
+        1,
+        95,
+        95
+      ]
+    }
+  },
+  "synthetic_probe_only": true,
+  "mri_inference_performed": false,
+  "configuration": "one classifier fold1 and one sagittal/axial keypoint fold0; reduced research configuration; full-ensemble performance not established",
+  "fold_membership_verified": false,
+  "checkpoint_compatibility_verified": true,
+  "automatic_roi_pipeline_verified": false,
+  "synthetic_forward_verified": true
+}
