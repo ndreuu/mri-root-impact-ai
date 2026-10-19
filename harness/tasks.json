@@ -156,7 +156,8 @@
       "evidence": [
         "harness/upstreams/ldh-followup-search.json; docs/ldh-audit.md",
         "Bounded public follow-up: all21 reachable main commit trees and README links, one branch, no forks/issues, author MRI repo, HF and Zenodo queries checked",
-        "No matching medical checkpoints/postprocessing found in checked sources; no messages sent; acceptance remains unfulfilled, approach remains available for adaptation"
+        "No matching medical checkpoints/postprocessing found in checked sources; no messages sent; acceptance remains unfulfilled, approach remains available for adaptation",
+        "docs/ldh-assets-request.md: corresponding-author contacts verified from publication; updated English draft requests medical weights, annotated AxialT2/subset, protocol and terms; no external messages sent"
       ]
     },
     {
