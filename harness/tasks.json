@@ -316,6 +316,30 @@
       ]
     },
     {
+      "id": "F004",
+      "title": "Связать снимки этапов, факты и условные анатомические правила",
+      "status": "done",
+      "depends_on": [
+        "F003"
+      ],
+      "acceptance": [
+        "На каждом полном frozen запуске автоматически показаны проверенные Sagittal T1 кадры фораминальных оценок и Axial T2 кадры субартикулярных оценок по уровням и сторонам",
+        "Иллюстрации выбраны из точных ordered model inputs, связаны с source frame/ROI/SHA; рамка не объявляется сегментацией патологии или корешка",
+        "Доступные аксиальные кадры дисков показаны для осмотра; отсутствие LDH inference и данных о грыже сохраняется явно",
+        "После изображений следуют исходные факты и условное анатомическое соответствие выходящему/проходящему корешку, отдельно от степени и подтвержденного fusion-вывода",
+        "Контекст грыжи не выдуман, шкала Sung не приравнена к RSNA, formal fusion и исходные MRI artifacts сохранены; автоматический отчет воспроизводится"
+      ],
+      "evidence": [
+        "mri_fusion/evidence.py and evidence_report.py; automatic report format1.1: stageimages then sourcefacts/conditionalanatomy then separate formalquality; docs/physician-report.md",
+        "Frozencontrol:10SagT1foraminalviews+10AxT2subarticularviews,5disc-reviewframes,7uniqueSHA-boundPNG; exact median ordered model input/ROI/sourceframe checked; sourceorientation preserved",
+        "20sourcefacts and conditional exiting/traversing relations includingL5-S1 L5/S1; normal_mild/moderate/severe semantics separated; LDH/nervecontact notfabricated; Sung2017 primarysourcechecked, no RSNA/Sungscaleconversion",
+        "Twofresh runs identical fusionJSON,Markdown,HTML,evidenceJSON; formal fusion unchanged fromF002/F003; report-evidence SHA d4336f925cd08bd376533201b6a9e18908b64dd8eb07e9c10371d6635858df84; oldruns preserved",
+        "verify-only no writes;161sourcefiles and29codefiles bound; all20selectedROI/sampleindices and7embeddedPNGs independently rechecked;2sourceoverlays viewed; browserHTMLvisualQA notclaimed",
+        "363tests pass in RSNA runtime; core318pass45optionalskips;10newmeaningful tests cover conditionalfacts,inputframe/ROI identity,cropbounds,PNGbytes,externalresource refusal and forged evidence checksum",
+        "External finalrun:/Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320/fusion/f004-001; nextE001 technicalevaluation; D002trainedLDHassets remain unavailable"
+      ]
+    },
+    {
       "id": "E001",
       "title": "Определить протокол технической оценки Stage I",
       "status": "ready",

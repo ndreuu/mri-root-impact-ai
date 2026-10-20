@@ -62,7 +62,7 @@ class FusionRunnerTests(unittest.TestCase):
         before = self.snapshot(self.inputs)
         output = self.directory / "output"
         self.fuse(output=output)
-        self.assertEqual({path.name for path in output.iterdir()}, {"fusion.json", "report.md", "report.html", "run.json"})
+        self.assertEqual({path.name for path in output.iterdir()}, {"fusion.json", "report.md", "report.html", "report-evidence.json", "run.json"})
         report = json.loads((output / "fusion.json").read_text())
         self.assertEqual(report["kind"], "mri_root_impact_fusion")
         self.assertEqual(len(report["branches"]), 20)
@@ -274,7 +274,10 @@ class FusionRunnerTests(unittest.TestCase):
         output = self.directory / "output"
         self.fuse(output=output)
         path = output / "report.html"
-        path.write_text(path.read_text().replace("Предварительное заключение", "Изменённое заключение"))
+        original = path.read_text()
+        altered = original.replace("Что получено", "Изменённое заключение")
+        self.assertNotEqual(original, altered)
+        path.write_text(altered)
         metadata_path = output / "run.json"
         metadata = json.loads(metadata_path.read_text())
         metadata["artifacts_sha256"]["report.html"] = hashlib.sha256(path.read_bytes()).hexdigest()
@@ -296,6 +299,23 @@ class FusionRunnerTests(unittest.TestCase):
         with mock.patch.object(runner, "_code_hashes", return_value=changed):
             with self.assertRaises(FusionContractError):
                 self.fuse(output=output, verify_only=True)
+        self.assertEqual(self.snapshot(self.directory), before)
+
+    def test_edited_conditional_facts_with_replaced_checksum_do_not_pass_verification(self):
+        output = self.directory / "output"
+        self.fuse(output=output)
+        path = output / "report-evidence.json"
+        bundle = json.loads(path.read_text())
+        fact = next(f for f in bundle["facts"] if f["conditional_anatomy"] is not None)
+        fact["conditional_anatomy"]["root"] = "L1"
+        self.write_json(path, bundle)
+        metadata_path = output / "run.json"
+        metadata = json.loads(metadata_path.read_text())
+        metadata["artifacts_sha256"][path.name] = hashlib.sha256(path.read_bytes()).hexdigest()
+        self.write_json(metadata_path, metadata)
+        before = self.snapshot(self.directory)
+        with self.assertRaisesRegex(FusionContractError, "Report evidence differs"):
+            self.fuse(output=output, verify_only=True)
         self.assertEqual(self.snapshot(self.directory), before)
 
     def test_nonobject_run_metadata_has_structured_cli_error_and_no_verify_writes(self):

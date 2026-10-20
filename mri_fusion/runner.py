@@ -1,6 +1,8 @@
 """Checked JSON I/O for the separate, dependency-free research fusion engine."""
 
+import base64
 import hashlib
+import struct
 import json
 import math
 from pathlib import Path
@@ -11,6 +13,7 @@ from mri_root_impact.contracts import manifest_digest, validate_bundle
 from mri_root_impact.control_study import write_json_external
 from .contracts import FusionContractError, artifact_binding, load_policy, validate_output
 from .engine import fuse
+from .evidence import build_evidence
 from .reporting import render_html, render_markdown
 
 
@@ -189,9 +192,26 @@ def _proof(study, document):
         raise FusionContractError("Review evidence must match the study and its synthetic flag")
 
 
-def render_report(report):
+def render_report(report, evidence=None):
     """Compatibility entry point for the physician-facing Markdown report."""
-    return render_markdown(report)
+    return render_markdown(report, evidence)
+
+
+def _read_report_image(directory, overlay, files):
+    root = directory.resolve()
+    path = root / overlay["file"]
+    if path.is_symlink() or root not in path.resolve().parents:
+        raise FusionContractError("Report image must be a checked upstream PNG")
+    raw = path.read_bytes()
+    digest = hashlib.sha256(raw).hexdigest()
+    if (len(raw) < 24 or len(raw) > 16 * 1024 * 1024 or raw[:8] != b"\x89PNG\r\n\x1a\n"
+            or digest != overlay["sha256"] or files.get(str(path.resolve())) != digest):
+        raise FusionContractError("Report image bytes are not bound to the checked upstream run")
+    width, height = struct.unpack(">II", raw[16:24])
+    if (width, height) != (overlay["width"], overlay["height"]):
+        raise FusionContractError("Report PNG dimensions differ from the source overlay")
+    return {"source_file": str(path.resolve()), "sha256": digest, "width": width, "height": height,
+            "data_uri": "data:image/png;base64," + base64.b64encode(raw).decode("ascii")}
 
 
 def _code_hashes():
@@ -201,18 +221,18 @@ def _code_hashes():
     return {p.relative_to(ROOT).as_posix(): file_sha256(p) for p in paths}
 
 
-def validate_saved_run(study, output, expected, files):
+def validate_saved_run(study, output, expected, files, evidence=None):
     metadata = {}
     run, _ = _load(output / "run.json", metadata)
     if (not isinstance(run, dict) or run.get("kind") != "mri_fusion_run" or run.get("status") != "completed"
             or run.get("study_id") != study["study_id"] or run.get("study_digest") != manifest_digest(study)
             or run.get("inference_performed") is not False or run.get("fusion_performed") is not True
-            or run.get("source_bytes_unchanged") is not True or run.get("report_format_version") != "1.0"
+            or run.get("source_bytes_unchanged") is not True or run.get("report_format_version") != "1.1"
             or run.get("code_files_sha256") != _code_hashes()
             or run.get("input_files_sha256") != files):
         raise FusionContractError("Fusion run metadata is not bound to these unchanged inputs/code")
     hashes = run.get("artifacts_sha256")
-    if not isinstance(hashes, dict) or set(hashes) != {"fusion.json", "report.md", "report.html"}:
+    if not isinstance(hashes, dict) or set(hashes) != {"fusion.json", "report.md", "report.html", "report-evidence.json"}:
         raise FusionContractError("Fusion requires JSON, Markdown and physician HTML artifacts")
     for name, digest in hashes.items():
         if (output / name).is_symlink() or file_sha256(output / name) != digest:
@@ -221,10 +241,13 @@ def validate_saved_run(study, output, expected, files):
     validate_output(study, actual)
     if manifest_digest(actual) != manifest_digest(expected):
         raise FusionContractError("Saved fusion differs from recomputed source evidence")
-    if (output / "report.md").read_text(encoding="utf-8") != render_report(expected):
+    if (output / "report.md").read_text(encoding="utf-8") != render_report(expected, evidence):
         raise FusionContractError("Human report differs from checked fusion JSON")
-    if (output / "report.html").read_text(encoding="utf-8") != render_html(expected):
+    if (output / "report.html").read_text(encoding="utf-8") != render_html(expected, evidence):
         raise FusionContractError("Physician HTML differs from checked fusion JSON")
+    actual_evidence, _ = _load(output / "report-evidence.json", metadata)
+    if manifest_digest(actual_evidence) != manifest_digest(evidence):
+        raise FusionContractError("Report evidence differs from checked model source images/facts")
     _assert_unchanged(files)
     return actual
 
@@ -289,25 +312,31 @@ def _run(study_path, output, result_paths, review_path, evidence_paths, spinenet
     _protect_output(output, list(files), frozen, verify_only)
     expected = fuse(study, results, bindings, review, review_sha, policy_path)
     validate_output(study, expected)
+    source_documents = {name: document for name, document, _ in documents}
+    evidence = build_evidence(
+        expected, source_documents.get("rsna-spatial"),
+        source_documents.get("rsna-execution", {}).get("overlays", ()),
+        (lambda overlay: _read_report_image(Path(rsna_run), overlay, files)) if frozen else None)
     if verify_only:
-        validate_saved_run(study, output, expected, files)
+        validate_saved_run(study, output, expected, files, evidence)
     else:
         _assert_unchanged(files)
         output.mkdir(parents=True)
         try:
             write_json_external(expected, output / "fusion.json")
-            (output / "report.md").write_text(render_report(expected), encoding="utf-8")
-            (output / "report.html").write_text(render_html(expected), encoding="utf-8")
+            (output / "report.md").write_text(render_report(expected, evidence), encoding="utf-8")
+            (output / "report.html").write_text(render_html(expected, evidence), encoding="utf-8")
+            write_json_external(evidence, output / "report-evidence.json")
             _assert_unchanged(files)
             report = {"schema_version": "1.0", "kind": "mri_fusion_run", "status": "completed",
                       "study_id": study["study_id"], "study_digest": manifest_digest(study),
-                      "inference_performed": False, "fusion_performed": True, "report_format_version": "1.0",
+                      "inference_performed": False, "fusion_performed": True, "report_format_version": "1.1",
                       "duration_seconds": time.monotonic() - started, "source_bytes_unchanged": True,
                       "input_files_sha256": files, "code_files_sha256": _code_hashes(),
                       "parameters": {"input_mode": "frozen_mri" if frozen else "c001_files", "review_provided": review_path is not None},
-                      "artifacts_sha256": {name: file_sha256(output / name) for name in ("fusion.json", "report.md", "report.html")}}
+                      "artifacts_sha256": {name: file_sha256(output / name) for name in ("fusion.json", "report.md", "report.html", "report-evidence.json")}}
             write_json_external(report, output / "run.json")
-            validate_saved_run(study, output, expected, files)
+            validate_saved_run(study, output, expected, files, evidence)
         except Exception as exc:
             write_json_external({"kind": "mri_fusion_run", "status": "error", "inference_performed": False,
                                  "fusion_performed": False, "error": str(exc)}, output / "run.json")

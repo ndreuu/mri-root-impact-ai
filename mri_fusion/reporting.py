@@ -203,7 +203,7 @@ def _html_overview(report):
     return ''.join(parts)
 
 
-def render_markdown(report):
+def _render_markdown_quality(report):
     """Return a readable Russian Markdown report without changing its input."""
     lines = ["# МРТ: потенциальное анатомическое воздействие на корешки", "", "**Предварительный исследовательский отчёт · Stage I**", ""]
     if report["synthetic"]:
@@ -259,7 +259,7 @@ def _html_evidence(evidence):
     return '<details class="evidence"><summary>{}</summary><p>{}</p><p>{}</p><p>{}</p><pre>{}</pre></details>'.format(_h(summary), _h(_finding(evidence)), _h(_probabilities(evidence)), _h(images), _h(_technical_evidence(evidence)))
 
 
-def render_html(report):
+def _render_html_quality(report):
     """Return a self-contained, escaped HTML view with no scripts or network."""
     parts = ['<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>МРТ: анатомическое воздействие на корешки</title><style>' + _CSS + '</style></head><body><main>', '<header><p class="eyebrow">Stage I · исследовательский МРТ-модуль</p><h1>Потенциальное анатомическое воздействие на корешки</h1><p>Предварительный отчёт по сохранённым результатам МРТ</p></header>']
     if report["synthetic"]:
@@ -297,3 +297,15 @@ def render_html(report):
 _CSS = """
 :root{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#172b3a;background:#f3f6f8;font-size:16px;line-height:1.55}*{box-sizing:border-box}body{margin:0}main{max-width:1260px;margin:auto;padding:42px 32px 60px;background:white}header{border-bottom:2px solid #234e66;padding-bottom:20px}h1{font-size:2rem;line-height:1.2;max-width:850px;margin:10px 0}h2{font-size:1.3rem;line-height:1.3;margin:0 0 14px}h3{font-size:1.05rem;margin:20px 0 8px}p{margin:10px 0}section,footer{margin-top:34px}.eyebrow{font-size:.85rem;letter-spacing:.04em;text-transform:uppercase;color:#486879}.conclusion{background:#edf4f7;border-left:5px solid #234e66;padding:22px}.lead{font-size:1.2rem;font-weight:600}.notice{padding:14px 18px;background:#fff3d4;border-left:4px solid #b27a16}.muted{font-size:.87rem;color:#526571}.table-scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{padding:12px 10px;border-bottom:1px solid #dce4e8;text-align:left;vertical-align:top}thead{background:#edf2f5}thead th{font-weight:650}tbody th{white-space:nowrap}a{color:#205979;text-underline-offset:3px}li{margin:8px 0}.trace{border:1px solid #d4dfe5;border-radius:5px;margin:12px 0}.trace>summary{padding:16px 18px;font-weight:600;background:#f6f8fa;cursor:pointer}.outcome{display:block;font-size:.86rem;font-weight:400;color:#526571;margin:5px 0 0 20px}.trace-body{padding:0 20px 20px}.checks{margin:8px 0}.checks>div{display:grid;grid-template-columns:minmax(220px,1fr) 1.4fr;gap:20px;padding:9px 0;border-bottom:1px solid #e5ebee}dt{font-weight:550}dd{margin:0}.evidence{margin:16px 0;border-top:1px solid #dce4e8;padding-top:10px}.evidence>summary,footer summary{cursor:pointer;font-size:.9rem;overflow-wrap:anywhere}pre{font-size:.75rem;line-height:1.45;background:#f4f6f8;padding:16px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}footer{padding-top:22px;border-top:2px solid #dce4e8;color:#526571}summary:focus-visible,a:focus-visible,.table-scroll:focus-visible{outline:3px solid #b27a16;outline-offset:3px}@media(max-width:700px){main{padding:24px 16px}h1{font-size:1.5rem}.conclusion{padding:16px}.checks>div{grid-template-columns:1fr;gap:3px}table{min-width:800px}#anatomy table{min-width:0}.trace-body{padding:0 14px 16px}}@media print{:root{background:white;font-size:10pt}main{max-width:none;padding:0}section,footer{margin-top:20px}.table-scroll{overflow:visible}table{font-size:8pt}th,td{padding:6px 5px}.trace>summary{background:white}.trace{break-inside:avoid}.conclusion{background:white}a{color:inherit;text-decoration:none}pre{max-width:100%;font-size:7pt}.checks>div{grid-template-columns:1fr 1.4fr}h2,h3{break-after:avoid}}
 """
+
+
+def render_markdown(report, evidence=None):
+    """Automatically present source images and facts before the quality trace."""
+    from .evidence_report import render_markdown as render
+    return render(report, evidence, _render_markdown_quality(report))
+
+
+def render_html(report, evidence=None):
+    """Self-contained illustrated report with conditional anatomy explained."""
+    from .evidence_report import render_html as render
+    return render(report, evidence, _render_html_quality(report))
