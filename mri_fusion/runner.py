@@ -227,7 +227,7 @@ def validate_saved_run(study, output, expected, files, evidence=None):
     if (not isinstance(run, dict) or run.get("kind") != "mri_fusion_run" or run.get("status") != "completed"
             or run.get("study_id") != study["study_id"] or run.get("study_digest") != manifest_digest(study)
             or run.get("inference_performed") is not False or run.get("fusion_performed") is not True
-            or run.get("source_bytes_unchanged") is not True or run.get("report_format_version") != "1.1"
+            or run.get("source_bytes_unchanged") is not True or run.get("report_format_version") != "1.2"
             or run.get("code_files_sha256") != _code_hashes()
             or run.get("input_files_sha256") != files):
         raise FusionContractError("Fusion run metadata is not bound to these unchanged inputs/code")
@@ -330,7 +330,7 @@ def _run(study_path, output, result_paths, review_path, evidence_paths, spinenet
             _assert_unchanged(files)
             report = {"schema_version": "1.0", "kind": "mri_fusion_run", "status": "completed",
                       "study_id": study["study_id"], "study_digest": manifest_digest(study),
-                      "inference_performed": False, "fusion_performed": True, "report_format_version": "1.1",
+                      "inference_performed": False, "fusion_performed": True, "report_format_version": "1.2",
                       "duration_seconds": time.monotonic() - started, "source_bytes_unchanged": True,
                       "input_files_sha256": files, "code_files_sha256": _code_hashes(),
                       "parameters": {"input_mode": "frozen_mri" if frozen else "c001_files", "review_provided": review_path is not None},

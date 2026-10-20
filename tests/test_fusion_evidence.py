@@ -37,7 +37,7 @@ def inputs(r):
             for i in range(5)]
     spatial = {"study_id": r["study_id"], "study_digest": r["study_digest"], "rois": rois,
                "inputs": [{"level": "L4-L5", "side": "left", "roi_ids": {"axial_t2": [x["roi_id"] for x in rois]}}],
-               "keypoints": [{"sequence": "axial_t2", "label": "L4-L5", "image_ref": ref}]}
+               "keypoints": [{"sequence": "axial_t2", "label": "center", "native_level": "L4-L5", "image_ref": ref}]}
     raw = picture()
     sha = hashlib.sha256(raw).hexdigest()
     overlays = [{"file": "overlays/frame-000.png", "image_ref": ref, "header_pixels": 32,
@@ -91,6 +91,8 @@ class EvidenceTests(unittest.TestCase):
         self.assertEqual(view["sequence"], "axial_t2")
         self.assertEqual(view["source_crop_box"], [3, 1, 12, 10])
         self.assertEqual(spatial, before)
+        self.assertEqual(bundle["disc_views"][0]["native_level"], "L4-L5")
+        self.assertNotEqual(bundle["disc_views"][0]["native_level"], "center")
         self.assertFalse(bundle["disc_views"][0]["herniation_detection_performed"])
         self.assertFalse(view["overlay_is_pathology_segmentation"])
 
@@ -104,19 +106,21 @@ class EvidenceTests(unittest.TestCase):
             with self.assertRaises(FusionContractError):
                 build_evidence(r, spatial, overlays, reader)
 
-    def test_images_and_facts_precede_quality_without_external_image_fetches(self):
+    def test_four_sections_keep_bound_images_without_external_image_fetches(self):
         r = report()
         bundle = build_evidence(r, *inputs(r))
         document = render_html(r, bundle)
         parsed = _ReportHTML(document)
-        self.assertTrue({"foraminal-stage", "subarticular-stage", "disc-stage", "facts", "formal-quality"} <= parsed.ids)
-        self.assertLess(document.index('id="subarticular-stage"'), document.index('id="facts"'))
-        self.assertLess(document.index('id="facts"'), document.index('id="formal-quality"'))
-        images = [v for tag,k,v in parsed.attributes if tag == "image" and k == "href"]
+        section_ids = ("discs", "foraminal-stage", "subarticular-stage", "fusion")
+        self.assertTrue(set(section_ids) <= parsed.ids)
+        self.assertEqual(sorted(section_ids, key=lambda value: document.index('id="' + value + '"')), list(section_ids))
+        self.assertEqual(len(parsed.h2), 4)
+        self.assertNotIn("formal-quality", parsed.ids)
+        images = [v for tag,k,v in parsed.attributes if (tag == "image" and k == "href") or (tag == "img" and k == "src")]
         self.assertTrue(images)
         self.assertTrue(all(v.startswith("data:image/png;base64,") for v in images))
-        self.assertIn("Если исходные метки верны", parsed.visible_text())
-        self.assertIn("не результат обнаружения грыжи", parsed.visible_text())
+        self.assertRegex(parsed.visible_text().lower(), r"нумерац.*совмещ.*(?:не подтверж|требуют подтверж)")
+        self.assertRegex(parsed.element("discs").lower(), r"грыж.*не оцен|не оцен.*грыж|не определ")
 
     def test_network_image_cannot_enter_self_contained_report(self):
         r = report()

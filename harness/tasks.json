@@ -340,6 +340,29 @@
       ]
     },
     {
+      "id": "F005",
+      "title": "Сократить отчет до четырех разделов и прямых выводов",
+      "status": "done",
+      "depends_on": [
+        "F004"
+      ],
+      "acceptance": [
+        "Отчет содержит ровно четыре основных раздела в порядке: диски, фораминальный стеноз, субартикулярный стеноз, Fusion",
+        "Пять дисков перечислены с результатом и правильным кадром; для стенозов по пять уровней с отдельными левой и правой оценками и изображениями",
+        "Fusion состоит из коротких строк находки ⇒ вывод, без повторных описаний проверок; Moderate/unknown не превращаются в подтвержденное воздействие",
+        "Исправлена привязка дисковых кадров к native_level вместо метки center; unknown и отсутствие LDH не становятся отрицательной находкой",
+        "Автоматическая генерация, SHA и verify-only сохраняются; новый отчет воспроизводится отдельно от прежних запусков"
+      ],
+      "evidence": [
+        "mri_fusion/evidence_report.py; concise report_format_version1.2; exactly4sections:discs,foraminal,subarticular,Fusion;5discrows+20sidecells+problem=>conclusionlines",
+        "Longqualitynarrative removed; fullsourceobservations/probabilities/provenance remain inJSON;normal_mild notproblem;Moderate uncertain; unverifiedSevere explicitly hypothesis; nofakeherniation",
+        "FixedF004discframelabelbug:point.native_level instead of label=center; realshape regression; all5disc source refs independently checked",
+        "Control F005:25logicalillustrations,4Fusionlines,214visiblewords;2fresh runs identical4artifacts; verify-onlynowrites; formal fusionJSONunchanged;7PNGsourcebytesverified",
+        "361tests pass in RSNA runtime;core316pass45optionalskips;12compactreporttests+9evidence+27runner checks; oldverbose-layout assertions replaced while preservingsemantic safety",
+        "External finalrun:/Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320/fusion/f005-001;docs/physician-report.md;nextE001;D002 remainsunresolved"
+      ]
+    },
+    {
       "id": "E001",
       "title": "Определить протокол технической оценки Stage I",
       "status": "ready",

@@ -72,8 +72,8 @@ class FusionRunnerTests(unittest.TestCase):
         self.assertEqual(report["root_candidates"], [])
         self.assertIs(report["inference_performed"], False)
         self.assertIsNone(report["clinical_diagnosis"])
-        self.assertIn("неопредел", (output / "report.md").read_text().lower())
-        self.assertIn("неопредел", (output / "report.html").read_text().lower())
+        self.assertIn("условная", (output / "report.md").read_text().lower())
+        self.assertIn("условная", (output / "report.html").read_text().lower())
         self.assertEqual(self.snapshot(self.inputs), before)
 
     def test_valid_empty_result_set_stays_unknown(self):
@@ -275,7 +275,7 @@ class FusionRunnerTests(unittest.TestCase):
         self.fuse(output=output)
         path = output / "report.html"
         original = path.read_text()
-        altered = original.replace("Что получено", "Изменённое заключение")
+        altered = original.replace("</h1>", " изменено</h1>", 1)
         self.assertNotEqual(original, altered)
         path.write_text(altered)
         metadata_path = output / "run.json"

@@ -128,7 +128,7 @@ def build_evidence(report, spatial=None, overlays=(), read_image=None):
         if point["sequence"] != "axial_t2":
             continue
         image_id, _ = image_for(point["image_ref"])
-        bundle["disc_views"].append({"native_level": point["label"], "sequence": "axial_t2",
+        bundle["disc_views"].append({"native_level": point["native_level"], "sequence": "axial_t2",
                                      "image_id": image_id, "image_ref": copy.deepcopy(point["image_ref"]),
                                      "purpose": "disc_visual_review_only", "herniation_detection_performed": False})
     bundle["image_status"] = "checked_model_source_overlays"

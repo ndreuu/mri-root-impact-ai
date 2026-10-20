@@ -1,149 +1,171 @@
-"""Physician reading order: MRI views, source facts, anatomy, formal quality."""
+"""Four concise physician sections, generated from checked MRI evidence."""
 
 from urllib.parse import quote
 
-from .evidence import build_evidence
 from .contracts import FusionContractError
-from .reporting import _h, _m, _title, _root, _html_overview, _coverage, GRADES, LIMITS
+from .evidence import build_evidence
+from .reporting import _h, _m, _root, SIDES
 
 
-PAPER = "https://www.kjronline.org/DOIx.php?id=10.3348/kjr.2017.18.1.249"
-VIEW_NOTE = ("Показан один из фактических входных кадров: средний отсчёт в упорядоченном наборе модели, "
-             "а не автоматически найденный наиболее выраженный стеноз. Рамки — области входа модели (ROI), "
-             "не сегментация грыжи, стеноза или нервного корешка. Изображения сохраняют исходную ориентацию.")
-ANATOMY_NOTE = ("Ниже применяется анатомическое соответствие к исходным меткам уровня и стороны. "
-                "Оно условно: верно, если эти метки и зона подтверждаются при просмотре. "
-                "Соответствие корешку само по себе не устанавливает воздействие на него.")
+LEVELS = ("L1-L2", "L2-L3", "L3-L4", "L4-L5", "L5-S1")
+GRADES = {"normal_mild": "Норма/лёгкий", "moderate": "Умеренный", "severe": "Выраженный"}
+ZONES = {"foraminal": "фораминальный", "subarticular": "субартикулярный"}
+TITLES = ("1. Анализ межпозвонковых дисков", "2. Фораминальный стеноз",
+          "3. Субартикулярный стеноз", "4. Fusion")
 
 
-def summary(bundle):
-    facts = bundle["facts"]
-    counts = {grade: sum(f["native_grade"] == grade for f in facts) for grade in GRADES}
-    return ("Получены исходные оценки: умеренный стеноз — {}; выраженный — {}; объединённый класс "
-            "«норма / лёгкий стеноз» — {}. Для {} сочетаний принятого класса нет. "
-            "Степени и метки уровня ниже предварительные до подтверждения анатомической привязки.").format(
-                counts["moderate"], counts["severe"], counts["normal_mild"],
-                sum(f["native_grade"] is None for f in facts))
+def _level(value):
+    return value.replace("-", "–")
 
 
-def relation(fact):
-    root = fact["conditional_anatomy"]
-    if root is None:
-        return "Анатомическое соответствие не построено: исходная оценка неизвестна или непринята."
-    return "Если исходные метки верны: {} → {}.".format(_title(fact["native_target"]), _root(root))
+def _marked(branch):
+    return " †" if branch["mapped_root"] is None else ""
 
 
-def effect(fact):
-    if fact["rule_effect"] == "severe_research_threshold":
-        return ("Выраженная степень соответствует исследовательскому порогу потенциального воздействия. "
-                "Для итогового кандидата требуются пригодный исходный статус и подтверждения привязки.")
-    if fact["rule_effect"] == "moderate_relation_only":
-        return ("Умеренная степень: указан анатомически соответствующий корешок; "
-                "порог положительного вывода в текущей версии не установлен.")
-    if fact["rule_effect"] == "no_severe_criterion":
-        return "Критерий выраженного стеноза по исходному классу не выполнен; объединённый класс не исключает лёгких изменений."
-    return "Правило степени не применяется: исходные классы отсутствуют, противоречивы или не поддерживаются."
-
-
-def _grade(fact):
+def _grade(fact, branch):
     if fact["native_grade"] is not None:
         return GRADES[fact["native_grade"]]
-    return " / ".join(o["label"] for o in fact["native_observations"]) or "Исходная оценка отсутствует"
+    if fact["native_observations"]:
+        return "Непринятая/противоречивая оценка: " + "/".join(o["label"] for o in fact["native_observations"])
+    statuses = {e["status"] for e in branch["evidence"]}
+    return "Ошибка оценки" if "error" in statuses else "Не запускалось" if "not_run" in statuses else "Не оценено"
+
+
+def _disc_result(report, level):
+    evidence = [e for e in report["raw_disc_evidence"] if e["target"]["level"] == level]
+    observations = [e["observation"] for e in evidence if e["observation"] is not None]
+    if observations:
+        return "Не оценено; исходная метка: " + "/".join(o["label"] for o in observations) + " (шкала не принята)"
+    return "Грыжа не оценена"
+
+
+def fusion_lines(report, bundle):
+    """Problems → short conclusion; conditional anatomy never changes JSON."""
+    branches = {b["branch_id"]: b for b in report["branches"]}
+    lines = []
+    for fact in bundle["facts"]:
+        grade = fact["native_grade"]
+        branch = branches[fact["branch_id"]]
+        if grade == "normal_mild" or not branch["evidence"]:
+            continue
+        target = fact["native_target"]
+        prefix = "{} + {} {} стеноз {}".format(_level(target["level"]),
+            {"moderate": "умеренный", "severe": "выраженный"}.get(grade, "неопределённый"),
+            ZONES[target["zone"]], SIDES[target["side"]])
+        root = fact["conditional_anatomy"]
+        if grade == "severe" and fact["verified_candidate"] is not None:
+            conclusion = "потенциальное воздействие на " + _root(root)
+        elif grade == "severe" and root is not None:
+            conclusion = "предположение: потенциальное воздействие на " + _root(root) + " †"
+        elif grade == "moderate" and root is not None:
+            conclusion = _root(root) + "; воздействие не определено" + _marked(branch)
+        else:
+            zone = {"foraminal": "фораминальная зона", "subarticular": "субартикулярная зона"}[target["zone"]]
+            prefix = "{} + {} {}: {}".format(_level(target["level"]), zone, SIDES[target["side"]], _grade(fact, branch))
+            conclusion = "корешок не определён"
+        lines.append(("fusion-" + fact["branch_id"], prefix + " ⇒ " + conclusion + "."))
+    for i, evidence in enumerate(report["unresolved_native_evidence"]):
+        target = evidence["target"]
+        observation = evidence["observation"]
+        label = "нет оценки" if observation is None else observation["label"]
+        lines.append(("unresolved-"+str(i), "{} + {} ⇒ корешок не определён.".format(target["level"], label)))
+    return lines
 
 
 def _figure(view, bundle, crop=True):
+    if view is None:
+        return '<span class="missing">Нет снимка</span>'
     image = bundle["images"][view["image_id"]]
     if not image["data_uri"].startswith("data:image/png;base64,"):
         raise FusionContractError("Report illustrations must be embedded PNGs, never network resources")
-    uri = _h(image["data_uri"])
     width, height = image["width"], image["height"]
-    contents = '<image href="{}" width="{}" height="{}"/>'.format(uri, width, height)
+    contents = '<image href="{}" width="{}" height="{}"/>'.format(_h(image["data_uri"]), width, height)
     zoom = ""
     if crop:
         x0, y0, x1, y1 = view["source_crop_box"]
         y0, y1 = y0 + view["header_pixels"], y1 + view["header_pixels"]
         contents += '<rect x="{}" y="{}" width="{}" height="{}" fill="none" stroke="#ffcc33" stroke-width="2"/>'.format(x0, y0, x1-x0, y1-y0)
-        zoom = '<svg role="img" aria-label="Увеличение ROI на исходном размеченном кадре" viewBox="{} {} {} {}">{}</svg>'.format(x0, y0, x1-x0, y1-y0, contents)
+        zoom = '<svg role="img" aria-label="Увеличение ROI" viewBox="{} {} {} {}">{}</svg>'.format(x0, y0, x1-x0, y1-y0, contents)
     ref = view["image_ref"]
-    caption = "Серия {} · изображение {} · индекс кадра {}".format(ref["series_id"], ref["image_id"], ref["frame_index"])
-    return ('<figure><div class="source-images"><svg role="img" aria-label="Исходный кадр с областями модели" '
-            'viewBox="0 0 {} {}">{}</svg>{}</div><figcaption>{}</figcaption></figure>').format(
-                width, height, contents, zoom, _h(caption))
+    source = "{} / {} / кадр {}".format(ref["series_id"], ref["image_id"], ref["frame_index"])
+    return '<div class="images" title="{}"><svg role="img" aria-label="Исходный кадр" viewBox="0 0 {} {}">{}</svg>{}</div>'.format(_h(source), width, height, contents, zoom)
 
 
-def render_html(report, bundle, quality_html):
+def _empty_fusion(bundle):
+    if all(f["native_grade"] == "normal_mild" for f in bundle["facts"]):
+        return "Умеренных/выраженных стенозов не указано. Воздействие по этим классам не установлено."
+    return "Исходных оценок для вывода недостаточно."
+
+
+def render_html(report, bundle):
     bundle = build_evidence(report) if bundle is None else bundle
     facts = {f["branch_id"]: f for f in bundle["facts"]}
-    # Reuse the checked detailed quality trace, but keep it after clinical facts.
-    css = quality_html.split('<style>', 1)[1].split('</style>', 1)[0]
-    quality = quality_html.split('<section id="algorithm">', 1)[1].split('</main>', 1)[0]
-    parts = ['<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>МРТ: снимки, находки и анатомический разбор</title><style>' + css + _CSS + '</style></head><body><main>',
-             '<header><p class="eyebrow">Исследовательский МРТ-отчёт · Stage I</p><h1>Снимки → находки → анатомическое правило</h1><p>Исследование: <strong>' + _h(report["study_id"]) + '</strong></p></header>']
+    branches = {b["branch_id"]: b for b in report["branches"]}
+    views = {v["branch_id"]: v for v in bundle["stage_views"]}
+    discs = {v["native_level"]: v for v in bundle["disc_views"]}
+    parts = ['<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>МРТ: результаты</title><style>' + _CSS + '</style></head><body><main>',
+             '<header><h1>МРТ поясничного отдела</h1><p>Исследовательская автооценка · ' + _h(report["study_id"]) + '</p></header>']
     if report["synthetic"]:
-        parts.append('<p class="notice">Синтетический пример: изображения и подтверждения не являются данными пациента.</p>')
-    parts += ['<section id="conclusion" class="conclusion"><h2>Что получено</h2><p class="lead">' + _h(summary(bundle)) + '</p><p>Ниже показаны результаты отдельных этапов и условное анатомическое объяснение. Достоверность итогового корешкового вывода проверяется отдельно.</p></section>',
-              '<nav><a href="#foraminal-stage">Фораминальный стеноз</a> · <a href="#subarticular-stage">Субартикулярный стеноз</a> · <a href="#disc-stage">Диски</a> · <a href="#facts">Факты и fusion</a></nav>',
-              '<p>Выбранная модель оценивает стеноз по совокупности Sagittal T1, Sagittal T2 и Axial T2. Галереи ниже выделяют запрошенную последовательность для просмотра, а не представляют её единственным входом классификатора.</p>']
-    for zone, sequence, title in (("foraminal", "Sagittal T1", "Фораминальный стеноз: слева и справа"),
-                                  ("subarticular", "Axial T2", "Субартикулярный стеноз: слева и справа")):
-        parts.append('<section id="{}-stage"><h2>{} · {}</h2><p>{}</p><div class="gallery">'.format(zone, _h(title), sequence, _h(VIEW_NOTE)))
-        views = [v for v in bundle["stage_views"] if v["native_target"]["zone"] == zone]
-        for view in views:
-            fact = facts[view["branch_id"]]
-            parts += ['<article class="image-card"><h3>' + _h(_title(view["native_target"])) + '</h3><p><strong>Предварительная оценка: ' + _h(_grade(fact)) + '</strong></p>',
-                      _figure(view, bundle), '<p class="muted">Рамка выделена для этой оценки; справа — увеличение той же области. Отсчёт {} из {} входов {}. Переворот для модели: {}.</p></article>'.format(
-                          view["model_sample_index"]+1, view["model_sample_count"], sequence, "да" if view["model_horizontal_flip"] else "нет")]
-        if not views:
-            parts.append('<p>Проверенные иллюстрации этой последовательности не предоставлены. Отсутствие картинки не считается отрицательной находкой.</p>')
-        parts.append('</div></section>')
-    parts += ['<section id="disc-stage"><h2>Анализ межпозвонковых дисков</h2><p class="notice">Детектор грыж LDH ещё не подключён. Наличие, размер и положение грыжи автоматически не определены. Ниже — доступные Axial T2 кадры для осмотра дисков, а не результат обнаружения грыжи.</p><div class="gallery">']
-    for view in bundle["disc_views"]:
-        parts += ['<article class="image-card"><h3>Исходная метка ' + _h(view["native_level"]) + '</h3>', _figure(view, bundle, False), '</article>']
-    if not bundle["disc_views"]:
-        parts.append('<p>Проверенные кадры дисков не предоставлены. Исходные оценки дисков, если есть, сохранены в подробностях.</p>')
-    parts += ['</div></section><section id="facts"><h2>Список фактов и применение fusion-правил</h2><p>' + _h(ANATOMY_NOTE) + '</p><p>Фораминальная зона → выходящий корешок верхнего позвонка; субартикулярная зона → проходящий корешок нижнего позвонка. Для L5–S1 это L5 и S1 соответственно.</p><div class="table-scroll"><table><thead><tr><th>Исходная область</th><th>Предварительный факт</th><th>Условное применение анатомии</th><th>Интерпретация степени</th></tr></thead><tbody>']
-    for fact in bundle["facts"]:
-        parts.append('<tr id="{}"><th scope="row">{}</th><td>{}</td><td>{}</td><td>{}</td></tr>'.format(
-            _h(fact["fact_id"]), _h(_title(fact["native_target"])), _h(_grade(fact)), _h(relation(fact)), _h(effect(fact))))
-    parts += ['</tbody></table></div><p>Контекст грыжи не оценён, поэтому наличие грыжи и её причинная роль в эти факты не добавляются.</p>',
-              '<details><summary>Пример правила, не находка этого исследования</summary><p>L4–L5 + левосторонняя грыжа + выраженный левосторонний субартикулярный стеноз → анатомическая гипотеза потенциального воздействия на левый проходящий корешок L5. Для вывода о данном исследовании каждый исходный факт должен быть установлен отдельно.</p></details>',
-              '<p>Основание выбора признаков: <a href="' + PAPER + '">Sung et al., 2017, таблица 2</a>. В статье оцениваются контакт, смещение и компрессия; её шкала 0–3 не конвертируется автоматически в классы RSNA.</p></section>',
-              '<section id="formal-quality"><h2>Достоверность итогового корешкового вывода</h2><p>' + _h(LIMITS) + '</p><p>' + _h(_coverage(report)) + '</p><p>Итоговых кандидатов после всех проверок: <strong>' + str(len(report["root_candidates"])) + '</strong>. Оценок с неподтверждённым итогом: <strong>' + str(report["coverage"]["indeterminate"]) + ' из 20</strong>. Этот статус не скрывает перечисленные выше находки модели.</p>' + _html_overview(report) + '<details><summary>Подробные проверки привязки, источники и исходные вероятности</summary><section id="algorithm">' + quality + '</details></section></main></body></html>']
+        parts.append('<p class="note">Синтетический пример.</p>')
+    parts += ['<section id="discs"><h2>' + TITLES[0] + '</h2><p>LDH не подключён. Наличие, размер и сторона грыжи не определены.</p><table><thead><tr><th>Диск</th><th>Результат</th><th>Axial T2</th></tr></thead><tbody>']
+    for level in LEVELS:
+        parts.append('<tr id="disc-{}"><th scope="row">{}</th><td>{}</td><td>{}</td></tr>'.format(
+            level, _level(level), _h(_disc_result(report, level)), _figure(discs.get(level), bundle, False)))
+    parts.append('</tbody></table></section>')
+    for zone, sequence, title in (("foraminal", "Sagittal T1", TITLES[1]), ("subarticular", "Axial T2", TITLES[2])):
+        parts.append('<section id="{}-stage"><h2>{}</h2><table><thead><tr><th>Уровень</th><th>Слева · {}</th><th>Справа · {}</th></tr></thead><tbody>'.format(zone, title, sequence, sequence))
+        for level in LEVELS:
+            parts.append('<tr><th scope="row">' + _level(level) + '</th>')
+            for side in ("left", "right"):
+                key = zone + "-" + level + "-" + side
+                label = _grade(facts[key], branches[key]) + _marked(branches[key])
+                parts.append('<td id="branch-{}"><strong>{}</strong>{}</td>'.format(
+                    key, _h(label), _figure(views.get(key), bundle)))
+            parts.append('</tr>')
+        parts.append('</tbody></table></section>')
+    parts += ['<section id="fusion"><h2>' + TITLES[3] + '</h2><ul>']
+    lines = fusion_lines(report, bundle)
+    parts += ['<li id="{}">{}</li>'.format(key, _h(text)) for key, text in lines]
+    if not lines:
+        parts.append('<li>' + _h(_empty_fusion(bundle)) + '</li>')
+    parts += ['</ul></section><footer><p>† Условная анатомическая привязка. Нумерация/совмещение требуют подтверждения.</p><p>Норма/лёгкий — единый класс, не исключает изменений. ROI — вход модели, не разметка патологии. Модель учитывает SagT1, SagT2 и AxT2.</p><p><a href="fusion.json">Результаты JSON</a> · <a href="report-evidence.json">Изображения и источники</a></p></footer></main></body></html>']
     return '\n'.join(parts) + '\n'
 
 
-def render_markdown(report, bundle, quality_markdown):
+def render_markdown(report, bundle):
     bundle = build_evidence(report) if bundle is None else bundle
-    lines = ['# МРТ: снимки, находки и анатомическое правило', '', 'Исследование: ' + _m(report["study_id"]), '',
-             '**Исследовательский предварительный отчёт.**', '', summary(bundle), '',
-             '## Изображения этапов', '', VIEW_NOTE, '']
-    if report["synthetic"]:
-        lines += ['**Синтетический пример; это не заключение о пациенте.**', '']
     facts = {f["branch_id"]: f for f in bundle["facts"]}
-    for view in bundle["stage_views"]:
-        image = bundle["images"][view["image_id"]]
-        lines += ['### ' + _m(_title(view["native_target"])) + ' · ' + view["sequence"], '',
-                  'Предварительно: ' + _m(_grade(facts[view["branch_id"]])), '',
-                  '![Проверенный исходный кадр](<' + quote(image["source_file"], safe="/") + '>)', '',
-                  'ROI исходного изображения: ' + str(view["source_crop_box"]) + '. Увеличение показано в HTML.', '']
-    if not bundle["stage_views"]:
-        lines += ['Проверенные изображения не предоставлены.', '']
-    lines += ['## Межпозвонковые диски', '', 'Детектор грыж не подключён; наличие, размер и положение грыжи не определены.', '']
-    for view in bundle["disc_views"]:
-        lines += ['Исходная метка ' + _m(view["native_level"]) + '; кадр для осмотра, не результат детектора грыж.', '',
-                  '![Axial T2 для осмотра диска](<' + quote(bundle["images"][view["image_id"]]["source_file"], safe="/") + '>)', '']
-    lines += ['## Факты → анатомическое правило', '', ANATOMY_NOTE, '']
-    for fact in bundle["facts"]:
-        lines += ['- **' + _m(_title(fact["native_target"])) + ':** ' + _m(_grade(fact)) + '. ' + _m(relation(fact)) + ' ' + _m(effect(fact))]
-    lines += ['', 'Контекст грыжи не оценён; её наличие и причинная роль не добавляются.', '',
-              '[Sung et al., таблица 2](' + PAPER + '): критерии контакта, смещения и компрессии; шкала статьи не приравнивается к RSNA.', '',
-              '## Достоверность итогового корешкового вывода', '',
-              _coverage(report), '',
-              'Кандидатов после всех проверок: {}. Неопределённых итоговых оценок: {} из 20.'.format(len(report["root_candidates"]), report["coverage"]["indeterminate"]), '',
-              quality_markdown[quality_markdown.index('## Как получен вывод'):]]
+    branches = {b["branch_id"]: b for b in report["branches"]}
+    views = {v["branch_id"]: v for v in bundle["stage_views"]}
+    discs = {v["native_level"]: v for v in bundle["disc_views"]}
+    def picture(view):
+        if view is None:
+            return "Нет снимка"
+        path = quote(bundle["images"][view["image_id"]]["source_file"], safe="/")
+        return '![Кадр](<' + path + '>)'
+    lines = ['# МРТ поясничного отдела', '', 'Исследовательская автооценка · ' + _m(report["study_id"]), '']
+    if report["synthetic"]:
+        lines += ['**Синтетический пример.**', '']
+    lines += ['## '+TITLES[0], '', 'LDH не подключён. Наличие, размер и сторона грыжи не определены.', '',
+              '| Диск | Результат | Axial T2 |', '|---|---|---|']
+    for level in LEVELS:
+        lines.append('| {} | {} | {} |'.format(_level(level), _m(_disc_result(report, level)), picture(discs.get(level))))
+    for zone, seq, title in (("foraminal", "Sagittal T1", TITLES[1]), ("subarticular", "Axial T2", TITLES[2])):
+        lines += ['', '## '+title, '', '| Уровень | Слева · '+seq+' | Справа · '+seq+' |', '|---|---|---|']
+        for level in LEVELS:
+            cells = []
+            for side in ("left", "right"):
+                key = zone+'-'+level+'-'+side
+                cells.append(_m(_grade(facts[key], branches[key])+_marked(branches[key]))+' '+picture(views.get(key)))
+            lines.append('| {} | {} | {} |'.format(_level(level), *cells))
+    lines += ['', '## '+TITLES[3], '']
+    lines += ['- '+_m(text) for _,text in fusion_lines(report,bundle)] or ['- '+_empty_fusion(bundle)]
+    lines += ['', '† Условная анатомическая привязка; нумерация/совмещение требуют подтверждения.',
+              'Норма/лёгкий — единый класс, не исключает изменений. ROI — вход модели, не разметка патологии. Модель: SagT1/SagT2/AxT2.', '',
+              '[Результаты JSON](fusion.json) · [Изображения и источники](report-evidence.json)', '']
     return '\n'.join(lines)
 
 
 _CSS = """
-nav{margin:22px 0}.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.image-card{border:1px solid #d4dfe5;border-radius:6px;padding:16px;background:#fafcfd}.image-card h3{margin-top:0}.source-images{display:flex;align-items:center;gap:12px;background:#0d151c;padding:8px;min-height:260px}.source-images svg{width:58%;max-height:310px;background:#0d151c}.source-images svg+svg{width:40%;image-rendering:auto}figure{margin:12px 0}figcaption{font-size:.78rem;overflow-wrap:anywhere;margin-top:7px}.image-card .muted{margin-bottom:0}#facts th{min-width:130px}#facts td{min-width:150px}@media(max-width:760px){.gallery{grid-template-columns:1fr}}@media print{.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}.image-card{break-inside:avoid}.source-images{min-height:0}.source-images svg{max-height:200px}}
+*{box-sizing:border-box}body{margin:0;background:#f3f5f6;color:#152735;font:15px/1.4 system-ui,-apple-system,sans-serif}main{max-width:1180px;margin:auto;padding:28px;background:white}h1{font-size:24px;margin:0}header p,footer{font-size:12px;color:#526370}h2{font-size:19px;margin:28px 0 12px}section>p{font-size:13px}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{padding:10px;border:1px solid #dbe2e6;text-align:left;vertical-align:top;overflow-wrap:anywhere}thead{background:#eef2f4}th:first-child{width:95px}td strong{display:block;font-weight:600;margin-bottom:8px}.images{display:flex;align-items:center;justify-content:center;gap:8px;background:#0c1219;margin-top:6px}.images svg{display:block;width:58%;height:210px}.images svg+svg{width:40%;height:150px}#discs .images svg{width:100%;height:180px}#discs td:nth-child(2){width:30%}#fusion li{padding:9px 0;border-bottom:1px solid #e5eaed;line-height:1.5}.missing{font-size:12px;color:#6a7780}footer{margin-top:25px;border-top:1px solid #dbe2e6}footer p{margin:7px 0}a{color:#245e7a}.note{font-weight:600}@media(max-width:650px){main{padding:14px}body{font-size:13px}th,td{padding:6px}th:first-child{width:65px}.images svg{height:160px}.images svg+svg{height:95px}}@media print{body{background:white;font-size:10pt}main{padding:0}tr{break-inside:avoid}.images svg{height:160px}h2{break-after:avoid}a{color:inherit}}
 """

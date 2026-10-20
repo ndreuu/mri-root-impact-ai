@@ -2,7 +2,7 @@
 
 Реализована исследовательская [policy 0.1.0](fusion-spec.md): отдельные `mri_fusion/contracts.py`, `engine.py`, `runner.py` и CLI `scripts/fuse_mri.py`. Нужен Python 3.9+ со стандартной библиотекой. Fusion читает готовые результаты; нейросети не запускает.
 
-[Отчет для врача](physician-report.md) автоматически формируется при каждом успешном запуске. Текущая версия F004 содержит снимки этапов, факты и условное анатомическое соответствие; она сохранена в `fusion/f004-001`. F002/F003 оставлены как исторические результаты.
+[Краткий отчет для врача](physician-report.md) автоматически формируется при каждом успешном запуске. F005 содержит четыре раздела: диски, фораминальный стеноз, субартикулярный стеноз и Fusion. Текущий результат — `fusion/f005-001`; прежние запуски сохранены.
 
 F001 policy сохранена побайтно: SHA-256 `c3e574a12603a0a438eb1db50b9ce21b47b53fcae9b5d2900bbbfd3cc8744fed`. Ее историческое поле `implementation_status=specified_not_implemented` описывает момент спецификации. F002 исполняет эту спецификацию; статус реализации отражен здесь и в очереди. Аналогично 34 abstract vectors сохраняют исходное `specified_not_executed`; теперь все они преобразуются в настоящие synthetic C001/review inputs и выполняются в `tests/test_fusion_vectors.py`.
 
@@ -16,7 +16,7 @@ python3 scripts/fuse_mri.py \
   --spinenet-run /Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320/localization/l002-001 \
   --rsna-run /Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320/stenosis/s003-001 \
   --crosscheck-run /Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320/geometry/l003-001 \
-  --output /Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320/fusion/f004-001 \
+  --output /Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320/fusion/f005-001 \
   --verify-only
 ```
 
@@ -42,7 +42,7 @@ Frozen-режим повторно проверяет L002/S003 native, C001, sp
 
 При завершении F002 два свежих запуска дали побайтно одинаковые `fusion.json` и `report.md`. Исторические SHA: fusion — `7a175e03af51c178987bfdb2567e2ddc9a43b796fb5c5fe863fb2fc42f65dded`, report — `e52bac9a5cf3a6ffa890cee0e1b90c5e8149fccdea64d64ece8c1f1eef63188c`. F003 меняет представление, сохраняя тот же fusion JSON; новый Markdown и HTML проверяются собственными SHA. `run.json` содержит время и потому побайтного совпадения между запусками не требует.
 
-`--verify-only` перечитывает входы, пересчитывает fusion, факты и изображения, сравнивает JSON, evidence JSON, Markdown и HTML с сохраненным результатом. Файловая запись не выполняется. Исторические F002/F003 проверяются кодом их коммитов `0d61c27`/`d0d3129`; текущая команда проверяет F004 с изображениями.
+`--verify-only` перечитывает входы, пересчитывает fusion, факты и изображения, сравнивает JSON, evidence JSON, Markdown и HTML с сохраненным результатом. Файловая запись не выполняется. F002/F003/F004 проверяются их кодом: `0d61c27`/`d0d3129`/`28bb52c`. Текущая команда проверяет F005.
 
 ## Явные C001 inputs
 
