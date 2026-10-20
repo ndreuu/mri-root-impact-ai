@@ -292,6 +292,30 @@
       ]
     },
     {
+      "id": "F003",
+      "title": "Сформировать понятный врачу отчет с алгоритмом принятия решения",
+      "status": "done",
+      "depends_on": [
+        "F002"
+      ],
+      "acceptance": [
+        "HTML и Markdown показывают предварительные находки, условия их интерпретации, примененное правило и итог на русском языке",
+        "Для каждой ветви видна цепочка находка → проверка исходной оценки и review → исследовательский порог → решение; технические коды не заменяют объяснение",
+        "Неопределенная привязка не становится подтвержденной находкой или именованным пациентским корешком; объединенный Normal/Mild и ограничения грыж сохраняются",
+        "HTML работает локально без внешних ресурсов, значения экранируются; report HTML/Markdown связаны SHA и пересчетом с неизменным fusion JSON",
+        "Новый отчет на контрольном случае сохранен отдельно от F002, прочитан и проверен по двадцати объяснениям; инструкция запуска и очередь обновлены"
+      ],
+      "evidence": [
+        "mri_fusion/reporting.py; docs/physician-report.md; automatic physician HTML+Markdown on each successful fuse_mri.py run; four-stage explanations and conditional anatomy reference",
+        "Every20branch has nativefinding, source/reviewgates, researchthreshold and outcome; unverified mapping never namespatientroot; rawunknown/disc/probability evidence retained without medical scale conversion",
+        "HTML is escaped and self-contained with no scripts/externalresources; generated HTML/Markdown/JSON hashes and exact recomputation checked; source/code files remain bound",
+        "Two fresh runs identical HTML,Markdown,fusionJSON; fusionJSON unchanged from F002; old F002report preserved; verify-only no writes;161inputfiles and27codefiles verified",
+        "353tests pass in RSNA runtime; core308pass45optionalskips;16new meaningful checks including unsupportedscale, missingdata, partialrootcoverage, HTMLescaping and forgedchecksum; harnesssmoke passes",
+        "Control report text and20structureddecisiontraces reviewed; browser fileURL preview blocked by toolpolicy and not claimed visually verified",
+        "External finalrun:/Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320/fusion/f003-001; nextE001 technical evaluation protocol"
+      ]
+    },
+    {
       "id": "E001",
       "title": "Определить протокол технической оценки Stage I",
       "status": "ready",

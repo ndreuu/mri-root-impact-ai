@@ -2,6 +2,8 @@
 
 Реализована исследовательская [policy 0.1.0](fusion-spec.md): отдельные `mri_fusion/contracts.py`, `engine.py`, `runner.py` и CLI `scripts/fuse_mri.py`. Нужен Python 3.9+ со стандартной библиотекой. Fusion читает готовые результаты; нейросети не запускает.
 
+[F003](physician-report.md) автоматически формирует понятные врачу HTML и Markdown при каждом успешном запуске: предварительный вывод, исходные находки и пошаговое объяснение решения. Сохраненный контрольный отчет новой версии находится в `fusion/f003-001`; F002 оставлен как исторический результат.
+
 F001 policy сохранена побайтно: SHA-256 `c3e574a12603a0a438eb1db50b9ce21b47b53fcae9b5d2900bbbfd3cc8744fed`. Ее историческое поле `implementation_status=specified_not_implemented` описывает момент спецификации. F002 исполняет эту спецификацию; статус реализации отражен здесь и в очереди. Аналогично 34 abstract vectors сохраняют исходное `specified_not_executed`; теперь все они преобразуются в настоящие synthetic C001/review inputs и выполняются в `tests/test_fusion_vectors.py`.
 
 ## Повторить контрольный результат
@@ -14,7 +16,7 @@ python3 scripts/fuse_mri.py \
   --spinenet-run /Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320/localization/l002-001 \
   --rsna-run /Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320/stenosis/s003-001 \
   --crosscheck-run /Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320/geometry/l003-001 \
-  --output /Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320/fusion/f002-001 \
+  --output /Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320/fusion/f003-001 \
   --verify-only
 ```
 
@@ -34,11 +36,12 @@ Frozen-режим повторно проверяет L002/S003 native, C001, sp
 |---|---|
 | `fusion.json` | Версия формата 1.0; policy SHA, bindings исходных JSON, 20 ветвей, native evidence, review gates, reasons, summaries и candidates |
 | `report.md` | Читаемая таблица native уровня, стороны, зоны, степени, решения и причин неопределенности |
-| `run.json` | Статус выполнения, время, SHA всех прочитанных файлов и исходного кода, SHA двух итоговых артефактов |
+| `report.html` | Отчет для врача с предварительным заключением и раскрываемым разбором каждой оценки; создается автоматически начиная с F003 |
+| `run.json` | Статус выполнения, время, SHA всех прочитанных файлов и исходного кода, SHA итоговых JSON, Markdown и HTML |
 
-Два свежих запуска дали побайтно одинаковые `fusion.json` и `report.md`. SHA fusion — `7a175e03af51c178987bfdb2567e2ddc9a43b796fb5c5fe863fb2fc42f65dded`, report — `e52bac9a5cf3a6ffa890cee0e1b90c5e8149fccdea64d64ece8c1f1eef63188c`. `run.json` содержит время и потому побайтного совпадения между запусками не требует.
+При завершении F002 два свежих запуска дали побайтно одинаковые `fusion.json` и `report.md`. Исторические SHA: fusion — `7a175e03af51c178987bfdb2567e2ddc9a43b796fb5c5fe863fb2fc42f65dded`, report — `e52bac9a5cf3a6ffa890cee0e1b90c5e8149fccdea64d64ece8c1f1eef63188c`. F003 меняет представление, сохраняя тот же fusion JSON; новый Markdown и HTML проверяются собственными SHA. `run.json` содержит время и потому побайтного совпадения между запусками не требует.
 
-`--verify-only` перечитывает входы, пересчитывает fusion и сравнивает полный JSON и Markdown с сохраненным результатом. Проверены 161 входной файл, включая все 60 DICOM, и SHA 26 файлов кода; файловая запись не выполняется. Полный отчет обязан совпасть с пересчетом, поэтому одной внутренней согласованности отредактированного JSON недостаточно.
+`--verify-only` перечитывает входы, пересчитывает fusion и сравнивает полный JSON, Markdown и HTML с сохраненным результатом. Файловая запись не выполняется. Полный отчет обязан совпасть с пересчетом, поэтому одной внутренней согласованности отредактированного JSON недостаточно. Исторический F002 проверяется кодом его коммита `0d61c27`; текущая команда проверяет новый F003 с HTML.
 
 ## Явные C001 inputs
 
@@ -73,6 +76,6 @@ Evidence document содержит ровно `schema_version=1.0`, `kind=fusion
 
 34 F001 сценария исполняются через synthetic fixtures, включая L5–S1, обе стороны, многоуровневость, два основания одного L5, partial coverage, дубликаты, конфликты, unknown target, непринятую шкалу грыж, некорректные вероятности и SHA. Дополнительные tests проверяют contracts, невозможность подменить исходный статус, защиту источников, tamper detection и read-only verification.
 
-Все 337 тестов проходят в RSNA runtime; core Python 3.9 проходит 292 и пропускает 45 optional decoder tests. Отдельный harness smoke проходит. Из них 92 новых fusion tests: 42 vector/regression, 26 contract и 24 runner.
+При завершении F002 все 337 тестов прошли в RSNA runtime; core Python 3.9 прошел 292 и пропустил 45 optional decoder tests. Отдельный harness smoke прошел. Из них 92 новых fusion tests: 42 vector/regression, 26 contract и 24 runner. Проверки нового представления F003 добавлены отдельно.
 
 Эти проверки подтверждают применение правил и сохранность данных. Контрольный train-case и синтетические сценарии не оценивают точность определения корешков. Протокол независимой технической оценки — E001; LDH adapter и его обученные артефакты — D002. Полный Stage I еще не завершен.

@@ -62,7 +62,7 @@ class FusionRunnerTests(unittest.TestCase):
         before = self.snapshot(self.inputs)
         output = self.directory / "output"
         self.fuse(output=output)
-        self.assertEqual({path.name for path in output.iterdir()}, {"fusion.json", "report.md", "run.json"})
+        self.assertEqual({path.name for path in output.iterdir()}, {"fusion.json", "report.md", "report.html", "run.json"})
         report = json.loads((output / "fusion.json").read_text())
         self.assertEqual(report["kind"], "mri_root_impact_fusion")
         self.assertEqual(len(report["branches"]), 20)
@@ -72,7 +72,8 @@ class FusionRunnerTests(unittest.TestCase):
         self.assertEqual(report["root_candidates"], [])
         self.assertIs(report["inference_performed"], False)
         self.assertIsNone(report["clinical_diagnosis"])
-        self.assertIn("indeterminate", (output / "report.md").read_text())
+        self.assertIn("неопредел", (output / "report.md").read_text().lower())
+        self.assertIn("неопредел", (output / "report.html").read_text().lower())
         self.assertEqual(self.snapshot(self.inputs), before)
 
     def test_valid_empty_result_set_stays_unknown(self):
@@ -256,6 +257,30 @@ class FusionRunnerTests(unittest.TestCase):
         path.write_text(path.read_text() + "\nAltered report.\n")
         before = self.snapshot(self.directory)
         with self.assertRaises(FusionContractError):
+            self.fuse(output=output, verify_only=True)
+        self.assertEqual(self.snapshot(self.directory), before)
+
+    def test_tampered_html_report_is_rejected_without_repairing_it(self):
+        output = self.directory / "output"
+        self.fuse(output=output)
+        path = output / "report.html"
+        path.write_text(path.read_text() + "\n<p>Altered clinical explanation.</p>\n")
+        before = self.snapshot(self.directory)
+        with self.assertRaises(FusionContractError):
+            self.fuse(output=output, verify_only=True)
+        self.assertEqual(self.snapshot(self.directory), before)
+
+    def test_html_edit_with_replaced_checksum_still_fails_source_recomputation(self):
+        output = self.directory / "output"
+        self.fuse(output=output)
+        path = output / "report.html"
+        path.write_text(path.read_text().replace("Предварительное заключение", "Изменённое заключение"))
+        metadata_path = output / "run.json"
+        metadata = json.loads(metadata_path.read_text())
+        metadata["artifacts_sha256"]["report.html"] = hashlib.sha256(path.read_bytes()).hexdigest()
+        self.write_json(metadata_path, metadata)
+        before = self.snapshot(self.directory)
+        with self.assertRaisesRegex(FusionContractError, "Physician HTML differs"):
             self.fuse(output=output, verify_only=True)
         self.assertEqual(self.snapshot(self.directory), before)
 

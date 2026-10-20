@@ -11,6 +11,7 @@ from mri_root_impact.contracts import manifest_digest, validate_bundle
 from mri_root_impact.control_study import write_json_external
 from .contracts import FusionContractError, artifact_binding, load_policy, validate_output
 from .engine import fuse
+from .reporting import render_html, render_markdown
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -189,31 +190,8 @@ def _proof(study, document):
 
 
 def render_report(report):
-    def cell(value):
-        return str(value).replace("|", "\\|").replace("\n", " ")
-    lines = ["# Stage I — исследовательский MRI fusion", "",
-             "Применена policy `{}`. Нового MRI inference нет.".format(report["policy_id"]), "",
-             "Кандидаты по двум стенозным правилам: **{}**. Неопределенные ветви: **{} из 20**.".format(
-                 len(report["root_candidates"]), report["coverage"]["indeterminate"]), "",
-             "Отдельно сохранены находки без установленного target: **{}**; исходные оценки дисков: **{}**.".format(
-                 len(report["unresolved_native_evidence"]), len(report["raw_disc_evidence"])), "",
-             "Отсутствие кандидатов при неопределенных входах не является отрицательной находкой. "
-             "Кандидат не подтверждает компрессию или радикулопатию. Severe-only — исследовательский порог.", "",
-             "| Native уровень | Сторона | Зона | Native grade | Решение | Кандидат | Причины |",
-             "|---|---|---|---|---|---|---|"]
-    for row in report["branches"]:
-        grades = sorted({e["observation"]["label"] for e in row["evidence"] if e["observation"] is not None})
-        root = row["candidate_root"]
-        candidate = "—" if root is None else "{} {} ({})".format(root["side"], root["root"], root["role"])
-        values = [row["target"]["level"], row["target"]["side"], row["target"]["zone"],
-                  ", ".join(grades) or "нет оценки", row["decision"], candidate, ", ".join(row["reason_codes"])]
-        lines.append("| " + " | ".join(cell(v) for v in values) + " |")
-    lines += ["", "Контекст грыжи: `not_evaluated`; причина стеноза грыже не приписывается. "
-              "Согласие локализаторов и неподтвержденное identity-LPS не заменяют review.", "",
-              "Policy SHA-256: `{}`.".format(report["policy_sha256"]),
-              "Review SHA-256: `{}`.".format(report["review_context_sha256"] or "не предоставлен"),
-              "Полная provenance, native probabilities и source refs сохранены в `fusion.json`.", ""]
-    return "\n".join(lines)
+    """Compatibility entry point for the physician-facing Markdown report."""
+    return render_markdown(report)
 
 
 def _code_hashes():
@@ -229,12 +207,13 @@ def validate_saved_run(study, output, expected, files):
     if (not isinstance(run, dict) or run.get("kind") != "mri_fusion_run" or run.get("status") != "completed"
             or run.get("study_id") != study["study_id"] or run.get("study_digest") != manifest_digest(study)
             or run.get("inference_performed") is not False or run.get("fusion_performed") is not True
-            or run.get("source_bytes_unchanged") is not True or run.get("code_files_sha256") != _code_hashes()
+            or run.get("source_bytes_unchanged") is not True or run.get("report_format_version") != "1.0"
+            or run.get("code_files_sha256") != _code_hashes()
             or run.get("input_files_sha256") != files):
         raise FusionContractError("Fusion run metadata is not bound to these unchanged inputs/code")
     hashes = run.get("artifacts_sha256")
-    if not isinstance(hashes, dict) or set(hashes) != {"fusion.json", "report.md"}:
-        raise FusionContractError("Fusion requires both output artifacts")
+    if not isinstance(hashes, dict) or set(hashes) != {"fusion.json", "report.md", "report.html"}:
+        raise FusionContractError("Fusion requires JSON, Markdown and physician HTML artifacts")
     for name, digest in hashes.items():
         if (output / name).is_symlink() or file_sha256(output / name) != digest:
             raise FusionContractError("Fusion output checksum mismatch")
@@ -244,6 +223,8 @@ def validate_saved_run(study, output, expected, files):
         raise FusionContractError("Saved fusion differs from recomputed source evidence")
     if (output / "report.md").read_text(encoding="utf-8") != render_report(expected):
         raise FusionContractError("Human report differs from checked fusion JSON")
+    if (output / "report.html").read_text(encoding="utf-8") != render_html(expected):
+        raise FusionContractError("Physician HTML differs from checked fusion JSON")
     _assert_unchanged(files)
     return actual
 
@@ -316,14 +297,15 @@ def _run(study_path, output, result_paths, review_path, evidence_paths, spinenet
         try:
             write_json_external(expected, output / "fusion.json")
             (output / "report.md").write_text(render_report(expected), encoding="utf-8")
+            (output / "report.html").write_text(render_html(expected), encoding="utf-8")
             _assert_unchanged(files)
             report = {"schema_version": "1.0", "kind": "mri_fusion_run", "status": "completed",
                       "study_id": study["study_id"], "study_digest": manifest_digest(study),
-                      "inference_performed": False, "fusion_performed": True,
+                      "inference_performed": False, "fusion_performed": True, "report_format_version": "1.0",
                       "duration_seconds": time.monotonic() - started, "source_bytes_unchanged": True,
                       "input_files_sha256": files, "code_files_sha256": _code_hashes(),
                       "parameters": {"input_mode": "frozen_mri" if frozen else "c001_files", "review_provided": review_path is not None},
-                      "artifacts_sha256": {name: file_sha256(output / name) for name in ("fusion.json", "report.md")}}
+                      "artifacts_sha256": {name: file_sha256(output / name) for name in ("fusion.json", "report.md", "report.html")}}
             write_json_external(report, output / "run.json")
             validate_saved_run(study, output, expected, files)
         except Exception as exc:
@@ -332,4 +314,5 @@ def _run(study_path, output, result_paths, review_path, evidence_paths, spinenet
             raise
     return {"ok": True, "operation": "verify-fusion" if verify_only else "fuse-mri", "output": str(output),
             "inference_performed": False, "fusion_performed": True, "coverage": expected["coverage"],
-            "named_root_candidates": len(expected["root_candidates"]), "global_root_clearance": False}
+            "named_root_candidates": len(expected["root_candidates"]), "global_root_clearance": False,
+            "report": str(output / "report.html"), "markdown_report": str(output / "report.md")}
