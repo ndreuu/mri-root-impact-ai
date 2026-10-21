@@ -13,7 +13,7 @@ from mri_root_impact.contracts import manifest_digest, validate_bundle
 from mri_root_impact.control_study import write_json_external
 from .contracts import FusionContractError, artifact_binding, load_policy, validate_output
 from .engine import fuse
-from .evidence import build_evidence
+from .evidence import build_evidence, add_disc_evidence
 from .reporting import render_html, render_markdown
 
 
@@ -216,6 +216,7 @@ def _read_report_image(directory, overlay, files):
 
 def _code_hashes():
     paths = (sorted((ROOT / "mri_fusion").glob("*.py"))
+             + sorted((ROOT / "mri_disc").glob("*.py"))
              + sorted((ROOT / "mri_root_impact").glob("*.py"))
              + [ROOT / "scripts/fuse_mri.py", ROOT / "scripts/compare_localizers.py"])
     return {p.relative_to(ROOT).as_posix(): file_sha256(p) for p in paths}
@@ -227,7 +228,7 @@ def validate_saved_run(study, output, expected, files, evidence=None):
     if (not isinstance(run, dict) or run.get("kind") != "mri_fusion_run" or run.get("status") != "completed"
             or run.get("study_id") != study["study_id"] or run.get("study_digest") != manifest_digest(study)
             or run.get("inference_performed") is not False or run.get("fusion_performed") is not True
-            or run.get("source_bytes_unchanged") is not True or run.get("report_format_version") != "1.2"
+            or run.get("source_bytes_unchanged") is not True or run.get("report_format_version") != "1.3"
             or run.get("code_files_sha256") != _code_hashes()
             or run.get("input_files_sha256") != files):
         raise FusionContractError("Fusion run metadata is not bound to these unchanged inputs/code")
@@ -253,31 +254,45 @@ def validate_saved_run(study, output, expected, files, evidence=None):
 
 
 def run_fusion(study_path, output, result_paths=(), review_path=None, evidence_paths=(),
-               spinenet_run=None, rsna_run=None, crosscheck_run=None, policy_path=None, verify_only=False):
+               spinenet_run=None, rsna_run=None, crosscheck_run=None, policy_path=None, verify_only=False, disc_run=None):
     try:
         return _run(study_path, output, result_paths, review_path, evidence_paths,
-                    spinenet_run, rsna_run, crosscheck_run, policy_path, verify_only)
+                    spinenet_run, rsna_run, crosscheck_run, policy_path, verify_only, disc_run)
     except FusionContractError:
         raise
     except (OSError, ValueError, KeyError, TypeError, AttributeError) as exc:
         raise FusionContractError("Fusion input/run error: " + str(exc)) from exc
 
 
-def _run(study_path, output, result_paths, review_path, evidence_paths, spinenet_run, rsna_run, crosscheck_run, policy_path, verify_only):
+def _run(study_path, output, result_paths, review_path, evidence_paths, spinenet_run, rsna_run, crosscheck_run, policy_path, verify_only, disc_run):
     started = time.monotonic()
     frozen = [p for p in (spinenet_run, rsna_run, crosscheck_run) if p is not None]
     if frozen and len(frozen) != 3:
         raise FusionContractError("Frozen mode requires all three upstream run directories")
+    if disc_run is not None and len(frozen) != 3:
+        raise FusionContractError('Disc grading requires all three frozen MRI runs')
+    input_dirs = frozen + ([] if disc_run is None else [disc_run])
     from .contracts import POLICY_PATH
     policy_path = Path(policy_path or POLICY_PATH).resolve()
     paths = [study_path, policy_path] + list(result_paths) + list(evidence_paths) + ([] if review_path is None else [review_path])
-    output = _protect_output(output, paths, frozen, verify_only)
+    output = _protect_output(output, paths, input_dirs, verify_only)
     files = {}
     study, _ = _load(study_path, files)
     validate_bundle(study, [])
     _, policy_sha = load_policy(policy_path)
     files[str(policy_path)] = policy_sha
     documents = _frozen_runs(study, *frozen, files) if frozen else []
+    disc_document = None
+    if disc_run is not None:
+        from mri_disc.contract import validate_run as validate_disc_run
+        disc_document, _, disc_files = validate_disc_run(study_path, spinenet_run, disc_run)
+        for path, digest in disc_files.items():
+            _pin_file(path, digest, files)
+        for name, prefix in (('disc.json','disc-native'),('result.json','disc-result'),('run.json','disc-execution')):
+            document, digest = _load(Path(disc_run) / name, files)
+            documents.append((prefix, document, digest))
+        if disc_document != documents[-3][1]:
+            raise FusionContractError('Disc native document changed across validation')
     for path in result_paths:
         document, digest = _load(path, files)
         if not isinstance(document, dict) or document.get("kind") != "module_result":
@@ -309,7 +324,7 @@ def _run(study_path, output, result_paths, review_path, evidence_paths, spinenet
                 files[str(Path(image["path"]).resolve())] = image["sha256"]
     # Images and frozen artifacts are discovered after the initial path check.
     # Keep new artifacts out of every source directory, including DICOM folders.
-    _protect_output(output, list(files), frozen, verify_only)
+    _protect_output(output, list(files), input_dirs, verify_only)
     expected = fuse(study, results, bindings, review, review_sha, policy_path)
     validate_output(study, expected)
     source_documents = {name: document for name, document, _ in documents}
@@ -317,6 +332,12 @@ def _run(study_path, output, result_paths, review_path, evidence_paths, spinenet
         expected, source_documents.get("rsna-spatial"),
         source_documents.get("rsna-execution", {}).get("overlays", ()),
         (lambda overlay: _read_report_image(Path(rsna_run), overlay, files)) if frozen else None)
+    if disc_document is not None:
+        def disc_image(name):
+            path = Path(disc_run).resolve() / name
+            return _read_report_image(Path(disc_run), {'file': name, 'sha256': files[str(path)],
+                                                      'width': 224, 'height': 112}, files)
+        add_disc_evidence(evidence, disc_document, disc_image)
     if verify_only:
         validate_saved_run(study, output, expected, files, evidence)
     else:
@@ -330,7 +351,7 @@ def _run(study_path, output, result_paths, review_path, evidence_paths, spinenet
             _assert_unchanged(files)
             report = {"schema_version": "1.0", "kind": "mri_fusion_run", "status": "completed",
                       "study_id": study["study_id"], "study_digest": manifest_digest(study),
-                      "inference_performed": False, "fusion_performed": True, "report_format_version": "1.2",
+                      "inference_performed": False, "fusion_performed": True, "report_format_version": "1.3",
                       "duration_seconds": time.monotonic() - started, "source_bytes_unchanged": True,
                       "input_files_sha256": files, "code_files_sha256": _code_hashes(),
                       "parameters": {"input_mode": "frozen_mri" if frozen else "c001_files", "review_provided": review_path is not None},

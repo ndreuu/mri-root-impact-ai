@@ -95,6 +95,9 @@ class MRIToolTests(unittest.TestCase):
             count = sum(len(series["images"]) for series in self.study["series"])
             self.write(output, {"kind": "input_preflight", "study_digest": manifest_digest(self.study),
                                 "files_verified": count, "files_decoded": count})
+        elif 'mri_disc.worker' in arguments:
+            self.events.append('disc_analysis')
+            self.fake_run(output, 'disc_analysis')
         else:
             self.events.append("crosscheck")
             self.fake_run(output, "crosscheck")
@@ -180,6 +183,54 @@ class MRIToolTests(unittest.TestCase):
         self.assertEqual(report["root_candidates"], [])
         self.assertIs(report["inference_performed"], False)
         self.assertTrue((self.output / "fusion" / "report.html").is_file())
+
+    def enable_disc_fixture(self):
+        self.config['disc_analysis']='spinenet_binary'
+        self.write(self.config_path,self.config)
+        actual=self.fusion.side_effect
+        def fixture_fusion(*args,**kwargs):
+            kwargs.pop('disc_run',None)
+            return actual(*args,**kwargs)
+        self.fusion.side_effect=fixture_fusion
+
+    def test_disc_worker_uses_spinenet_runtime_after_localization_and_is_not_repeated_in_verify(self):
+        self.enable_disc_fixture()
+        with mock.patch('mri_disc.contract.validate_run') as validate:
+            self.run_tool()
+            self.assertEqual(self.events,['preflight','localization','disc_analysis','stenosis','crosscheck','fusion'])
+            call=next(c for c in self.command.call_args_list if 'mri_disc.worker' in c.args[1])
+            self.assertEqual(call.args[0],self.python)
+            self.assertIn(str(self.spine_source),[str(v) for v in call.args[1]])
+            validate.assert_called_once()
+            before=self.snapshot(self.output);count=self.command.call_count
+            self.run_tool(verify_only=True)
+            self.assertEqual(self.command.call_count,count)
+            self.assertEqual(self.snapshot(self.output),before)
+        self.assertEqual(load_document(self.output/'tool-run.json')['herniation_analysis'],'spinenet_binary_unreviewed')
+
+    def test_invalid_disc_artifact_stops_pipeline_before_stenosis(self):
+        self.enable_disc_fixture()
+        with mock.patch('mri_disc.contract.validate_run',side_effect=ValueError('Fictitious corrupt disc artifact')):
+            with self.assertRaises(ValueError):self.run_tool()
+        journal=load_document(self.output/'tool-run.json')
+        self.assertEqual(journal['failed_stage'],'disc_analysis')
+        self.assertEqual(journal['completed_stages'],['preflight','localization'])
+        self.rsna.assert_not_called();self.fusion.assert_not_called()
+
+    def test_frozen_disc_mode_reuses_all_stages_without_model_calls(self):
+        self.enable_disc_fixture();self.frozen()
+        self.config['disc_run']='../frozen/disc'
+        self.write(self.config_path,self.config)
+        self.run_tool()
+        self.command.assert_not_called();self.spine.assert_not_called();self.rsna.assert_not_called()
+        self.assertEqual(self.fusion.call_args.kwargs['disc_run'],self.directory/'frozen/disc')
+        self.assertEqual(load_document(self.output/'tool-run.json')['completed_stages'],['fusion'])
+
+    def test_unknown_disc_backend_is_rejected_before_any_stage(self):
+        self.config['disc_analysis']='ldh_mock'
+        self.write(self.config_path,self.config)
+        with self.assertRaises(ValueError):self.run_tool()
+        self.command.assert_not_called()
 
     def test_frozen_mode_calls_only_fusion_and_never_models_or_commands(self):
         self.frozen()

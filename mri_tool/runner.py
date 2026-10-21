@@ -37,12 +37,16 @@ def _config(path):
     mode = config.get("mode")
     if mode == "frozen":
         names = ("spinenet_run", "rsna_run", "crosscheck_run")
-        _object(config, ("schema_version", "mode") + names)
-        return {"mode": mode, **{name: _path(config[name], base) for name in names}}
+        _object(config, ("schema_version", "mode") + names, ('disc_run',))
+        return {"mode": mode, **{name: _path(config[name], base) for name in names},
+                **({'disc_run': _path(config['disc_run'], base)} if 'disc_run' in config else {})}
     if mode != "inference":
         raise ValueError("Tool mode must be inference or frozen")
-    _object(config, ("schema_version", "mode", "spinenet", "rsna"), ("options",))
-    resolved = {"mode": mode}
+    _object(config, ("schema_version", "mode", "spinenet", "rsna"), ("options", 'disc_analysis'))
+    backend = config.get('disc_analysis')
+    if backend not in (None, 'spinenet_binary'):
+        raise ValueError('disc_analysis must be spinenet_binary when supplied')
+    resolved = {"mode": mode, 'disc_analysis': backend}
     for model, fields in (("spinenet", ("source", "python")), ("rsna", ("source", "weights", "python"))):
         _object(config[model], fields)
         resolved[model] = {key: _path(config[model][key], base) for key in fields}
@@ -61,7 +65,7 @@ def _config(path):
 
 
 def _code_hashes():
-    paths = sorted((ROOT / "mri_tool").glob("*.py")) + [ROOT / "scripts/run_mri.py"]
+    paths = sorted((ROOT / "mri_tool").glob("*.py")) + sorted((ROOT / 'mri_disc').glob('*.py')) + [ROOT / "scripts/run_mri.py"]
     return {p.relative_to(ROOT).as_posix(): file_sha256(p) for p in paths}
 
 
@@ -73,7 +77,8 @@ def _write(path, document):
 
 def _run_command(python, arguments, log_path, timeout):
     environment = os.environ.copy()
-    environment.update(PYTHONPATH=str(ROOT), PYTHONDONTWRITEBYTECODE="1", MPLBACKEND="Agg")
+    environment.update(PYTHONPATH=str(ROOT), PYTHONDONTWRITEBYTECODE="1", MPLBACKEND="Agg",
+                       MPLCONFIGDIR=str(log_path.parent / '.mpl-cache'))
     environment.pop("PYTHONHOME", None)
     with log_path.open("x", encoding="utf-8") as log:
         process = subprocess.Popen([str(python)] + [str(v) for v in arguments], cwd=ROOT,
@@ -115,6 +120,8 @@ def _protect(output, study_path, study, config_path, config, verify_only):
         for model in ("spinenet", "rsna"):
             parent = config[model]["python"].parent
             directories.append((parent.parent if parent.name in ("bin", "Scripts") else parent).resolve())
+    elif 'disc_run' in config:
+        directories.append(config['disc_run'].resolve())
     for directory in directories:
         if output == directory or directory in output.parents or output in directory.parents:
             raise ValueError("Tool output overlaps a source, weights or upstream run")
@@ -139,23 +146,26 @@ def run_mri(study_path, config_path, output, verify_only=False, progress=None):
     runs = ({key: config[key] for key in ("spinenet_run", "rsna_run", "crosscheck_run")}
             if config["mode"] == "frozen" else
             {"spinenet_run": output / "localization", "rsna_run": output / "stenosis", "crosscheck_run": output / "crosscheck"})
+    disc_run = (output / 'disc-analysis' if config.get('disc_analysis') == 'spinenet_binary' else config.get('disc_run'))
+    disc_args = {} if disc_run is None else {'disc_run': disc_run}
+    stages = ['preflight', 'localization'] + (['disc_analysis'] if disc_run is not None else []) + ['stenosis','crosscheck','fusion']
     identity = {"kind": "mri_report_tool_run", "schema_version": "1.0", "tool_version": __version__, "mode": config["mode"],
                 "study_id": study["study_id"], "study_digest": manifest_digest(study),
                 "input_files_sha256": bindings, "code_files_sha256": _code_hashes(),
-                "stage_directories": {k: str(p) for k, p in runs.items()},
+                "stage_directories": {k: str(p) for k, p in {**runs, **disc_args}.items()},
                 "report": str(output / "fusion/report.html"),
                 "markdown_report": str(output / "fusion/report.md"),
-                "herniation_analysis": "not_configured"}
+                "herniation_analysis": 'spinenet_binary_unreviewed' if disc_run is not None else "not_configured"}
     if verify_only:
         saved = load_document(output / "tool-run.json")
         if (not isinstance(saved, dict) or saved.get("status") != "completed"
                 or any(saved.get(key) != value for key, value in identity.items())
                 or saved.get("inference_performed") is not (config["mode"] == "inference")
-                or saved.get("completed_stages") != (["preflight", "localization", "stenosis", "crosscheck", "fusion"]
+                or saved.get("completed_stages") != (stages
                                                      if config["mode"] == "inference" else ["fusion"])
                 or saved.get("fusion_run_sha256") != file_sha256(output / "fusion/run.json")):
             raise ValueError("Tool run metadata, inputs, code or fusion binding differ")
-        result = run_fusion(study_path, output / "fusion", **runs, verify_only=True)
+        result = run_fusion(study_path, output / "fusion", **runs, **disc_args, verify_only=True)
         _unchanged(bindings)
         return {**result, "operation": "verify-mri-report", "output": str(output),
                 "tool_run": str(output / "tool-run.json")}
@@ -193,6 +203,15 @@ def run_mri(study_path, config_path, output, verify_only=False, progress=None):
             common = {key: options[key] for key in ("allow_missing_modality", "threads", "timeout")}
             run_spinenet(study_path, output=runs["spinenet_run"], **config["spinenet"], **common)
             completed.append(stage)
+            if disc_run is not None:
+                advance('disc_analysis')
+                _run_command(config['spinenet']['python'], ['-m','mri_disc.worker','--study',study_path,
+                    '--spine-run',runs['spinenet_run'],'--source',config['spinenet']['source'],
+                    '--output',disc_run,'--threads',options['threads']] + policy,
+                    output / 'disc-analysis.log', options['timeout'])
+                from mri_disc.contract import validate_run as validate_disc_run
+                validate_disc_run(study_path, runs['spinenet_run'], disc_run)
+                completed.append(stage)
             advance("stenosis")
             run_rsna(study_path, output=runs["rsna_run"], **config["rsna"], **common,
                      allow_unverified_registration=options["allow_unverified_registration"])
@@ -204,7 +223,7 @@ def run_mri(study_path, config_path, output, verify_only=False, progress=None):
                          output / "crosscheck.log", options["timeout"])
             completed.append(stage)
         advance("fusion")
-        result = run_fusion(study_path, output / "fusion", **runs)
+        result = run_fusion(study_path, output / "fusion", **runs, **disc_args)
         completed.append(stage)
         _unchanged(bindings)
         journal = {**identity, "status": "completed", "completed_stages": completed,

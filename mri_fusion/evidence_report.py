@@ -31,7 +31,17 @@ def _grade(fact, branch):
     return "Ошибка оценки" if "error" in statuses else "Не запускалось" if "not_run" in statuses else "Не оценено"
 
 
-def _disc_result(report, level):
+def _disc_prediction(bundle, level):
+    if bundle.get('disc_analysis_status') != 'spinenet_binary_unreviewed':
+        return None
+    rows = [r for r in bundle.get('disc_predictions', []) if r['native_level'] == level]
+    return rows[0]['native_class'] if len(rows) == 1 else None
+
+
+def _disc_result(report, level, bundle=None):
+    if bundle is not None and bundle.get('disc_analysis_status') == 'spinenet_binary_unreviewed':
+        value = _disc_prediction(bundle, level)
+        return {1: 'Модель: признак грыжи †', 0: 'Модель: признак грыжи не выявлен †'}.get(value, 'Грыжа не оценена')
     evidence = [e for e in report["raw_disc_evidence"] if e["target"]["level"] == level]
     observations = [e["observation"] for e in evidence if e["observation"] is not None]
     if observations:
@@ -43,12 +53,14 @@ def fusion_lines(report, bundle):
     """Problems → short conclusion; conditional anatomy never changes JSON."""
     branches = {b["branch_id"]: b for b in report["branches"]}
     lines = []
+    represented = set()
     for fact in bundle["facts"]:
         grade = fact["native_grade"]
         branch = branches[fact["branch_id"]]
         if grade == "normal_mild" or not branch["evidence"]:
             continue
         target = fact["native_target"]
+        represented.add(target['level'])
         prefix = "{} + {} {} стеноз {}".format(_level(target["level"]),
             {"moderate": "умеренный", "severe": "выраженный"}.get(grade, "неопределённый"),
             ZONES[target["zone"]], SIDES[target["side"]])
@@ -63,7 +75,13 @@ def fusion_lines(report, bundle):
             zone = {"foraminal": "фораминальная зона", "subarticular": "субартикулярная зона"}[target["zone"]]
             prefix = "{} + {} {}: {}".format(_level(target["level"]), zone, SIDES[target["side"]], _grade(fact, branch))
             conclusion = "корешок не определён"
+        if _disc_prediction(bundle, target['level']) == 1:
+            prefix += ' + признак грыжи (SpineNet; сторона неизвестна)'
         lines.append(("fusion-" + fact["branch_id"], prefix + " ⇒ " + conclusion + "."))
+    for level in LEVELS:
+        if level not in represented and _disc_prediction(bundle, level) == 1:
+            lines.append(('fusion-disc-' + level, _level(level) +
+                          ' + признак грыжи (SpineNet; сторона неизвестна) ⇒ корешок по этой находке не определён.'))
     for i, evidence in enumerate(report["unresolved_native_evidence"]):
         target = evidence["target"]
         observation = evidence["observation"]
@@ -88,7 +106,8 @@ def _figure(view, bundle, crop=True):
         zoom = '<svg role="img" aria-label="Увеличение ROI" viewBox="{} {} {} {}">{}</svg>'.format(x0, y0, x1-x0, y1-y0, contents)
     ref = view["image_ref"]
     source = "{} / {} / кадр {}".format(ref["series_id"], ref["image_id"], ref["frame_index"])
-    return '<div class="images" title="{}"><svg role="img" aria-label="Исходный кадр" viewBox="0 0 {} {}">{}</svg>{}</div>'.format(_h(source), width, height, contents, zoom)
+    label = 'Вход модели SpineNet, срез 5/9' if view.get('purpose') == 'spinenet_binary_model_input' else 'Исходный кадр'
+    return '<div class="images" title="{}"><svg role="img" aria-label="{}" viewBox="0 0 {} {}">{}</svg>{}</div>'.format(_h(source), _h(label), width, height, contents, zoom)
 
 
 def _empty_fusion(bundle):
@@ -107,10 +126,13 @@ def render_html(report, bundle):
              '<header><h1>МРТ поясничного отдела</h1><p>Исследовательская автооценка · ' + _h(report["study_id"]) + '</p></header>']
     if report["synthetic"]:
         parts.append('<p class="note">Синтетический пример.</p>')
-    parts += ['<section id="discs"><h2>' + TITLES[0] + '</h2><p>LDH не подключён. Наличие, размер и сторона грыжи не определены.</p><table><thead><tr><th>Диск</th><th>Результат</th><th>Axial T2</th></tr></thead><tbody>']
+    has_disc = bundle.get('disc_analysis_status') == 'spinenet_binary_unreviewed'
+    note = 'SpineNet: бинарный признак грыжи. Размер, сторона и тип не определены.' if has_disc else 'LDH не подключён. Наличие, размер и сторона грыжи не определены.'
+    sequence = 'Sagittal T2 · вход SpineNet' if has_disc else 'Axial T2'
+    parts += ['<section id="discs"><h2>' + TITLES[0] + '</h2><p>' + note + '</p><table><thead><tr><th>Диск</th><th>Результат</th><th>' + sequence + '</th></tr></thead><tbody>']
     for level in LEVELS:
         parts.append('<tr id="disc-{}"><th scope="row">{}</th><td>{}</td><td>{}</td></tr>'.format(
-            level, _level(level), _h(_disc_result(report, level)), _figure(discs.get(level), bundle, False)))
+            level, _level(level), _h(_disc_result(report, level, bundle)), _figure(discs.get(level), bundle, False)))
     parts.append('</tbody></table></section>')
     for zone, sequence, title in (("foraminal", "Sagittal T1", TITLES[1]), ("subarticular", "Axial T2", TITLES[2])):
         parts.append('<section id="{}-stage"><h2>{}</h2><table><thead><tr><th>Уровень</th><th>Слева · {}</th><th>Справа · {}</th></tr></thead><tbody>'.format(zone, title, sequence, sequence))
@@ -146,10 +168,13 @@ def render_markdown(report, bundle):
     lines = ['# МРТ поясничного отдела', '', 'Исследовательская автооценка · ' + _m(report["study_id"]), '']
     if report["synthetic"]:
         lines += ['**Синтетический пример.**', '']
-    lines += ['## '+TITLES[0], '', 'LDH не подключён. Наличие, размер и сторона грыжи не определены.', '',
-              '| Диск | Результат | Axial T2 |', '|---|---|---|']
+    has_disc = bundle.get('disc_analysis_status') == 'spinenet_binary_unreviewed'
+    note = 'SpineNet: бинарный признак грыжи. Размер, сторона и тип не определены.' if has_disc else 'LDH не подключён. Наличие, размер и сторона грыжи не определены.'
+    sequence = 'Sagittal T2 · вход SpineNet' if has_disc else 'Axial T2'
+    lines += ['## '+TITLES[0], '', note, '',
+              '| Диск | Результат | '+sequence+' |', '|---|---|---|']
     for level in LEVELS:
-        lines.append('| {} | {} | {} |'.format(_level(level), _m(_disc_result(report, level)), picture(discs.get(level))))
+        lines.append('| {} | {} | {} |'.format(_level(level), _m(_disc_result(report, level, bundle)), picture(discs.get(level))))
     for zone, seq, title in (("foraminal", "Sagittal T1", TITLES[1]), ("subarticular", "Axial T2", TITLES[2])):
         lines += ['', '## '+title, '', '| Уровень | Слева · '+seq+' | Справа · '+seq+' |', '|---|---|---|']
         for level in LEVELS:

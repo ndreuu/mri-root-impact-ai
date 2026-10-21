@@ -133,3 +133,20 @@ def build_evidence(report, spatial=None, overlays=(), read_image=None):
                                      "purpose": "disc_visual_review_only", "herniation_detection_performed": False})
     bundle["image_status"] = "checked_model_source_overlays"
     return bundle
+
+
+def add_disc_evidence(bundle, document, read_image):
+    """Attach checked native binary predictions; never change impact decisions."""
+    bundle['disc_analysis_status'] = 'spinenet_binary_unreviewed'
+    bundle['disc_predictions'] = copy.deepcopy(document['predictions'])
+    bundle['disc_views'] = []
+    for row in document['predictions']:
+        if row['crop'] is None:
+            continue
+        image = read_image(row['crop']['image'])
+        image_id = 'png-' + image['sha256']
+        bundle['images'][image_id] = image
+        bundle['disc_views'].append({'native_level': row['native_level'], 'sequence': 'sagittal_t2',
+            'image_id': image_id, 'image_ref': copy.deepcopy(row['source_samples'][4]),
+            'purpose': 'spinenet_binary_model_input', 'herniation_detection_performed': True,
+            'model_sample_index': 4, 'model_sample_count': 9})

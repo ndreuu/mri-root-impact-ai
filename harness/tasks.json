@@ -196,6 +196,23 @@
       ]
     },
     {
+      "id": "D004",
+      "title": "Integrate SpineNet binary herniation grading into the tool and report",
+      "status": "in_progress",
+      "depends_on": [
+        "D003",
+        "T001"
+      ],
+      "acceptance": [
+        "Explicit config enables an isolated CPU grading worker with checked SpineNet sources, weights and localization",
+        "Native binary classes, logits, source samples and actual model inputs are stored; PNG matches input and C001 remains indeterminate",
+        "Four-section report displays all five discs and images; positive grading is context with unknown side and never independently promotes a root impact",
+        "Full and frozen CLI runs work; read-only verification detects changed sources, model inputs, classes and artifacts",
+        "Control run, meaningful tests and instructions are complete; old baseline and MRI adapter hashes preserved"
+      ],
+      "evidence": []
+    },
+    {
       "id": "S001",
       "title": "Проверить модели RSNA для фораминального и субартикулярного стеноза",
       "status": "done",
