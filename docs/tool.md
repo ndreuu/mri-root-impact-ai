@@ -2,6 +2,8 @@
 
 Отсечка 21 октября 2026: подготовленный набор МРТ → локализация → оценки стенозов → анатомические правила → короткий отчет F005. Один CLI запускает существующие проверяемые модули; формат рассуждения сохранен.
 
+Рабочая поставка — **Stage I без анализа грыж**: локализация, два вида стеноза слева/справа, анатомический fusion и отчет с изображениями. LDH остается отдельной задачей; неизвестная грыжа не считается отсутствующей. Неподтвержденные нумерация и совмещение сохраняются в выводах.
+
 ## Запуск
 
 Из корня репозитория, Python 3.9+:
@@ -76,10 +78,24 @@ python3 scripts/run_mri.py \
 ## Подготовленный локальный пример
 
 ```sh
+cd /Users/andrew/Projects/mri-root-impact-ai
+MRI_DATA_ROOT=/Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320
+MRI_RUN_DIR="$MRI_DATA_ROOT/tool/run-$(date +%Y%m%d-%H%M%S)"
 python3 scripts/run_mri.py \
-  --study /Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320/prepared/study.json \
-  --config /Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320/tool-config/inference.json \
-  --output /Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320/tool/t001-001
+  --study "$MRI_DATA_ROOT/prepared/study.json" \
+  --config "$MRI_DATA_ROOT/tool-config/inference.json" \
+  --output "$MRI_RUN_DIR"
 ```
 
-Этот запуск сохранен как контрольный. Для нового inference замените имя output; для проверки существующего добавьте `--verify-only`. Конфиг `tool-config/frozen.json` повторяет исходные L002/S003/L003 без моделей и сохраняет тот же формат F005.
+Выходной HTML — `$MRI_RUN_DIR/fusion/report.html`; абсолютный путь печатается в поле `report`. Новый запуск получает новую папку, старые результаты сохраняются.
+
+Контрольный полный запуск уже сохранен в `tool/t001-001`. Проверить его без моделей и записи:
+
+```sh
+python3 scripts/run_mri.py \
+  --study "$MRI_DATA_ROOT/prepared/study.json" \
+  --config "$MRI_DATA_ROOT/tool-config/inference.json" \
+  --output "$MRI_DATA_ROOT/tool/t001-001" --verify-only
+```
+
+Конфиг `tool-config/frozen.json` повторяет исходные L002/S003/L003 без моделей и сохраняет тот же формат F005; для него также нужен новый output.
