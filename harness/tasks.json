@@ -365,7 +365,7 @@
     {
       "id": "T001",
       "title": "Оформить локальную тулзу: набор МРТ → краткий отчет",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "F005"
       ],
@@ -376,7 +376,15 @@
         "Полный запуск проверен на контрольном МРТ; ограничение LDH и неподтвержденная анатомическая привязка сохранены",
         "Инструкция и отсечка возможностей зафиксированы; исторические MRI-adapters, policy и формат рассуждения не меняются"
       ],
-      "evidence": []
+      "evidence": [
+        "mri_tool/runner.py; scripts/run_mri.py; MRI Report Tool 0.1.0. Prepared study + local config → preflight, SpineNet, RSNA, crosscheck, fusion and automatic F005 report.",
+        "Full control CLI completed in 31.14 seconds with MRI inference. Frozen CLI completed without inference; both verified read-only with unchanged file snapshots.",
+        "Both reports have 4 sections, 5 disc rows, 20 side cells, 25 logical illustrations and 4 fusion lines. HTML SHA b76cc1255f0b9e08aafe52c7a71d18ffab78afe3443c13aa9abc6da15c9bfcdc matches F005.",
+        "Frozen fusion.json, report.html, report.md and report-evidence.json byte-identical to F005. Prior F005 verification still succeeds; MRI adapters, C001, policy and report renderer unchanged.",
+        "20 meaningful new tests cover orchestration, policy flags, protected output/runtime paths, errors/timeouts, source tamper and read-only verification. All 381 tests pass in RSNA runtime; core 336 pass / 45 optional skips; harness smoke passes.",
+        "External runs: /Users/andrew/Datasets/mri-root-impact-ai/rsna-3139265320/tool/t001-001 and t001-frozen-001. Local profiles: tool-config/inference.json and frozen.json. Usage and capability checkpoint: docs/tool.md.",
+        "LDH remains not_configured; anatomical numbering and registration remain unreviewed; no clinical diagnosis. Next E001 and D002 remain separate work."
+      ]
     },
     {
       "id": "E001",
