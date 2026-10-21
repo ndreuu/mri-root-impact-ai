@@ -16,6 +16,17 @@ F001/F002 закрепили [спецификацию анатомическо�
 
 ## Быстрый запуск
 
+Тулза [MRI Report Tool 0.1.0](docs/tool.md): подготовленный набор МРТ → краткий отчет F005. Полный запуск выполняет проверку DICOM, SpineNet, RSNA, сопоставление и fusion одной командой:
+
+```sh
+python3 scripts/run_mri.py --study /path/to/prepared/study.json \
+  --config /path/to/config/local-models.json --output /path/to/runs/new-run
+```
+
+Результат — `new-run/fusion/report.html`; готовые стадии можно использовать в режиме `frozen`. Команда с `--verify-only` проверяет сохраненный запуск без моделей и записи. Конфиги и рабочий локальный пример — в [инструкции](docs/tool.md). Модели и их отдельные Python-окружения должны быть подготовлены заранее.
+
+## Harness
+
 Нужны Python 3.9+ и Git. Установка пакетов и доступ к сети не требуются.
 
 ```sh
