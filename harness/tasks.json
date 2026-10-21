@@ -198,7 +198,7 @@
     {
       "id": "D004",
       "title": "Integrate SpineNet binary herniation grading into the tool and report",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "D003",
         "T001"
@@ -210,7 +210,16 @@
         "Full and frozen CLI runs work; read-only verification detects changed sources, model inputs, classes and artifacts",
         "Control run, meaningful tests and instructions are complete; old baseline and MRI adapter hashes preserved"
       ],
-      "evidence": []
+      "evidence": [
+        "mri_disc/contract.py and worker.py; explicit native binary grading in isolated pinned SpineNet CPU runtime. Existing medical weights and worker-only numpy.bool compatibility; original MRI package and policy/engine unchanged.",
+        "Tool 0.2.0 config disc_analysis=spinenet_binary enables localization then grading, stenosis, crosscheck and fusion. Frozen config accepts checked disc_run. Stage validation fails before later models for bad disc outputs.",
+        "Disc artifacts bind native logits/classes, five C001 assessments, actual 9x112x224 float64 volumes, exact central-plane PNGs, source-frame roster, checkpoint/code/input hashes. Missing IVD is not a negative; side/size/morphology null.",
+        "Four-section report v1.3 displays five disc results and actual model inputs, 20 stenosis cells and four short fusion lines. Herniation context has unknown side; root-impact rules never upgraded by binary grading.",
+        "Real full control tool/d004-001 completed with inference in 44.81s. Frozen d004-frozen-001 completed without models in 0.69s. Four report artifacts byte-identical; both verify-only runs write nothing.",
+        "Control HTML SHA 0377707c86f2757a51f0e74c9d8f4e38bdcf50871c09395e3957b6537f70e01b. Native class 1 at L3-L4, four class 0; all indeterminate, no root candidates. One model-input crop visually inspected.",
+        "17 new meaningful tests; all 398 pass in RSNA runtime; core 353 pass / 45 optional skips; harness smoke and shell examples pass. Existing baseline main/4ab0e4c retained and old F005 verified with its code and policy.",
+        "docs/disc-run.md, docs/tool.md, README updated; external inference-disc.json and frozen-disc.json leave old profiles untouched. D002 morphology and E001 independent evaluation remain separate."
+      ]
     },
     {
       "id": "S001",
