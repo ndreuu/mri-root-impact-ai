@@ -218,7 +218,8 @@
         "Real full control tool/d004-001 completed with inference in 44.81s. Frozen d004-frozen-001 completed without models in 0.69s. Four report artifacts byte-identical; both verify-only runs write nothing.",
         "Control HTML SHA 0377707c86f2757a51f0e74c9d8f4e38bdcf50871c09395e3957b6537f70e01b. Native class 1 at L3-L4, four class 0; all indeterminate, no root candidates. One model-input crop visually inspected.",
         "17 new meaningful tests; all 398 pass in RSNA runtime; core 353 pass / 45 optional skips; harness smoke and shell examples pass. Existing baseline main/4ab0e4c retained and old F005 verified with its code and policy.",
-        "docs/disc-run.md, docs/tool.md, README updated; external inference-disc.json and frozen-disc.json leave old profiles untouched. D002 morphology and E001 independent evaluation remain separate."
+        "docs/disc-run.md, docs/tool.md, README updated; external inference-disc.json and frozen-disc.json leave old profiles untouched. D002 morphology and E001 independent evaluation remain separate.",
+        "2026-10-22: integrated into local main by fast-forward. Both D004 full and frozen controls verified again on main, with no writes or new inference. Launch instructions included in README and docs/tool.md."
       ]
     },
     {
