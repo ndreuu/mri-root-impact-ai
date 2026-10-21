@@ -389,7 +389,7 @@
     {
       "id": "T002",
       "title": "Закрепить Stage I без анализа грыж в основной ветке",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "T001"
       ],
@@ -399,7 +399,12 @@
         "Полная инструкция объясняет подготовку, входы, конфиги, результат и проверку сохраненного запуска",
         "Проверки проходят; сохраненный контрольный отчет остается проверяемым; данные и модели не попадают в Git"
       ],
-      "evidence": []
+      "evidence": [
+        "Local main fast-forwarded from df91cc5 to the runnable MRI Report Tool baseline and updated documentation; all implementation history preserved.",
+        "README states Stage I without herniation analysis and includes a copyable local full-run command with a new timestamped output. docs/tool.md covers setup, manifests, config, outputs, frozen reuse and verification.",
+        "381 tests pass in RSNA runtime; harness smoke passes; shell examples parse. Runtime, model and report code unchanged from verified T001.",
+        "Both full and frozen saved controls verified on main; file SHA snapshots unchanged and no inference during verification. Worktree clean; patient data and weights external."
+      ]
     },
     {
       "id": "E001",
