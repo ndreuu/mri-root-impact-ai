@@ -457,6 +457,26 @@
       ]
     },
     {
+      "id": "T003",
+      "title": "Publish the project to a public GitHub repository",
+      "status": "done",
+      "depends_on": [
+        "D004"
+      ],
+      "acceptance": [
+        "Public repository exists under the authenticated GitHub account with main as default branch",
+        "Checked main, source code and run instructions are pushed; local main tracks origin/main",
+        "Patient images, model weights and generated report artifacts stay outside Git; history checked for credential-like content",
+        "Remote main revision and public repository visibility are verified"
+      ],
+      "evidence": [
+        "2026-10-22: user explicitly selected public visibility. Created https://github.com/ndreuu/mri-root-impact-ai under the authenticated ndreuu account; GitHub confirms PUBLIC visibility and default branch main.",
+        "Checked local main pushed; origin configured as HTTPS and local main tracks origin/main. README contains clone and run commands; project instructions included.",
+        "379 named history objects scanned: no binary MRI/model/derived image artifacts or credential-like patterns found. Patient data, outputs and weights remain outside Git.",
+        "All 398 tests pass in RSNA runtime and harness smoke passes. Publication changes only documentation/task metadata; runtime, model adapters, policy and report code unchanged."
+      ]
+    },
+    {
       "id": "E001",
       "title": "Определить протокол технической оценки Stage I",
       "status": "ready",

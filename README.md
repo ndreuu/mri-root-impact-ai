@@ -20,6 +20,13 @@ F001/F002 закрепили [спецификацию анатомическо�
 
 ## Быстрый запуск
 
+Получить код:
+
+```sh
+git clone https://github.com/ndreuu/mri-root-impact-ai.git
+cd mri-root-impact-ai
+```
+
 Тулза [MRI Report Tool 0.2.0](docs/tool.md): подготовленный набор МРТ → краткий отчет в четырех разделах. Полный запуск выполняет проверку DICOM, SpineNet, grading дисков, RSNA, сопоставление и fusion одной командой:
 
 ```sh
