@@ -173,6 +173,29 @@
       ]
     },
     {
+      "id": "D003",
+      "title": "Проверить SpineNet grading для бинарного признака грыжи",
+      "status": "done",
+      "depends_on": [
+        "L002"
+      ],
+      "acceptance": [
+        "Проверены опубликованные возможности, native классы, реальная grading head и доступный checkpoint",
+        "Пробный запуск на контрольном МРТ подтверждает исполнимость и привязку предсказаний к дисковым уровням; ограничения входа и качества сохранены",
+        "Размер, сторона и морфология не заявляются доступными; существующий pipeline и fusion не меняются",
+        "Совместимость среды, условия использования и воспроизводимый запуск зафиксированы; артефакты вне Git"
+      ],
+      "evidence": [
+        "docs/spinenet-herniation-audit.md; official documentation and technical paper confirm a binary Herniation output on sagittal lumbar T2.",
+        "Pinned GradingModel fc_hrn shape 2x512 loaded from existing medical grading/ckpt1.pt SHA b7259f0a32d438d30e58db0f36db0b401ae5e36cb58d3eddb650cd7a141778fb. No downloads or environment changes.",
+        "CPU technical probe on control MRI reused verified L002 polygons. Six IVD crops 9x112x224 cover T12-L1 through L5-S1. Two public grading passes identical; third direct pass confirms per-crop/DataFrame level alignment.",
+        "Unmodified upstream fails on removed np.bool. Successful isolated process explicitly aliases numpy.bool to numpy.bool_; upstream source bytes unchanged. Three grading passes 7.50s; total probe 19.80s.",
+        "Binary native class 1 at L3-L4; other classes 0, all unvalidated predictions. Side, size, morphology and zone null. Numbering and conventional T2 contrast remain unconfirmed; no diagnostic or root-impact claim.",
+        "All source, weight and DICOM hashes rechecked. External reproducible script, JSON, CSV and logs saved in disc-analysis/d003-001; probe JSON SHA b431ca87514276b8ced2802cbdecbdc2170ee7a70fba828d0e5e28cb4b11550f.",
+        "All 381 existing tests pass in RSNA runtime; harness smoke passes. Production model adapters, fusion, tool and main baseline unchanged; no integration yet. D002 for morphology remains ready."
+      ]
+    },
+    {
       "id": "S001",
       "title": "Проверить модели RSNA для фораминального и субартикулярного стеноза",
       "status": "done",
