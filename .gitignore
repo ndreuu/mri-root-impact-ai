@@ -34,3 +34,4 @@ runs/
 *.onnx
 *.npy
 *.npz
+!examples/rsna-3139265320/input/dicom/**/*.dcm

@@ -82,6 +82,20 @@ python3 scripts/run_mri.py \
 
 Добавьте `--verify-only` к исходной команде, чтобы проверить сохраненный запуск: config, study, код тулзы и полный fusion с изображениями. Повторного MRI inference и записи файлов нет. Изменение входов, кода или артефактов дает ошибку; старые результаты сохраняются.
 
+## Пример в репозитории
+
+[examples/rsna-3139265320](../examples/rsna-3139265320/README.md) содержит 60 исходных DICOM и соответствующий [отчет с изображениями](../examples/rsna-3139265320/output/report.md), HTML, fusion JSON и SHA. Для просмотра результата модели не нужны.
+
+```sh
+python3 scripts/example.py verify
+python3 scripts/example.py prepare --output /tmp/mri-example-input
+python3 scripts/run_mri.py \
+  --study /tmp/mri-example-input/study.json \
+  --config /path/to/local-models.json --output /tmp/mri-example-new-run
+```
+
+Скопируйте `examples/rsna-3139265320/input/models.example.json` во внешний конфиг и заполните пути. Шаблон manifest содержит относительные пути; `prepare` материализует обязательные абсолютные пути C001. Сохраненный `output/` — экспорт представления; для его проверки используется `example.py verify`. Полный `run_mri.py --verify-only` применяется к новому запуску со всеми промежуточными артефактами.
+
 ## Подготовленный локальный пример
 
 ```sh

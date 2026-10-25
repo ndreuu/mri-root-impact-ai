@@ -1,0 +1,4489 @@
+{
+  "schema_version": "1.0",
+  "kind": "mri_root_impact_fusion",
+  "fusion_id": "fusion-c76a0325c47b9462a7a9943e",
+  "study_id": "rsna-3139265320",
+  "study_digest": "3646a46c66cfd02eb133be05f49cd548b12fe3baef972a5acbc63e3af3be89cb",
+  "synthetic": false,
+  "policy_id": "mri-root-impact:stenosis-severe-candidate:0.1.0",
+  "policy_version": "0.1.0",
+  "policy_sha256": "c3e574a12603a0a438eb1db50b9ce21b47b53fcae9b5d2900bbbfd3cc8744fed",
+  "input_artifacts": [
+    {
+      "artifact_id": "crosscheck-crosscheck",
+      "kind": "localizer_crosscheck",
+      "result_id": null,
+      "sha256": "277e6ffa69fc0c4b98d934394dda74e304f54dca820d16be54a2e564f7a7c6ec",
+      "document_digest": "f7d9c256bc1902196374d11f7a416679b2a022f173c003b228fe82e45538a818"
+    },
+    {
+      "artifact_id": "crosscheck-run",
+      "kind": "localizer_crosscheck_run",
+      "result_id": null,
+      "sha256": "fa31d72765fa37d7519367e90da61a5f67386534ffc5f29f51f132488623681e",
+      "document_digest": "3627377f4bb5d1ecfeab1119aa8d2e9cc734f78d2cd6f6e5728bd6b0b3f30710"
+    },
+    {
+      "artifact_id": "disc-execution",
+      "kind": "spinenet_binary_disc_run",
+      "result_id": null,
+      "sha256": "58ced2815df9c7229b8ff72689d770a570730b483ad6a6ca814936c11d198802",
+      "document_digest": "4f257f7115149d918cfcf3a6c81101f1d123f1df4b7c290bebd8408165d9b585"
+    },
+    {
+      "artifact_id": "disc-native",
+      "kind": "spinenet_binary_disc",
+      "result_id": null,
+      "sha256": "0f4cff40f3347ef2a513a4fa771257d728cc98a779af4b85b3a9cc8650658b71",
+      "document_digest": "86e111a570a12143aeb42920e3a176ba0369ce1e5ceaf4de2f4392d2fd518df7"
+    },
+    {
+      "artifact_id": "result-rsna-foraminal-001",
+      "kind": "module_result",
+      "result_id": "rsna-foraminal-001",
+      "sha256": "8dbd8fbfb9e23e66ba5937e796f2ba182a3523083324de2069c5f5217f29d3a8",
+      "document_digest": "86cc5c3bdd0c44cbc806cf46676535ac3ceac8272de8aee1d877bf371a0048c8"
+    },
+    {
+      "artifact_id": "result-rsna-localization-001",
+      "kind": "module_result",
+      "result_id": "rsna-localization-001",
+      "sha256": "fbf899ab291d91f9f95b0da845a36cf9ed6e6db1eedad14a735c8d45afc08d72",
+      "document_digest": "6e8c12893817d459bb5caf82cd0b7b798597de69a3710734fadb2f3717b9b97e"
+    },
+    {
+      "artifact_id": "result-rsna-subarticular-001",
+      "kind": "module_result",
+      "result_id": "rsna-subarticular-001",
+      "sha256": "0f285846bb72258b4f3a4172ff2bf009e1b225c33f6b6095a7c7e89b3561da02",
+      "document_digest": "f05e7c346499597dd9baf0bd2cd0428f7db46d6f55e97b59fd72e110277b8879"
+    },
+    {
+      "artifact_id": "result-spinenet-93f7e08b26553fe23725c0f1",
+      "kind": "module_result",
+      "result_id": "spinenet-93f7e08b26553fe23725c0f1",
+      "sha256": "320d546b002c52c4329316114f2ab3b933a435aa0577d380c7893c088f903651",
+      "document_digest": "d716ddd120d817c0bc910f0d9b8d2b43ad5771b98bbcf39ba586a1e797ab00e9"
+    },
+    {
+      "artifact_id": "result-spinenet-disc-86e111a570a12143aeb42920",
+      "kind": "module_result",
+      "result_id": "spinenet-disc-86e111a570a12143aeb42920",
+      "sha256": "831b9af5cc8004e249b3343125b5d2b84dff879241a81878927ea8ca2b121b67",
+      "document_digest": "b959ff710626183485d0b796658f33ede8f614cc431ad69bc74b6ee0a0734612"
+    },
+    {
+      "artifact_id": "rsna-execution",
+      "kind": "rsna_mri_execution",
+      "result_id": null,
+      "sha256": "226cabf4f0dcb32c512b8e84aff13b4a8ace22be2501510233a453f8ba02ae95",
+      "document_digest": "a1ed7d1487f8cf07f7834efe459090ce8b392211fb3cd230614d8e40fc92c40b"
+    },
+    {
+      "artifact_id": "rsna-native",
+      "kind": "rsna_native_predictions",
+      "result_id": null,
+      "sha256": "5f2d535ffe8683650cb12ea00d7aa267e1fa5cf1aaae356bb997fccc8541ebc1",
+      "document_digest": "6de7b464e85feb4968d3b230993dd590a236f1772e34eb82e36a531fc1180d26"
+    },
+    {
+      "artifact_id": "rsna-run",
+      "kind": "rsna_inference_run",
+      "result_id": null,
+      "sha256": "6548ee1124ab10a5c0b348949a259d8fd1ba0ef0a78fffed14ec901b03833330",
+      "document_digest": "3ec3dae37ef642f15d97bd4df111efbde5769ecc28447521cfa06f0b021fecf1"
+    },
+    {
+      "artifact_id": "rsna-spatial",
+      "kind": "rsna_source_geometry",
+      "result_id": null,
+      "sha256": "88aba8e97d62b67bb677fa75e231fbe2dff28a78198fee354fc27563a7151ba1",
+      "document_digest": "b31894860b73bf8ce2f87dcbbaf7f370486d65ae49247cc4e72ab8386f693953"
+    },
+    {
+      "artifact_id": "spine-execution",
+      "kind": "localization_execution",
+      "result_id": null,
+      "sha256": "869a14554512f2edd9c9eef84869082ef51e3464efef2113e8c25df90eeab317",
+      "document_digest": "a51baba0120e9ba8ea564a88053e897ae20ebe3beaf733d47eadc6a8576d8929"
+    },
+    {
+      "artifact_id": "spine-native",
+      "kind": "native_spinenet_detections",
+      "result_id": null,
+      "sha256": "694b72e4dccd83cf7e03c1ffd91eb078d99b5b629954d8686fe86e81cdced207",
+      "document_digest": "e2adbce02bc2baf035f3ffa64da9b280ac34184d69ceb1034e164897fbcd7883"
+    },
+    {
+      "artifact_id": "spine-run",
+      "kind": "localization_run",
+      "result_id": null,
+      "sha256": "3cf3e4eaa9d113068b44ab6cc0354755336bd645a49d2526719e2f6599de5761",
+      "document_digest": "e7cdc6c47367eab4ddc77d64d8ce667a3e545e9bea20811cbd7c81dc5661fa38"
+    },
+    {
+      "artifact_id": "spine-spatial",
+      "kind": "localization_spatial",
+      "result_id": null,
+      "sha256": "c08eb3b791e948e27a55659094494bfc4a3aa01a5448a589812ebcc23835e6a1",
+      "document_digest": "e94d9780bca3347b80cc4aa2ef77ddae242d1076993f42d2b030f14474231a04"
+    }
+  ],
+  "review_context_sha256": null,
+  "branches": [
+    {
+      "branch_id": "foraminal-L1-L2-left",
+      "target": {
+        "level": "L1-L2",
+        "side": "left",
+        "zone": "foraminal"
+      },
+      "component": "foraminal_stenosis",
+      "rule_id": "F-NFN-01",
+      "decision": "indeterminate",
+      "reason_codes": [
+        "herniation_not_evaluated",
+        "numbering_unreviewed",
+        "registration_unverified",
+        "review_context_missing",
+        "source_indeterminate"
+      ],
+      "mapped_root": null,
+      "candidate_root": null,
+      "evidence": [
+        {
+          "source_ref": {
+            "result_id": "rsna-foraminal-001",
+            "assessment_id": "foraminal-L1-L2-left"
+          },
+          "artifact_id": "result-rsna-foraminal-001",
+          "artifact_sha256": "8dbd8fbfb9e23e66ba5937e796f2ba182a3523083324de2069c5f5217f29d3a8",
+          "component": "foraminal_stenosis",
+          "target": {
+            "level": "L1-L2",
+            "side": "left",
+            "zone": "foraminal"
+          },
+          "status": "indeterminate",
+          "reason": "Native RSNA numbering is unreviewed; anatomical disc numbering and registration have not been independently confirmed.",
+          "observation": {
+            "label": "normal_mild",
+            "scale_id": "rsna2024:stenosis-severity:v1",
+            "measurements": [
+              {
+                "name": "p_normal_mild",
+                "value": 0.9902623891830444,
+                "unit": "probability"
+              },
+              {
+                "name": "p_moderate",
+                "value": 0.00955998059362173,
+                "unit": "probability"
+              },
+              {
+                "name": "p_severe",
+                "value": 0.00017751267296262085,
+                "unit": "probability"
+              }
+            ]
+          },
+          "producer": {
+            "name": "rsna-moyasii-adapter",
+            "version": "1.0",
+            "method": "model",
+            "model": {
+              "name": "rsna2024-moyasii-classifier",
+              "version": "8a3cd3e615bf24c934dc5440e96ee52aa68c1386",
+              "weights_sha256": "44239affed99127c8945ceb31e615644fb383b4f40e34abe048ce2ff7398c3cd"
+            }
+          },
+          "image_refs": [
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-1",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-2",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-3",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-4",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-5",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-1",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-2",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-3",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-4",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-5",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-9",
+              "frame_index": 0
+            }
+          ],
+          "upstream_refs": [
+            {
+              "result_id": "rsna-localization-001",
+              "assessment_id": "disc-L1-L2"
+            }
+          ],
+          "review_ref": null,
+          "review_states": {},
+          "review_series_coverage": "missing"
+        }
+      ],
+      "gate_states": {
+        "source_assessed": false,
+        "reviews_passed": false,
+        "known_scale_and_label": true,
+        "native_probabilities_usable": true,
+        "evidence_consistent": true
+      },
+      "herniation_context": "not_evaluated",
+      "etiology": "unassigned"
+    },
+    {
+      "branch_id": "subarticular-L1-L2-left",
+      "target": {
+        "level": "L1-L2",
+        "side": "left",
+        "zone": "subarticular"
+      },
+      "component": "subarticular_stenosis",
+      "rule_id": "F-SS-01",
+      "decision": "indeterminate",
+      "reason_codes": [
+        "herniation_not_evaluated",
+        "numbering_unreviewed",
+        "registration_unverified",
+        "review_context_missing",
+        "source_indeterminate"
+      ],
+      "mapped_root": null,
+      "candidate_root": null,
+      "evidence": [
+        {
+          "source_ref": {
+            "result_id": "rsna-subarticular-001",
+            "assessment_id": "subarticular-L1-L2-left"
+          },
+          "artifact_id": "result-rsna-subarticular-001",
+          "artifact_sha256": "0f285846bb72258b4f3a4172ff2bf009e1b225c33f6b6095a7c7e89b3561da02",
+          "component": "subarticular_stenosis",
+          "target": {
+            "level": "L1-L2",
+            "side": "left",
+            "zone": "subarticular"
+          },
+          "status": "indeterminate",
+          "reason": "Native RSNA numbering is unreviewed; anatomical disc numbering and registration have not been independently confirmed.",
+          "observation": {
+            "label": "normal_mild",
+            "scale_id": "rsna2024:stenosis-severity:v1",
+            "measurements": [
+              {
+                "name": "p_normal_mild",
+                "value": 0.9976907968521118,
+                "unit": "probability"
+              },
+              {
+                "name": "p_moderate",
+                "value": 0.002261202549561858,
+                "unit": "probability"
+              },
+              {
+                "name": "p_severe",
+                "value": 4.8101785068865865e-05,
+                "unit": "probability"
+              }
+            ]
+          },
+          "producer": {
+            "name": "rsna-moyasii-adapter",
+            "version": "1.0",
+            "method": "model",
+            "model": {
+              "name": "rsna2024-moyasii-classifier",
+              "version": "8a3cd3e615bf24c934dc5440e96ee52aa68c1386",
+              "weights_sha256": "44239affed99127c8945ceb31e615644fb383b4f40e34abe048ce2ff7398c3cd"
+            }
+          },
+          "image_refs": [
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-1",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-2",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-3",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-4",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-5",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-1",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-2",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-3",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-4",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-5",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-9",
+              "frame_index": 0
+            }
+          ],
+          "upstream_refs": [
+            {
+              "result_id": "rsna-localization-001",
+              "assessment_id": "disc-L1-L2"
+            }
+          ],
+          "review_ref": null,
+          "review_states": {},
+          "review_series_coverage": "missing"
+        }
+      ],
+      "gate_states": {
+        "source_assessed": false,
+        "reviews_passed": false,
+        "known_scale_and_label": true,
+        "native_probabilities_usable": true,
+        "evidence_consistent": true
+      },
+      "herniation_context": "not_evaluated",
+      "etiology": "unassigned"
+    },
+    {
+      "branch_id": "foraminal-L1-L2-right",
+      "target": {
+        "level": "L1-L2",
+        "side": "right",
+        "zone": "foraminal"
+      },
+      "component": "foraminal_stenosis",
+      "rule_id": "F-NFN-01",
+      "decision": "indeterminate",
+      "reason_codes": [
+        "herniation_not_evaluated",
+        "numbering_unreviewed",
+        "registration_unverified",
+        "review_context_missing",
+        "source_indeterminate"
+      ],
+      "mapped_root": null,
+      "candidate_root": null,
+      "evidence": [
+        {
+          "source_ref": {
+            "result_id": "rsna-foraminal-001",
+            "assessment_id": "foraminal-L1-L2-right"
+          },
+          "artifact_id": "result-rsna-foraminal-001",
+          "artifact_sha256": "8dbd8fbfb9e23e66ba5937e796f2ba182a3523083324de2069c5f5217f29d3a8",
+          "component": "foraminal_stenosis",
+          "target": {
+            "level": "L1-L2",
+            "side": "right",
+            "zone": "foraminal"
+          },
+          "status": "indeterminate",
+          "reason": "Native RSNA numbering is unreviewed; anatomical disc numbering and registration have not been independently confirmed.",
+          "observation": {
+            "label": "normal_mild",
+            "scale_id": "rsna2024:stenosis-severity:v1",
+            "measurements": [
+              {
+                "name": "p_normal_mild",
+                "value": 0.9952883720397949,
+                "unit": "probability"
+              },
+              {
+                "name": "p_moderate",
+                "value": 0.004652511328458786,
+                "unit": "probability"
+              },
+              {
+                "name": "p_severe",
+                "value": 5.913224595133215e-05,
+                "unit": "probability"
+              }
+            ]
+          },
+          "producer": {
+            "name": "rsna-moyasii-adapter",
+            "version": "1.0",
+            "method": "model",
+            "model": {
+              "name": "rsna2024-moyasii-classifier",
+              "version": "8a3cd3e615bf24c934dc5440e96ee52aa68c1386",
+              "weights_sha256": "44239affed99127c8945ceb31e615644fb383b4f40e34abe048ce2ff7398c3cd"
+            }
+          },
+          "image_refs": [
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-15",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-9",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-15",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-9",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-9",
+              "frame_index": 0
+            }
+          ],
+          "upstream_refs": [
+            {
+              "result_id": "rsna-localization-001",
+              "assessment_id": "disc-L1-L2"
+            }
+          ],
+          "review_ref": null,
+          "review_states": {},
+          "review_series_coverage": "missing"
+        }
+      ],
+      "gate_states": {
+        "source_assessed": false,
+        "reviews_passed": false,
+        "known_scale_and_label": true,
+        "native_probabilities_usable": true,
+        "evidence_consistent": true
+      },
+      "herniation_context": "not_evaluated",
+      "etiology": "unassigned"
+    },
+    {
+      "branch_id": "subarticular-L1-L2-right",
+      "target": {
+        "level": "L1-L2",
+        "side": "right",
+        "zone": "subarticular"
+      },
+      "component": "subarticular_stenosis",
+      "rule_id": "F-SS-01",
+      "decision": "indeterminate",
+      "reason_codes": [
+        "herniation_not_evaluated",
+        "numbering_unreviewed",
+        "registration_unverified",
+        "review_context_missing",
+        "source_indeterminate"
+      ],
+      "mapped_root": null,
+      "candidate_root": null,
+      "evidence": [
+        {
+          "source_ref": {
+            "result_id": "rsna-subarticular-001",
+            "assessment_id": "subarticular-L1-L2-right"
+          },
+          "artifact_id": "result-rsna-subarticular-001",
+          "artifact_sha256": "0f285846bb72258b4f3a4172ff2bf009e1b225c33f6b6095a7c7e89b3561da02",
+          "component": "subarticular_stenosis",
+          "target": {
+            "level": "L1-L2",
+            "side": "right",
+            "zone": "subarticular"
+          },
+          "status": "indeterminate",
+          "reason": "Native RSNA numbering is unreviewed; anatomical disc numbering and registration have not been independently confirmed.",
+          "observation": {
+            "label": "normal_mild",
+            "scale_id": "rsna2024:stenosis-severity:v1",
+            "measurements": [
+              {
+                "name": "p_normal_mild",
+                "value": 0.9976615905761719,
+                "unit": "probability"
+              },
+              {
+                "name": "p_moderate",
+                "value": 0.0022288092877715826,
+                "unit": "probability"
+              },
+              {
+                "name": "p_severe",
+                "value": 0.0001096813430194743,
+                "unit": "probability"
+              }
+            ]
+          },
+          "producer": {
+            "name": "rsna-moyasii-adapter",
+            "version": "1.0",
+            "method": "model",
+            "model": {
+              "name": "rsna2024-moyasii-classifier",
+              "version": "8a3cd3e615bf24c934dc5440e96ee52aa68c1386",
+              "weights_sha256": "44239affed99127c8945ceb31e615644fb383b4f40e34abe048ce2ff7398c3cd"
+            }
+          },
+          "image_refs": [
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-15",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-9",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-15",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-9",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-9",
+              "frame_index": 0
+            }
+          ],
+          "upstream_refs": [
+            {
+              "result_id": "rsna-localization-001",
+              "assessment_id": "disc-L1-L2"
+            }
+          ],
+          "review_ref": null,
+          "review_states": {},
+          "review_series_coverage": "missing"
+        }
+      ],
+      "gate_states": {
+        "source_assessed": false,
+        "reviews_passed": false,
+        "known_scale_and_label": true,
+        "native_probabilities_usable": true,
+        "evidence_consistent": true
+      },
+      "herniation_context": "not_evaluated",
+      "etiology": "unassigned"
+    },
+    {
+      "branch_id": "foraminal-L2-L3-left",
+      "target": {
+        "level": "L2-L3",
+        "side": "left",
+        "zone": "foraminal"
+      },
+      "component": "foraminal_stenosis",
+      "rule_id": "F-NFN-01",
+      "decision": "indeterminate",
+      "reason_codes": [
+        "herniation_not_evaluated",
+        "numbering_unreviewed",
+        "registration_unverified",
+        "review_context_missing",
+        "source_indeterminate"
+      ],
+      "mapped_root": null,
+      "candidate_root": null,
+      "evidence": [
+        {
+          "source_ref": {
+            "result_id": "rsna-foraminal-001",
+            "assessment_id": "foraminal-L2-L3-left"
+          },
+          "artifact_id": "result-rsna-foraminal-001",
+          "artifact_sha256": "8dbd8fbfb9e23e66ba5937e796f2ba182a3523083324de2069c5f5217f29d3a8",
+          "component": "foraminal_stenosis",
+          "target": {
+            "level": "L2-L3",
+            "side": "left",
+            "zone": "foraminal"
+          },
+          "status": "indeterminate",
+          "reason": "Native RSNA numbering is unreviewed; anatomical disc numbering and registration have not been independently confirmed.",
+          "observation": {
+            "label": "normal_mild",
+            "scale_id": "rsna2024:stenosis-severity:v1",
+            "measurements": [
+              {
+                "name": "p_normal_mild",
+                "value": 0.9904256463050842,
+                "unit": "probability"
+              },
+              {
+                "name": "p_moderate",
+                "value": 0.009444855153560638,
+                "unit": "probability"
+              },
+              {
+                "name": "p_severe",
+                "value": 0.0001295375550398603,
+                "unit": "probability"
+              }
+            ]
+          },
+          "producer": {
+            "name": "rsna-moyasii-adapter",
+            "version": "1.0",
+            "method": "model",
+            "model": {
+              "name": "rsna2024-moyasii-classifier",
+              "version": "8a3cd3e615bf24c934dc5440e96ee52aa68c1386",
+              "weights_sha256": "44239affed99127c8945ceb31e615644fb383b4f40e34abe048ce2ff7398c3cd"
+            }
+          },
+          "image_refs": [
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-1",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-2",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-3",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-4",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-5",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-1",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-2",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-3",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-4",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-5",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-15",
+              "frame_index": 0
+            }
+          ],
+          "upstream_refs": [
+            {
+              "result_id": "rsna-localization-001",
+              "assessment_id": "disc-L2-L3"
+            }
+          ],
+          "review_ref": null,
+          "review_states": {},
+          "review_series_coverage": "missing"
+        }
+      ],
+      "gate_states": {
+        "source_assessed": false,
+        "reviews_passed": false,
+        "known_scale_and_label": true,
+        "native_probabilities_usable": true,
+        "evidence_consistent": true
+      },
+      "herniation_context": "not_evaluated",
+      "etiology": "unassigned"
+    },
+    {
+      "branch_id": "subarticular-L2-L3-left",
+      "target": {
+        "level": "L2-L3",
+        "side": "left",
+        "zone": "subarticular"
+      },
+      "component": "subarticular_stenosis",
+      "rule_id": "F-SS-01",
+      "decision": "indeterminate",
+      "reason_codes": [
+        "herniation_not_evaluated",
+        "numbering_unreviewed",
+        "registration_unverified",
+        "review_context_missing",
+        "source_indeterminate"
+      ],
+      "mapped_root": null,
+      "candidate_root": null,
+      "evidence": [
+        {
+          "source_ref": {
+            "result_id": "rsna-subarticular-001",
+            "assessment_id": "subarticular-L2-L3-left"
+          },
+          "artifact_id": "result-rsna-subarticular-001",
+          "artifact_sha256": "0f285846bb72258b4f3a4172ff2bf009e1b225c33f6b6095a7c7e89b3561da02",
+          "component": "subarticular_stenosis",
+          "target": {
+            "level": "L2-L3",
+            "side": "left",
+            "zone": "subarticular"
+          },
+          "status": "indeterminate",
+          "reason": "Native RSNA numbering is unreviewed; anatomical disc numbering and registration have not been independently confirmed.",
+          "observation": {
+            "label": "normal_mild",
+            "scale_id": "rsna2024:stenosis-severity:v1",
+            "measurements": [
+              {
+                "name": "p_normal_mild",
+                "value": 0.9947657585144043,
+                "unit": "probability"
+              },
+              {
+                "name": "p_moderate",
+                "value": 0.0050834729336202145,
+                "unit": "probability"
+              },
+              {
+                "name": "p_severe",
+                "value": 0.00015072300448082387,
+                "unit": "probability"
+              }
+            ]
+          },
+          "producer": {
+            "name": "rsna-moyasii-adapter",
+            "version": "1.0",
+            "method": "model",
+            "model": {
+              "name": "rsna2024-moyasii-classifier",
+              "version": "8a3cd3e615bf24c934dc5440e96ee52aa68c1386",
+              "weights_sha256": "44239affed99127c8945ceb31e615644fb383b4f40e34abe048ce2ff7398c3cd"
+            }
+          },
+          "image_refs": [
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-1",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-2",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-3",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-4",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-5",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-1",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-2",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-3",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-4",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-5",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-15",
+              "frame_index": 0
+            }
+          ],
+          "upstream_refs": [
+            {
+              "result_id": "rsna-localization-001",
+              "assessment_id": "disc-L2-L3"
+            }
+          ],
+          "review_ref": null,
+          "review_states": {},
+          "review_series_coverage": "missing"
+        }
+      ],
+      "gate_states": {
+        "source_assessed": false,
+        "reviews_passed": false,
+        "known_scale_and_label": true,
+        "native_probabilities_usable": true,
+        "evidence_consistent": true
+      },
+      "herniation_context": "not_evaluated",
+      "etiology": "unassigned"
+    },
+    {
+      "branch_id": "foraminal-L2-L3-right",
+      "target": {
+        "level": "L2-L3",
+        "side": "right",
+        "zone": "foraminal"
+      },
+      "component": "foraminal_stenosis",
+      "rule_id": "F-NFN-01",
+      "decision": "indeterminate",
+      "reason_codes": [
+        "herniation_not_evaluated",
+        "numbering_unreviewed",
+        "registration_unverified",
+        "review_context_missing",
+        "source_indeterminate"
+      ],
+      "mapped_root": null,
+      "candidate_root": null,
+      "evidence": [
+        {
+          "source_ref": {
+            "result_id": "rsna-foraminal-001",
+            "assessment_id": "foraminal-L2-L3-right"
+          },
+          "artifact_id": "result-rsna-foraminal-001",
+          "artifact_sha256": "8dbd8fbfb9e23e66ba5937e796f2ba182a3523083324de2069c5f5217f29d3a8",
+          "component": "foraminal_stenosis",
+          "target": {
+            "level": "L2-L3",
+            "side": "right",
+            "zone": "foraminal"
+          },
+          "status": "indeterminate",
+          "reason": "Native RSNA numbering is unreviewed; anatomical disc numbering and registration have not been independently confirmed.",
+          "observation": {
+            "label": "normal_mild",
+            "scale_id": "rsna2024:stenosis-severity:v1",
+            "measurements": [
+              {
+                "name": "p_normal_mild",
+                "value": 0.9897998571395874,
+                "unit": "probability"
+              },
+              {
+                "name": "p_moderate",
+                "value": 0.01005432941019535,
+                "unit": "probability"
+              },
+              {
+                "name": "p_severe",
+                "value": 0.0001458780752727762,
+                "unit": "probability"
+              }
+            ]
+          },
+          "producer": {
+            "name": "rsna-moyasii-adapter",
+            "version": "1.0",
+            "method": "model",
+            "model": {
+              "name": "rsna2024-moyasii-classifier",
+              "version": "8a3cd3e615bf24c934dc5440e96ee52aa68c1386",
+              "weights_sha256": "44239affed99127c8945ceb31e615644fb383b4f40e34abe048ce2ff7398c3cd"
+            }
+          },
+          "image_refs": [
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-15",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-9",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-15",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-9",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-15",
+              "frame_index": 0
+            }
+          ],
+          "upstream_refs": [
+            {
+              "result_id": "rsna-localization-001",
+              "assessment_id": "disc-L2-L3"
+            }
+          ],
+          "review_ref": null,
+          "review_states": {},
+          "review_series_coverage": "missing"
+        }
+      ],
+      "gate_states": {
+        "source_assessed": false,
+        "reviews_passed": false,
+        "known_scale_and_label": true,
+        "native_probabilities_usable": true,
+        "evidence_consistent": true
+      },
+      "herniation_context": "not_evaluated",
+      "etiology": "unassigned"
+    },
+    {
+      "branch_id": "subarticular-L2-L3-right",
+      "target": {
+        "level": "L2-L3",
+        "side": "right",
+        "zone": "subarticular"
+      },
+      "component": "subarticular_stenosis",
+      "rule_id": "F-SS-01",
+      "decision": "indeterminate",
+      "reason_codes": [
+        "herniation_not_evaluated",
+        "numbering_unreviewed",
+        "registration_unverified",
+        "review_context_missing",
+        "source_indeterminate"
+      ],
+      "mapped_root": null,
+      "candidate_root": null,
+      "evidence": [
+        {
+          "source_ref": {
+            "result_id": "rsna-subarticular-001",
+            "assessment_id": "subarticular-L2-L3-right"
+          },
+          "artifact_id": "result-rsna-subarticular-001",
+          "artifact_sha256": "0f285846bb72258b4f3a4172ff2bf009e1b225c33f6b6095a7c7e89b3561da02",
+          "component": "subarticular_stenosis",
+          "target": {
+            "level": "L2-L3",
+            "side": "right",
+            "zone": "subarticular"
+          },
+          "status": "indeterminate",
+          "reason": "Native RSNA numbering is unreviewed; anatomical disc numbering and registration have not been independently confirmed.",
+          "observation": {
+            "label": "normal_mild",
+            "scale_id": "rsna2024:stenosis-severity:v1",
+            "measurements": [
+              {
+                "name": "p_normal_mild",
+                "value": 0.9954946041107178,
+                "unit": "probability"
+              },
+              {
+                "name": "p_moderate",
+                "value": 0.004388299770653248,
+                "unit": "probability"
+              },
+              {
+                "name": "p_severe",
+                "value": 0.00011714565334841609,
+                "unit": "probability"
+              }
+            ]
+          },
+          "producer": {
+            "name": "rsna-moyasii-adapter",
+            "version": "1.0",
+            "method": "model",
+            "model": {
+              "name": "rsna2024-moyasii-classifier",
+              "version": "8a3cd3e615bf24c934dc5440e96ee52aa68c1386",
+              "weights_sha256": "44239affed99127c8945ceb31e615644fb383b4f40e34abe048ce2ff7398c3cd"
+            }
+          },
+          "image_refs": [
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-15",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-9",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-15",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-9",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-15",
+              "frame_index": 0
+            }
+          ],
+          "upstream_refs": [
+            {
+              "result_id": "rsna-localization-001",
+              "assessment_id": "disc-L2-L3"
+            }
+          ],
+          "review_ref": null,
+          "review_states": {},
+          "review_series_coverage": "missing"
+        }
+      ],
+      "gate_states": {
+        "source_assessed": false,
+        "reviews_passed": false,
+        "known_scale_and_label": true,
+        "native_probabilities_usable": true,
+        "evidence_consistent": true
+      },
+      "herniation_context": "not_evaluated",
+      "etiology": "unassigned"
+    },
+    {
+      "branch_id": "foraminal-L3-L4-left",
+      "target": {
+        "level": "L3-L4",
+        "side": "left",
+        "zone": "foraminal"
+      },
+      "component": "foraminal_stenosis",
+      "rule_id": "F-NFN-01",
+      "decision": "indeterminate",
+      "reason_codes": [
+        "herniation_not_evaluated",
+        "numbering_unreviewed",
+        "registration_unverified",
+        "review_context_missing",
+        "source_indeterminate"
+      ],
+      "mapped_root": null,
+      "candidate_root": null,
+      "evidence": [
+        {
+          "source_ref": {
+            "result_id": "rsna-foraminal-001",
+            "assessment_id": "foraminal-L3-L4-left"
+          },
+          "artifact_id": "result-rsna-foraminal-001",
+          "artifact_sha256": "8dbd8fbfb9e23e66ba5937e796f2ba182a3523083324de2069c5f5217f29d3a8",
+          "component": "foraminal_stenosis",
+          "target": {
+            "level": "L3-L4",
+            "side": "left",
+            "zone": "foraminal"
+          },
+          "status": "indeterminate",
+          "reason": "Native RSNA numbering is unreviewed; anatomical disc numbering and registration have not been independently confirmed.",
+          "observation": {
+            "label": "moderate",
+            "scale_id": "rsna2024:stenosis-severity:v1",
+            "measurements": [
+              {
+                "name": "p_normal_mild",
+                "value": 0.3860606551170349,
+                "unit": "probability"
+              },
+              {
+                "name": "p_moderate",
+                "value": 0.6018021702766418,
+                "unit": "probability"
+              },
+              {
+                "name": "p_severe",
+                "value": 0.012137136422097683,
+                "unit": "probability"
+              }
+            ]
+          },
+          "producer": {
+            "name": "rsna-moyasii-adapter",
+            "version": "1.0",
+            "method": "model",
+            "model": {
+              "name": "rsna2024-moyasii-classifier",
+              "version": "8a3cd3e615bf24c934dc5440e96ee52aa68c1386",
+              "weights_sha256": "44239affed99127c8945ceb31e615644fb383b4f40e34abe048ce2ff7398c3cd"
+            }
+          },
+          "image_refs": [
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-1",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-2",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-3",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-4",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-5",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-1",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-2",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-3",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-4",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-5",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-16",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-17",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-18",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-19",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-20",
+              "frame_index": 0
+            }
+          ],
+          "upstream_refs": [
+            {
+              "result_id": "rsna-localization-001",
+              "assessment_id": "disc-L3-L4"
+            }
+          ],
+          "review_ref": null,
+          "review_states": {},
+          "review_series_coverage": "missing"
+        }
+      ],
+      "gate_states": {
+        "source_assessed": false,
+        "reviews_passed": false,
+        "known_scale_and_label": true,
+        "native_probabilities_usable": true,
+        "evidence_consistent": true
+      },
+      "herniation_context": "not_evaluated",
+      "etiology": "unassigned"
+    },
+    {
+      "branch_id": "subarticular-L3-L4-left",
+      "target": {
+        "level": "L3-L4",
+        "side": "left",
+        "zone": "subarticular"
+      },
+      "component": "subarticular_stenosis",
+      "rule_id": "F-SS-01",
+      "decision": "indeterminate",
+      "reason_codes": [
+        "herniation_not_evaluated",
+        "numbering_unreviewed",
+        "registration_unverified",
+        "review_context_missing",
+        "source_indeterminate"
+      ],
+      "mapped_root": null,
+      "candidate_root": null,
+      "evidence": [
+        {
+          "source_ref": {
+            "result_id": "rsna-subarticular-001",
+            "assessment_id": "subarticular-L3-L4-left"
+          },
+          "artifact_id": "result-rsna-subarticular-001",
+          "artifact_sha256": "0f285846bb72258b4f3a4172ff2bf009e1b225c33f6b6095a7c7e89b3561da02",
+          "component": "subarticular_stenosis",
+          "target": {
+            "level": "L3-L4",
+            "side": "left",
+            "zone": "subarticular"
+          },
+          "status": "indeterminate",
+          "reason": "Native RSNA numbering is unreviewed; anatomical disc numbering and registration have not been independently confirmed.",
+          "observation": {
+            "label": "moderate",
+            "scale_id": "rsna2024:stenosis-severity:v1",
+            "measurements": [
+              {
+                "name": "p_normal_mild",
+                "value": 0.3586263358592987,
+                "unit": "probability"
+              },
+              {
+                "name": "p_moderate",
+                "value": 0.6042358875274658,
+                "unit": "probability"
+              },
+              {
+                "name": "p_severe",
+                "value": 0.03713775798678398,
+                "unit": "probability"
+              }
+            ]
+          },
+          "producer": {
+            "name": "rsna-moyasii-adapter",
+            "version": "1.0",
+            "method": "model",
+            "model": {
+              "name": "rsna2024-moyasii-classifier",
+              "version": "8a3cd3e615bf24c934dc5440e96ee52aa68c1386",
+              "weights_sha256": "44239affed99127c8945ceb31e615644fb383b4f40e34abe048ce2ff7398c3cd"
+            }
+          },
+          "image_refs": [
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-1",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-2",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-3",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-4",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-5",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-1",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-2",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-3",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-4",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-5",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-16",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-17",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-18",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-19",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-20",
+              "frame_index": 0
+            }
+          ],
+          "upstream_refs": [
+            {
+              "result_id": "rsna-localization-001",
+              "assessment_id": "disc-L3-L4"
+            }
+          ],
+          "review_ref": null,
+          "review_states": {},
+          "review_series_coverage": "missing"
+        }
+      ],
+      "gate_states": {
+        "source_assessed": false,
+        "reviews_passed": false,
+        "known_scale_and_label": true,
+        "native_probabilities_usable": true,
+        "evidence_consistent": true
+      },
+      "herniation_context": "not_evaluated",
+      "etiology": "unassigned"
+    },
+    {
+      "branch_id": "foraminal-L3-L4-right",
+      "target": {
+        "level": "L3-L4",
+        "side": "right",
+        "zone": "foraminal"
+      },
+      "component": "foraminal_stenosis",
+      "rule_id": "F-NFN-01",
+      "decision": "indeterminate",
+      "reason_codes": [
+        "herniation_not_evaluated",
+        "numbering_unreviewed",
+        "registration_unverified",
+        "review_context_missing",
+        "source_indeterminate"
+      ],
+      "mapped_root": null,
+      "candidate_root": null,
+      "evidence": [
+        {
+          "source_ref": {
+            "result_id": "rsna-foraminal-001",
+            "assessment_id": "foraminal-L3-L4-right"
+          },
+          "artifact_id": "result-rsna-foraminal-001",
+          "artifact_sha256": "8dbd8fbfb9e23e66ba5937e796f2ba182a3523083324de2069c5f5217f29d3a8",
+          "component": "foraminal_stenosis",
+          "target": {
+            "level": "L3-L4",
+            "side": "right",
+            "zone": "foraminal"
+          },
+          "status": "indeterminate",
+          "reason": "Native RSNA numbering is unreviewed; anatomical disc numbering and registration have not been independently confirmed.",
+          "observation": {
+            "label": "normal_mild",
+            "scale_id": "rsna2024:stenosis-severity:v1",
+            "measurements": [
+              {
+                "name": "p_normal_mild",
+                "value": 0.8689354658126831,
+                "unit": "probability"
+              },
+              {
+                "name": "p_moderate",
+                "value": 0.12956416606903076,
+                "unit": "probability"
+              },
+              {
+                "name": "p_severe",
+                "value": 0.001500458805821836,
+                "unit": "probability"
+              }
+            ]
+          },
+          "producer": {
+            "name": "rsna-moyasii-adapter",
+            "version": "1.0",
+            "method": "model",
+            "model": {
+              "name": "rsna2024-moyasii-classifier",
+              "version": "8a3cd3e615bf24c934dc5440e96ee52aa68c1386",
+              "weights_sha256": "44239affed99127c8945ceb31e615644fb383b4f40e34abe048ce2ff7398c3cd"
+            }
+          },
+          "image_refs": [
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-15",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-9",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-15",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-9",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-16",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-17",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-18",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-19",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-20",
+              "frame_index": 0
+            }
+          ],
+          "upstream_refs": [
+            {
+              "result_id": "rsna-localization-001",
+              "assessment_id": "disc-L3-L4"
+            }
+          ],
+          "review_ref": null,
+          "review_states": {},
+          "review_series_coverage": "missing"
+        }
+      ],
+      "gate_states": {
+        "source_assessed": false,
+        "reviews_passed": false,
+        "known_scale_and_label": true,
+        "native_probabilities_usable": true,
+        "evidence_consistent": true
+      },
+      "herniation_context": "not_evaluated",
+      "etiology": "unassigned"
+    },
+    {
+      "branch_id": "subarticular-L3-L4-right",
+      "target": {
+        "level": "L3-L4",
+        "side": "right",
+        "zone": "subarticular"
+      },
+      "component": "subarticular_stenosis",
+      "rule_id": "F-SS-01",
+      "decision": "indeterminate",
+      "reason_codes": [
+        "herniation_not_evaluated",
+        "numbering_unreviewed",
+        "registration_unverified",
+        "review_context_missing",
+        "source_indeterminate"
+      ],
+      "mapped_root": null,
+      "candidate_root": null,
+      "evidence": [
+        {
+          "source_ref": {
+            "result_id": "rsna-subarticular-001",
+            "assessment_id": "subarticular-L3-L4-right"
+          },
+          "artifact_id": "result-rsna-subarticular-001",
+          "artifact_sha256": "0f285846bb72258b4f3a4172ff2bf009e1b225c33f6b6095a7c7e89b3561da02",
+          "component": "subarticular_stenosis",
+          "target": {
+            "level": "L3-L4",
+            "side": "right",
+            "zone": "subarticular"
+          },
+          "status": "indeterminate",
+          "reason": "Native RSNA numbering is unreviewed; anatomical disc numbering and registration have not been independently confirmed.",
+          "observation": {
+            "label": "normal_mild",
+            "scale_id": "rsna2024:stenosis-severity:v1",
+            "measurements": [
+              {
+                "name": "p_normal_mild",
+                "value": 0.5990362167358398,
+                "unit": "probability"
+              },
+              {
+                "name": "p_moderate",
+                "value": 0.3879706859588623,
+                "unit": "probability"
+              },
+              {
+                "name": "p_severe",
+                "value": 0.012993132695555687,
+                "unit": "probability"
+              }
+            ]
+          },
+          "producer": {
+            "name": "rsna-moyasii-adapter",
+            "version": "1.0",
+            "method": "model",
+            "model": {
+              "name": "rsna2024-moyasii-classifier",
+              "version": "8a3cd3e615bf24c934dc5440e96ee52aa68c1386",
+              "weights_sha256": "44239affed99127c8945ceb31e615644fb383b4f40e34abe048ce2ff7398c3cd"
+            }
+          },
+          "image_refs": [
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-15",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-9",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-15",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-9",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-16",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-17",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-18",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-19",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-20",
+              "frame_index": 0
+            }
+          ],
+          "upstream_refs": [
+            {
+              "result_id": "rsna-localization-001",
+              "assessment_id": "disc-L3-L4"
+            }
+          ],
+          "review_ref": null,
+          "review_states": {},
+          "review_series_coverage": "missing"
+        }
+      ],
+      "gate_states": {
+        "source_assessed": false,
+        "reviews_passed": false,
+        "known_scale_and_label": true,
+        "native_probabilities_usable": true,
+        "evidence_consistent": true
+      },
+      "herniation_context": "not_evaluated",
+      "etiology": "unassigned"
+    },
+    {
+      "branch_id": "foraminal-L4-L5-left",
+      "target": {
+        "level": "L4-L5",
+        "side": "left",
+        "zone": "foraminal"
+      },
+      "component": "foraminal_stenosis",
+      "rule_id": "F-NFN-01",
+      "decision": "indeterminate",
+      "reason_codes": [
+        "herniation_not_evaluated",
+        "numbering_unreviewed",
+        "registration_unverified",
+        "review_context_missing",
+        "source_indeterminate"
+      ],
+      "mapped_root": null,
+      "candidate_root": null,
+      "evidence": [
+        {
+          "source_ref": {
+            "result_id": "rsna-foraminal-001",
+            "assessment_id": "foraminal-L4-L5-left"
+          },
+          "artifact_id": "result-rsna-foraminal-001",
+          "artifact_sha256": "8dbd8fbfb9e23e66ba5937e796f2ba182a3523083324de2069c5f5217f29d3a8",
+          "component": "foraminal_stenosis",
+          "target": {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "foraminal"
+          },
+          "status": "indeterminate",
+          "reason": "Native RSNA numbering is unreviewed; anatomical disc numbering and registration have not been independently confirmed.",
+          "observation": {
+            "label": "moderate",
+            "scale_id": "rsna2024:stenosis-severity:v1",
+            "measurements": [
+              {
+                "name": "p_normal_mild",
+                "value": 0.1474919468164444,
+                "unit": "probability"
+              },
+              {
+                "name": "p_moderate",
+                "value": 0.7847175598144531,
+                "unit": "probability"
+              },
+              {
+                "name": "p_severe",
+                "value": 0.06779047846794128,
+                "unit": "probability"
+              }
+            ]
+          },
+          "producer": {
+            "name": "rsna-moyasii-adapter",
+            "version": "1.0",
+            "method": "model",
+            "model": {
+              "name": "rsna2024-moyasii-classifier",
+              "version": "8a3cd3e615bf24c934dc5440e96ee52aa68c1386",
+              "weights_sha256": "44239affed99127c8945ceb31e615644fb383b4f40e34abe048ce2ff7398c3cd"
+            }
+          },
+          "image_refs": [
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-1",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-2",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-3",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-4",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-5",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-1",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-2",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-3",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-4",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-5",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-21",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-22",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-23",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-24",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-25",
+              "frame_index": 0
+            }
+          ],
+          "upstream_refs": [
+            {
+              "result_id": "rsna-localization-001",
+              "assessment_id": "disc-L4-L5"
+            }
+          ],
+          "review_ref": null,
+          "review_states": {},
+          "review_series_coverage": "missing"
+        }
+      ],
+      "gate_states": {
+        "source_assessed": false,
+        "reviews_passed": false,
+        "known_scale_and_label": true,
+        "native_probabilities_usable": true,
+        "evidence_consistent": true
+      },
+      "herniation_context": "not_evaluated",
+      "etiology": "unassigned"
+    },
+    {
+      "branch_id": "subarticular-L4-L5-left",
+      "target": {
+        "level": "L4-L5",
+        "side": "left",
+        "zone": "subarticular"
+      },
+      "component": "subarticular_stenosis",
+      "rule_id": "F-SS-01",
+      "decision": "indeterminate",
+      "reason_codes": [
+        "herniation_not_evaluated",
+        "numbering_unreviewed",
+        "registration_unverified",
+        "review_context_missing",
+        "source_indeterminate"
+      ],
+      "mapped_root": null,
+      "candidate_root": null,
+      "evidence": [
+        {
+          "source_ref": {
+            "result_id": "rsna-subarticular-001",
+            "assessment_id": "subarticular-L4-L5-left"
+          },
+          "artifact_id": "result-rsna-subarticular-001",
+          "artifact_sha256": "0f285846bb72258b4f3a4172ff2bf009e1b225c33f6b6095a7c7e89b3561da02",
+          "component": "subarticular_stenosis",
+          "target": {
+            "level": "L4-L5",
+            "side": "left",
+            "zone": "subarticular"
+          },
+          "status": "indeterminate",
+          "reason": "Native RSNA numbering is unreviewed; anatomical disc numbering and registration have not been independently confirmed.",
+          "observation": {
+            "label": "moderate",
+            "scale_id": "rsna2024:stenosis-severity:v1",
+            "measurements": [
+              {
+                "name": "p_normal_mild",
+                "value": 0.36012402176856995,
+                "unit": "probability"
+              },
+              {
+                "name": "p_moderate",
+                "value": 0.5655747056007385,
+                "unit": "probability"
+              },
+              {
+                "name": "p_severe",
+                "value": 0.07430127263069153,
+                "unit": "probability"
+              }
+            ]
+          },
+          "producer": {
+            "name": "rsna-moyasii-adapter",
+            "version": "1.0",
+            "method": "model",
+            "model": {
+              "name": "rsna2024-moyasii-classifier",
+              "version": "8a3cd3e615bf24c934dc5440e96ee52aa68c1386",
+              "weights_sha256": "44239affed99127c8945ceb31e615644fb383b4f40e34abe048ce2ff7398c3cd"
+            }
+          },
+          "image_refs": [
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-1",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-2",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-3",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-4",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-5",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-1",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-2",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-3",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-4",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-5",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-21",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-22",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-23",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-24",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-25",
+              "frame_index": 0
+            }
+          ],
+          "upstream_refs": [
+            {
+              "result_id": "rsna-localization-001",
+              "assessment_id": "disc-L4-L5"
+            }
+          ],
+          "review_ref": null,
+          "review_states": {},
+          "review_series_coverage": "missing"
+        }
+      ],
+      "gate_states": {
+        "source_assessed": false,
+        "reviews_passed": false,
+        "known_scale_and_label": true,
+        "native_probabilities_usable": true,
+        "evidence_consistent": true
+      },
+      "herniation_context": "not_evaluated",
+      "etiology": "unassigned"
+    },
+    {
+      "branch_id": "foraminal-L4-L5-right",
+      "target": {
+        "level": "L4-L5",
+        "side": "right",
+        "zone": "foraminal"
+      },
+      "component": "foraminal_stenosis",
+      "rule_id": "F-NFN-01",
+      "decision": "indeterminate",
+      "reason_codes": [
+        "herniation_not_evaluated",
+        "numbering_unreviewed",
+        "registration_unverified",
+        "review_context_missing",
+        "source_indeterminate"
+      ],
+      "mapped_root": null,
+      "candidate_root": null,
+      "evidence": [
+        {
+          "source_ref": {
+            "result_id": "rsna-foraminal-001",
+            "assessment_id": "foraminal-L4-L5-right"
+          },
+          "artifact_id": "result-rsna-foraminal-001",
+          "artifact_sha256": "8dbd8fbfb9e23e66ba5937e796f2ba182a3523083324de2069c5f5217f29d3a8",
+          "component": "foraminal_stenosis",
+          "target": {
+            "level": "L4-L5",
+            "side": "right",
+            "zone": "foraminal"
+          },
+          "status": "indeterminate",
+          "reason": "Native RSNA numbering is unreviewed; anatomical disc numbering and registration have not been independently confirmed.",
+          "observation": {
+            "label": "normal_mild",
+            "scale_id": "rsna2024:stenosis-severity:v1",
+            "measurements": [
+              {
+                "name": "p_normal_mild",
+                "value": 0.6118708848953247,
+                "unit": "probability"
+              },
+              {
+                "name": "p_moderate",
+                "value": 0.3538966774940491,
+                "unit": "probability"
+              },
+              {
+                "name": "p_severe",
+                "value": 0.03423240780830383,
+                "unit": "probability"
+              }
+            ]
+          },
+          "producer": {
+            "name": "rsna-moyasii-adapter",
+            "version": "1.0",
+            "method": "model",
+            "model": {
+              "name": "rsna2024-moyasii-classifier",
+              "version": "8a3cd3e615bf24c934dc5440e96ee52aa68c1386",
+              "weights_sha256": "44239affed99127c8945ceb31e615644fb383b4f40e34abe048ce2ff7398c3cd"
+            }
+          },
+          "image_refs": [
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-15",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-9",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-15",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-9",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-21",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-22",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-23",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-24",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-25",
+              "frame_index": 0
+            }
+          ],
+          "upstream_refs": [
+            {
+              "result_id": "rsna-localization-001",
+              "assessment_id": "disc-L4-L5"
+            }
+          ],
+          "review_ref": null,
+          "review_states": {},
+          "review_series_coverage": "missing"
+        }
+      ],
+      "gate_states": {
+        "source_assessed": false,
+        "reviews_passed": false,
+        "known_scale_and_label": true,
+        "native_probabilities_usable": true,
+        "evidence_consistent": true
+      },
+      "herniation_context": "not_evaluated",
+      "etiology": "unassigned"
+    },
+    {
+      "branch_id": "subarticular-L4-L5-right",
+      "target": {
+        "level": "L4-L5",
+        "side": "right",
+        "zone": "subarticular"
+      },
+      "component": "subarticular_stenosis",
+      "rule_id": "F-SS-01",
+      "decision": "indeterminate",
+      "reason_codes": [
+        "herniation_not_evaluated",
+        "numbering_unreviewed",
+        "registration_unverified",
+        "review_context_missing",
+        "source_indeterminate"
+      ],
+      "mapped_root": null,
+      "candidate_root": null,
+      "evidence": [
+        {
+          "source_ref": {
+            "result_id": "rsna-subarticular-001",
+            "assessment_id": "subarticular-L4-L5-right"
+          },
+          "artifact_id": "result-rsna-subarticular-001",
+          "artifact_sha256": "0f285846bb72258b4f3a4172ff2bf009e1b225c33f6b6095a7c7e89b3561da02",
+          "component": "subarticular_stenosis",
+          "target": {
+            "level": "L4-L5",
+            "side": "right",
+            "zone": "subarticular"
+          },
+          "status": "indeterminate",
+          "reason": "Native RSNA numbering is unreviewed; anatomical disc numbering and registration have not been independently confirmed.",
+          "observation": {
+            "label": "normal_mild",
+            "scale_id": "rsna2024:stenosis-severity:v1",
+            "measurements": [
+              {
+                "name": "p_normal_mild",
+                "value": 0.5188343524932861,
+                "unit": "probability"
+              },
+              {
+                "name": "p_moderate",
+                "value": 0.440073162317276,
+                "unit": "probability"
+              },
+              {
+                "name": "p_severe",
+                "value": 0.04109250381588936,
+                "unit": "probability"
+              }
+            ]
+          },
+          "producer": {
+            "name": "rsna-moyasii-adapter",
+            "version": "1.0",
+            "method": "model",
+            "model": {
+              "name": "rsna2024-moyasii-classifier",
+              "version": "8a3cd3e615bf24c934dc5440e96ee52aa68c1386",
+              "weights_sha256": "44239affed99127c8945ceb31e615644fb383b4f40e34abe048ce2ff7398c3cd"
+            }
+          },
+          "image_refs": [
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-15",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-9",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-15",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-9",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-21",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-22",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-23",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-24",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-25",
+              "frame_index": 0
+            }
+          ],
+          "upstream_refs": [
+            {
+              "result_id": "rsna-localization-001",
+              "assessment_id": "disc-L4-L5"
+            }
+          ],
+          "review_ref": null,
+          "review_states": {},
+          "review_series_coverage": "missing"
+        }
+      ],
+      "gate_states": {
+        "source_assessed": false,
+        "reviews_passed": false,
+        "known_scale_and_label": true,
+        "native_probabilities_usable": true,
+        "evidence_consistent": true
+      },
+      "herniation_context": "not_evaluated",
+      "etiology": "unassigned"
+    },
+    {
+      "branch_id": "foraminal-L5-S1-left",
+      "target": {
+        "level": "L5-S1",
+        "side": "left",
+        "zone": "foraminal"
+      },
+      "component": "foraminal_stenosis",
+      "rule_id": "F-NFN-01",
+      "decision": "indeterminate",
+      "reason_codes": [
+        "herniation_not_evaluated",
+        "numbering_unreviewed",
+        "registration_unverified",
+        "review_context_missing",
+        "source_indeterminate"
+      ],
+      "mapped_root": null,
+      "candidate_root": null,
+      "evidence": [
+        {
+          "source_ref": {
+            "result_id": "rsna-foraminal-001",
+            "assessment_id": "foraminal-L5-S1-left"
+          },
+          "artifact_id": "result-rsna-foraminal-001",
+          "artifact_sha256": "8dbd8fbfb9e23e66ba5937e796f2ba182a3523083324de2069c5f5217f29d3a8",
+          "component": "foraminal_stenosis",
+          "target": {
+            "level": "L5-S1",
+            "side": "left",
+            "zone": "foraminal"
+          },
+          "status": "indeterminate",
+          "reason": "Native RSNA numbering is unreviewed; anatomical disc numbering and registration have not been independently confirmed.",
+          "observation": {
+            "label": "normal_mild",
+            "scale_id": "rsna2024:stenosis-severity:v1",
+            "measurements": [
+              {
+                "name": "p_normal_mild",
+                "value": 0.6741914749145508,
+                "unit": "probability"
+              },
+              {
+                "name": "p_moderate",
+                "value": 0.3149988055229187,
+                "unit": "probability"
+              },
+              {
+                "name": "p_severe",
+                "value": 0.01080964133143425,
+                "unit": "probability"
+              }
+            ]
+          },
+          "producer": {
+            "name": "rsna-moyasii-adapter",
+            "version": "1.0",
+            "method": "model",
+            "model": {
+              "name": "rsna2024-moyasii-classifier",
+              "version": "8a3cd3e615bf24c934dc5440e96ee52aa68c1386",
+              "weights_sha256": "44239affed99127c8945ceb31e615644fb383b4f40e34abe048ce2ff7398c3cd"
+            }
+          },
+          "image_refs": [
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-1",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-2",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-3",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-4",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-5",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-1",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-2",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-3",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-4",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-5",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-26",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-27",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-28",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-29",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-30",
+              "frame_index": 0
+            }
+          ],
+          "upstream_refs": [
+            {
+              "result_id": "rsna-localization-001",
+              "assessment_id": "disc-L5-S1"
+            }
+          ],
+          "review_ref": null,
+          "review_states": {},
+          "review_series_coverage": "missing"
+        }
+      ],
+      "gate_states": {
+        "source_assessed": false,
+        "reviews_passed": false,
+        "known_scale_and_label": true,
+        "native_probabilities_usable": true,
+        "evidence_consistent": true
+      },
+      "herniation_context": "not_evaluated",
+      "etiology": "unassigned"
+    },
+    {
+      "branch_id": "subarticular-L5-S1-left",
+      "target": {
+        "level": "L5-S1",
+        "side": "left",
+        "zone": "subarticular"
+      },
+      "component": "subarticular_stenosis",
+      "rule_id": "F-SS-01",
+      "decision": "indeterminate",
+      "reason_codes": [
+        "herniation_not_evaluated",
+        "numbering_unreviewed",
+        "registration_unverified",
+        "review_context_missing",
+        "source_indeterminate"
+      ],
+      "mapped_root": null,
+      "candidate_root": null,
+      "evidence": [
+        {
+          "source_ref": {
+            "result_id": "rsna-subarticular-001",
+            "assessment_id": "subarticular-L5-S1-left"
+          },
+          "artifact_id": "result-rsna-subarticular-001",
+          "artifact_sha256": "0f285846bb72258b4f3a4172ff2bf009e1b225c33f6b6095a7c7e89b3561da02",
+          "component": "subarticular_stenosis",
+          "target": {
+            "level": "L5-S1",
+            "side": "left",
+            "zone": "subarticular"
+          },
+          "status": "indeterminate",
+          "reason": "Native RSNA numbering is unreviewed; anatomical disc numbering and registration have not been independently confirmed.",
+          "observation": {
+            "label": "normal_mild",
+            "scale_id": "rsna2024:stenosis-severity:v1",
+            "measurements": [
+              {
+                "name": "p_normal_mild",
+                "value": 0.7989598512649536,
+                "unit": "probability"
+              },
+              {
+                "name": "p_moderate",
+                "value": 0.19456784427165985,
+                "unit": "probability"
+              },
+              {
+                "name": "p_severe",
+                "value": 0.006472302600741386,
+                "unit": "probability"
+              }
+            ]
+          },
+          "producer": {
+            "name": "rsna-moyasii-adapter",
+            "version": "1.0",
+            "method": "model",
+            "model": {
+              "name": "rsna2024-moyasii-classifier",
+              "version": "8a3cd3e615bf24c934dc5440e96ee52aa68c1386",
+              "weights_sha256": "44239affed99127c8945ceb31e615644fb383b4f40e34abe048ce2ff7398c3cd"
+            }
+          },
+          "image_refs": [
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-1",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-2",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-3",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-4",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-5",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-1",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-2",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-3",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-4",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-5",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-6",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-7",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-26",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-27",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-28",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-29",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-30",
+              "frame_index": 0
+            }
+          ],
+          "upstream_refs": [
+            {
+              "result_id": "rsna-localization-001",
+              "assessment_id": "disc-L5-S1"
+            }
+          ],
+          "review_ref": null,
+          "review_states": {},
+          "review_series_coverage": "missing"
+        }
+      ],
+      "gate_states": {
+        "source_assessed": false,
+        "reviews_passed": false,
+        "known_scale_and_label": true,
+        "native_probabilities_usable": true,
+        "evidence_consistent": true
+      },
+      "herniation_context": "not_evaluated",
+      "etiology": "unassigned"
+    },
+    {
+      "branch_id": "foraminal-L5-S1-right",
+      "target": {
+        "level": "L5-S1",
+        "side": "right",
+        "zone": "foraminal"
+      },
+      "component": "foraminal_stenosis",
+      "rule_id": "F-NFN-01",
+      "decision": "indeterminate",
+      "reason_codes": [
+        "herniation_not_evaluated",
+        "numbering_unreviewed",
+        "registration_unverified",
+        "review_context_missing",
+        "source_indeterminate"
+      ],
+      "mapped_root": null,
+      "candidate_root": null,
+      "evidence": [
+        {
+          "source_ref": {
+            "result_id": "rsna-foraminal-001",
+            "assessment_id": "foraminal-L5-S1-right"
+          },
+          "artifact_id": "result-rsna-foraminal-001",
+          "artifact_sha256": "8dbd8fbfb9e23e66ba5937e796f2ba182a3523083324de2069c5f5217f29d3a8",
+          "component": "foraminal_stenosis",
+          "target": {
+            "level": "L5-S1",
+            "side": "right",
+            "zone": "foraminal"
+          },
+          "status": "indeterminate",
+          "reason": "Native RSNA numbering is unreviewed; anatomical disc numbering and registration have not been independently confirmed.",
+          "observation": {
+            "label": "normal_mild",
+            "scale_id": "rsna2024:stenosis-severity:v1",
+            "measurements": [
+              {
+                "name": "p_normal_mild",
+                "value": 0.7436606884002686,
+                "unit": "probability"
+              },
+              {
+                "name": "p_moderate",
+                "value": 0.24760855734348297,
+                "unit": "probability"
+              },
+              {
+                "name": "p_severe",
+                "value": 0.008730774745345116,
+                "unit": "probability"
+              }
+            ]
+          },
+          "producer": {
+            "name": "rsna-moyasii-adapter",
+            "version": "1.0",
+            "method": "model",
+            "model": {
+              "name": "rsna2024-moyasii-classifier",
+              "version": "8a3cd3e615bf24c934dc5440e96ee52aa68c1386",
+              "weights_sha256": "44239affed99127c8945ceb31e615644fb383b4f40e34abe048ce2ff7398c3cd"
+            }
+          },
+          "image_refs": [
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-15",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-9",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-15",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-9",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-26",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-27",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-28",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-29",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-30",
+              "frame_index": 0
+            }
+          ],
+          "upstream_refs": [
+            {
+              "result_id": "rsna-localization-001",
+              "assessment_id": "disc-L5-S1"
+            }
+          ],
+          "review_ref": null,
+          "review_states": {},
+          "review_series_coverage": "missing"
+        }
+      ],
+      "gate_states": {
+        "source_assessed": false,
+        "reviews_passed": false,
+        "known_scale_and_label": true,
+        "native_probabilities_usable": true,
+        "evidence_consistent": true
+      },
+      "herniation_context": "not_evaluated",
+      "etiology": "unassigned"
+    },
+    {
+      "branch_id": "subarticular-L5-S1-right",
+      "target": {
+        "level": "L5-S1",
+        "side": "right",
+        "zone": "subarticular"
+      },
+      "component": "subarticular_stenosis",
+      "rule_id": "F-SS-01",
+      "decision": "indeterminate",
+      "reason_codes": [
+        "herniation_not_evaluated",
+        "numbering_unreviewed",
+        "registration_unverified",
+        "review_context_missing",
+        "source_indeterminate"
+      ],
+      "mapped_root": null,
+      "candidate_root": null,
+      "evidence": [
+        {
+          "source_ref": {
+            "result_id": "rsna-subarticular-001",
+            "assessment_id": "subarticular-L5-S1-right"
+          },
+          "artifact_id": "result-rsna-subarticular-001",
+          "artifact_sha256": "0f285846bb72258b4f3a4172ff2bf009e1b225c33f6b6095a7c7e89b3561da02",
+          "component": "subarticular_stenosis",
+          "target": {
+            "level": "L5-S1",
+            "side": "right",
+            "zone": "subarticular"
+          },
+          "status": "indeterminate",
+          "reason": "Native RSNA numbering is unreviewed; anatomical disc numbering and registration have not been independently confirmed.",
+          "observation": {
+            "label": "normal_mild",
+            "scale_id": "rsna2024:stenosis-severity:v1",
+            "measurements": [
+              {
+                "name": "p_normal_mild",
+                "value": 0.915468156337738,
+                "unit": "probability"
+              },
+              {
+                "name": "p_moderate",
+                "value": 0.08181396871805191,
+                "unit": "probability"
+              },
+              {
+                "name": "p_severe",
+                "value": 0.002717845141887665,
+                "unit": "probability"
+              }
+            ]
+          },
+          "producer": {
+            "name": "rsna-moyasii-adapter",
+            "version": "1.0",
+            "method": "model",
+            "model": {
+              "name": "rsna2024-moyasii-classifier",
+              "version": "8a3cd3e615bf24c934dc5440e96ee52aa68c1386",
+              "weights_sha256": "44239affed99127c8945ceb31e615644fb383b4f40e34abe048ce2ff7398c3cd"
+            }
+          },
+          "image_refs": [
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-15",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1753194850",
+              "image_id": "1753194850-9",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-10",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-11",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-12",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-13",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-14",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-15",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-8",
+              "frame_index": 0
+            },
+            {
+              "series_id": "1889975433",
+              "image_id": "1889975433-9",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-26",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-27",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-28",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-29",
+              "frame_index": 0
+            },
+            {
+              "series_id": "3664269124",
+              "image_id": "3664269124-30",
+              "frame_index": 0
+            }
+          ],
+          "upstream_refs": [
+            {
+              "result_id": "rsna-localization-001",
+              "assessment_id": "disc-L5-S1"
+            }
+          ],
+          "review_ref": null,
+          "review_states": {},
+          "review_series_coverage": "missing"
+        }
+      ],
+      "gate_states": {
+        "source_assessed": false,
+        "reviews_passed": false,
+        "known_scale_and_label": true,
+        "native_probabilities_usable": true,
+        "evidence_consistent": true
+      },
+      "herniation_context": "not_evaluated",
+      "etiology": "unassigned"
+    }
+  ],
+  "unresolved_native_evidence": [],
+  "raw_disc_evidence": [
+    {
+      "source_ref": {
+        "result_id": "spinenet-disc-86e111a570a12143aeb42920",
+        "assessment_id": "disc-L1-L2"
+      },
+      "artifact_id": "result-spinenet-disc-86e111a570a12143aeb42920",
+      "artifact_sha256": "831b9af5cc8004e249b3343125b5d2b84dff879241a81878927ea8ca2b121b67",
+      "component": "disc_analysis",
+      "target": {
+        "level": "L1-L2",
+        "side": "unknown",
+        "zone": "disc"
+      },
+      "status": "indeterminate",
+      "reason": "Native binary prediction; anatomical numbering and T2 contrast unreviewed. Side, size, morphology and root impact not assessed.",
+      "observation": {
+        "label": "not_detected",
+        "scale_id": "spinenet_v2_herniation_binary",
+        "measurements": []
+      },
+      "producer": {
+        "name": "spinenet-binary-disc",
+        "version": "1.0",
+        "method": "model",
+        "model": {
+          "name": "SpineNet-v2-Herniation",
+          "version": "5e96ac54b1c1845a37d12e40bfd16f647d40acd8",
+          "weights_sha256": "b7259f0a32d438d30e58db0f36db0b401ae5e36cb58d3eddb650cd7a141778fb"
+        }
+      },
+      "image_refs": [
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-3",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-4",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-5",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-6",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-7",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-8",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-9",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-10",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-11",
+          "frame_index": 0
+        }
+      ],
+      "upstream_refs": [
+        {
+          "result_id": "spinenet-93f7e08b26553fe23725c0f1",
+          "assessment_id": "localization-0002"
+        },
+        {
+          "result_id": "spinenet-93f7e08b26553fe23725c0f1",
+          "assessment_id": "localization-0003"
+        }
+      ],
+      "review_ref": null,
+      "review_states": {},
+      "review_series_coverage": "missing"
+    },
+    {
+      "source_ref": {
+        "result_id": "spinenet-disc-86e111a570a12143aeb42920",
+        "assessment_id": "disc-L2-L3"
+      },
+      "artifact_id": "result-spinenet-disc-86e111a570a12143aeb42920",
+      "artifact_sha256": "831b9af5cc8004e249b3343125b5d2b84dff879241a81878927ea8ca2b121b67",
+      "component": "disc_analysis",
+      "target": {
+        "level": "L2-L3",
+        "side": "unknown",
+        "zone": "disc"
+      },
+      "status": "indeterminate",
+      "reason": "Native binary prediction; anatomical numbering and T2 contrast unreviewed. Side, size, morphology and root impact not assessed.",
+      "observation": {
+        "label": "not_detected",
+        "scale_id": "spinenet_v2_herniation_binary",
+        "measurements": []
+      },
+      "producer": {
+        "name": "spinenet-binary-disc",
+        "version": "1.0",
+        "method": "model",
+        "model": {
+          "name": "SpineNet-v2-Herniation",
+          "version": "5e96ac54b1c1845a37d12e40bfd16f647d40acd8",
+          "weights_sha256": "b7259f0a32d438d30e58db0f36db0b401ae5e36cb58d3eddb650cd7a141778fb"
+        }
+      },
+      "image_refs": [
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-3",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-4",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-5",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-6",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-7",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-8",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-9",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-10",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-11",
+          "frame_index": 0
+        }
+      ],
+      "upstream_refs": [
+        {
+          "result_id": "spinenet-93f7e08b26553fe23725c0f1",
+          "assessment_id": "localization-0003"
+        },
+        {
+          "result_id": "spinenet-93f7e08b26553fe23725c0f1",
+          "assessment_id": "localization-0004"
+        }
+      ],
+      "review_ref": null,
+      "review_states": {},
+      "review_series_coverage": "missing"
+    },
+    {
+      "source_ref": {
+        "result_id": "spinenet-disc-86e111a570a12143aeb42920",
+        "assessment_id": "disc-L3-L4"
+      },
+      "artifact_id": "result-spinenet-disc-86e111a570a12143aeb42920",
+      "artifact_sha256": "831b9af5cc8004e249b3343125b5d2b84dff879241a81878927ea8ca2b121b67",
+      "component": "disc_analysis",
+      "target": {
+        "level": "L3-L4",
+        "side": "unknown",
+        "zone": "disc"
+      },
+      "status": "indeterminate",
+      "reason": "Native binary prediction; anatomical numbering and T2 contrast unreviewed. Side, size, morphology and root impact not assessed.",
+      "observation": {
+        "label": "present",
+        "scale_id": "spinenet_v2_herniation_binary",
+        "measurements": []
+      },
+      "producer": {
+        "name": "spinenet-binary-disc",
+        "version": "1.0",
+        "method": "model",
+        "model": {
+          "name": "SpineNet-v2-Herniation",
+          "version": "5e96ac54b1c1845a37d12e40bfd16f647d40acd8",
+          "weights_sha256": "b7259f0a32d438d30e58db0f36db0b401ae5e36cb58d3eddb650cd7a141778fb"
+        }
+      },
+      "image_refs": [
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-3",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-4",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-5",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-6",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-7",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-8",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-9",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-10",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-11",
+          "frame_index": 0
+        }
+      ],
+      "upstream_refs": [
+        {
+          "result_id": "spinenet-93f7e08b26553fe23725c0f1",
+          "assessment_id": "localization-0004"
+        },
+        {
+          "result_id": "spinenet-93f7e08b26553fe23725c0f1",
+          "assessment_id": "localization-0005"
+        }
+      ],
+      "review_ref": null,
+      "review_states": {},
+      "review_series_coverage": "missing"
+    },
+    {
+      "source_ref": {
+        "result_id": "spinenet-disc-86e111a570a12143aeb42920",
+        "assessment_id": "disc-L4-L5"
+      },
+      "artifact_id": "result-spinenet-disc-86e111a570a12143aeb42920",
+      "artifact_sha256": "831b9af5cc8004e249b3343125b5d2b84dff879241a81878927ea8ca2b121b67",
+      "component": "disc_analysis",
+      "target": {
+        "level": "L4-L5",
+        "side": "unknown",
+        "zone": "disc"
+      },
+      "status": "indeterminate",
+      "reason": "Native binary prediction; anatomical numbering and T2 contrast unreviewed. Side, size, morphology and root impact not assessed.",
+      "observation": {
+        "label": "not_detected",
+        "scale_id": "spinenet_v2_herniation_binary",
+        "measurements": []
+      },
+      "producer": {
+        "name": "spinenet-binary-disc",
+        "version": "1.0",
+        "method": "model",
+        "model": {
+          "name": "SpineNet-v2-Herniation",
+          "version": "5e96ac54b1c1845a37d12e40bfd16f647d40acd8",
+          "weights_sha256": "b7259f0a32d438d30e58db0f36db0b401ae5e36cb58d3eddb650cd7a141778fb"
+        }
+      },
+      "image_refs": [
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-3",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-4",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-5",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-6",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-7",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-8",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-9",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-10",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-11",
+          "frame_index": 0
+        }
+      ],
+      "upstream_refs": [
+        {
+          "result_id": "spinenet-93f7e08b26553fe23725c0f1",
+          "assessment_id": "localization-0005"
+        },
+        {
+          "result_id": "spinenet-93f7e08b26553fe23725c0f1",
+          "assessment_id": "localization-0006"
+        }
+      ],
+      "review_ref": null,
+      "review_states": {},
+      "review_series_coverage": "missing"
+    },
+    {
+      "source_ref": {
+        "result_id": "spinenet-disc-86e111a570a12143aeb42920",
+        "assessment_id": "disc-L5-S1"
+      },
+      "artifact_id": "result-spinenet-disc-86e111a570a12143aeb42920",
+      "artifact_sha256": "831b9af5cc8004e249b3343125b5d2b84dff879241a81878927ea8ca2b121b67",
+      "component": "disc_analysis",
+      "target": {
+        "level": "L5-S1",
+        "side": "unknown",
+        "zone": "disc"
+      },
+      "status": "indeterminate",
+      "reason": "Native binary prediction; anatomical numbering and T2 contrast unreviewed. Side, size, morphology and root impact not assessed.",
+      "observation": {
+        "label": "not_detected",
+        "scale_id": "spinenet_v2_herniation_binary",
+        "measurements": []
+      },
+      "producer": {
+        "name": "spinenet-binary-disc",
+        "version": "1.0",
+        "method": "model",
+        "model": {
+          "name": "SpineNet-v2-Herniation",
+          "version": "5e96ac54b1c1845a37d12e40bfd16f647d40acd8",
+          "weights_sha256": "b7259f0a32d438d30e58db0f36db0b401ae5e36cb58d3eddb650cd7a141778fb"
+        }
+      },
+      "image_refs": [
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-3",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-4",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-5",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-6",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-7",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-8",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-9",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-10",
+          "frame_index": 0
+        },
+        {
+          "series_id": "1753194850",
+          "image_id": "1753194850-11",
+          "frame_index": 0
+        }
+      ],
+      "upstream_refs": [
+        {
+          "result_id": "spinenet-93f7e08b26553fe23725c0f1",
+          "assessment_id": "localization-0006"
+        },
+        {
+          "result_id": "spinenet-93f7e08b26553fe23725c0f1",
+          "assessment_id": "localization-0007"
+        }
+      ],
+      "review_ref": null,
+      "review_states": {},
+      "review_series_coverage": "missing"
+    }
+  ],
+  "root_summaries": [],
+  "root_candidates": [],
+  "coverage": {
+    "expected_branches": 20,
+    "potential_impact": 0,
+    "no_candidate_by_evaluated_criterion": 0,
+    "indeterminate": 20,
+    "unresolved_native_evidence": 0,
+    "duplicate_result_documents": 0
+  },
+  "herniation_context": "not_evaluated",
+  "etiology": "unassigned",
+  "inference_performed": false,
+  "fusion_performed": true,
+  "global_root_clearance": false,
+  "clinical_diagnosis": null
+}

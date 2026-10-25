@@ -477,6 +477,28 @@
       ]
     },
     {
+      "id": "T004",
+      "title": "Опубликовать пример входа и соответствующего выхода в репозитории",
+      "status": "in_progress",
+      "depends_on": [
+        "T003",
+        "D004"
+      ],
+      "acceptance": [
+        "В репозитории есть реальный контрольный вход со снимками, переносимым manifest и конфигом",
+        "Соответствующий читаемый выход содержит изображения и прежние выводы; происхождение и SHA записаны",
+        "Инструкция позволяет проверить комплект без моделей, подготовить C001 и повторить полный запуск",
+        "Исключение хранения данных ограничено конкретным разрешенным пользователем примером; остальная защита остается",
+        "Проверки проходят; пример доступен на GitHub в main"
+      ],
+      "evidence": [
+        "examples/rsna-3139265320:60DICOM,3560654bytes,79hashedfiles,12PNG; source image and fusionJSON bytes preserved; portable Markdown/evidence links.",
+        "Full replay from included DICOM completed in48.21s;5disc predictions,20stenosis facts,12PNG and HTML identical toD004. HTML SHA0377707c86f2757a51f0e74c9d8f4e38bdcf50871c09395e3957b6537f70e01b.",
+        "scripts/example.py verify and prepare;5 meaningful tests; AGENTS/.gitignore/harness exception restricted to this case and matching hashes. MRI packages and policy unchanged.",
+        "All403tests pass in existing RSNA runtime; harness smoke and offline example verify pass. GitHub main verified at5424403 before publication; no unrelated SpineSegPlus audit changes included."
+      ]
+    },
+    {
       "id": "E001",
       "title": "Определить протокол технической оценки Stage I",
       "status": "ready",

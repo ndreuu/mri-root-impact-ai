@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "mode": "inference",
+  "spinenet": {
+    "source": "/path/to/SpineNet",
+    "python": "/path/to/venv-spinenet/bin/python"
+  },
+  "rsna": {
+    "source": "/path/to/rsna/source",
+    "weights": "/path/to/rsna/weights",
+    "python": "/path/to/venv-rsna/bin/python"
+  },
+  "options": {
+    "threads": 2,
+    "timeout": 600,
+    "allow_missing_modality": true,
+    "allow_unverified_registration": true
+  },
+  "disc_analysis": "spinenet_binary"
+}

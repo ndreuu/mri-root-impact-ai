@@ -123,6 +123,17 @@ def unsafe_candidates():
     if result.returncode:
         raise ValueError("Cannot inspect Git candidates: " + result.stderr.strip())
     unsafe = []
+    # Only the explicitly published control case is exempt, with exact byte hashes.
+    example_root = ROOT / 'examples' / 'rsna-3139265320'
+    example_files = {}
+    try:
+        inventory = read_json(example_root / 'files.sha256.json')
+        if inventory.get('kind') == 'example_checksums' and inventory.get('study_id') == 'rsna-3139265320':
+            example_files = inventory.get('files', {})
+            if not isinstance(example_files, dict):
+                example_files = {}
+    except (OSError, ValueError, AttributeError):
+        pass
     for name in set(result.stdout.split("\0")) - {""}:
         path = Path(name)
         lower_name = name.lower()
@@ -131,6 +142,15 @@ def unsafe_candidates():
         env_file = path.name == ".env" or (
             path.name.startswith(".env.") and path.name != ".env.example"
         )
+        prefix = 'examples/rsna-3139265320/'
+        if name.startswith(prefix + 'input/dicom/') and lower_name.endswith('.dcm'):
+            relative = name[len(prefix):]
+            candidate = ROOT / path
+            if ('..' not in path.parts and not candidate.is_symlink()
+                    and example_root.resolve() in candidate.resolve().parents
+                    and candidate.is_file()
+                    and hashlib.sha256(candidate.read_bytes()).hexdigest() == example_files.get(relative)):
+                continue
         if (
             lower_name.endswith(FORBIDDEN_SUFFIXES) or env_file
             or (protected_directory and not allowed_readme)
